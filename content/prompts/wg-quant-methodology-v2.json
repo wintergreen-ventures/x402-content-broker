@@ -1,0 +1,285 @@
+{
+  "pack_id": "wg-agent-prompts-v2",
+  "title": "Wintergreen Quant Methodology Pack v2",
+  "description": "40 production-tested prompts across 7 categories: strategy design, backtesting, risk, regime detection, execution, agent orchestration, and market analysis. Built from an active quant desk running on Hyperliquid with kill-card discipline and closed-loop learning.",
+  "categories": {
+    "strategy_generation": [
+      {
+        "id": "sg-001",
+        "title": "Hypothesis-to-Backtest Bridge",
+        "prompt": "Given a trading hypothesis stated in plain English (e.g. 'BTC tends to mean-revert after a funding rate spike above 0.1%'), decompose it into: (1) a precise, falsifiable null hypothesis, (2) the exact entry/exit signal logic in pseudocode, (3) the minimum data fields required (OHLCV, funding, orderbook depth, etc.) and their required lookback window, (4) at least 2 confounding variables that could produce a false positive, and (5) the specific walk-forward validation split (train/test date ranges) that would falsify this hypothesis if it doesn't generalize. Do not write backtest code yet — output only the structured specification a backtesting engine could consume.",
+        "tags": ["quant", "strategy", "hypothesis", "backtesting"]
+      },
+      {
+        "id": "sg-002",
+        "title": "Regime-Aware Signal Gate",
+        "prompt": "You are evaluating whether a trading signal should fire given the current market regime. Input: signal_name, signal_direction (long/short), current_regime (trending_up/trending_down/ranging/high_vol/low_vol), regime_confidence (0-1), and historical_win_rate_by_regime (a dict mapping regime name to win rate for this exact signal). Output a single JSON decision: {\"fire\": bool, \"confidence_adjusted\": float, \"reasoning\": str}. The signal should NOT fire if regime_confidence < 0.5, or if historical_win_rate_by_regime[current_regime] < 0.45. Explain your reasoning in one sentence referencing the specific regime and win rate that drove the decision.",
+        "tags": ["quant", "regime", "signal-filtering", "risk"]
+      },
+      {
+        "id": "sg-003",
+        "title": "Kill Card Generator",
+        "prompt": "Write a kill card for a trading strategy candidate that failed validation. A kill card is a structured post-mortem with these exact fields: strategy_name, hypothesis_summary (1 sentence), kill_reason (one of: insufficient_edge, overfit_to_backtest_window, regime_dependent_only, transaction_costs_erase_edge, data_leakage_suspected, correlated_to_existing_signal), supporting_evidence (2-3 concrete numbers: sharpe, max_drawdown, win_rate, or p-value), and lessons_for_future_candidates (1-2 sentences of generalizable insight, not specific to this strategy). The tone should be blunt and evidence-based — no hedging language.",
+        "tags": ["quant", "risk", "post-mortem", "discipline"]
+      },
+      {
+        "id": "sg-004",
+        "title": "Signal Confluence Scorer",
+        "prompt": "Given N independent trading signals (each with: direction, confidence 0-1, edge_estimate in basis points, and max_correlation_to_other_signals as a float 0-1), output a JSON decision: {composite_score: float, signal_count: int, weighted_direction: 'long'|'short'|'neutral', independence_warning: bool}. Weight each signal by confidence * edge_estimate, then discount the composite score proportionally to the average pairwise correlation between signals. If any pair exceeds 0.7 correlation, set independence_warning=true and explain which pair is too correlated. This is based on the real production pattern where we killed a signal-confluence strategy (PF 2.48 in-sample, 0.00 out-of-sample) because we failed to check independence — ensure your scoring prevents that exact failure mode.",
+        "tags": ["quant", "signal-confluence", "correlation", "independence"]
+      },
+      {
+        "id": "sg-005",
+        "title": "Edge Decay Detector",
+        "prompt": "Given a time series of a strategy's rolling 30-day Sharpe ratio (N data points), determine whether the edge is decaying. Output: {status: 'stable'|'decaying'|'dead', trend_slope: float, confidence: float, recommendation: str}. Use linear regression on the rolling Sharpe series. If the slope is negative AND the most recent 5 periods are all below the series mean, classify as 'decaying'. If the slope is negative AND the most recent period's Sharpe < 0, classify as 'dead'. If the slope is positive or flat within 0.01/month, classify as 'stable'. Recommendation for 'decaying': reduce position size by 50% and re-evaluate in 15 days. For 'dead': suspend immediately, write a kill card. For 'stable': continue with current allocation.",
+        "tags": ["quant", "edge-decay", "monitoring", "risk"]
+      },
+      {
+        "id": "sg-006",
+        "title": "Candidate Differentiator",
+        "prompt": "Given a new strategy candidate and a list of previously killed candidates (each with hypothesis_summary and kill_reason), determine whether this candidate is genuinely novel or a repackaged version of a dead idea. Output: {is_novel: bool, closest_dead_candidate: str|null, differentiation_score: 0-1, recommendation: str}. Compare the hypothesis structure (not just the instrument or timeframe): does the candidate exploit a different market inefficiency than every dead candidate? If differentiation_score < 0.3, recommend killing without backtesting — the desk has already disproven this class of strategy. This pattern prevents waste: our desk burned weeks retesting variants of mean-reversion after killing 6 RSI-based strategies.",
+        "tags": ["quant", "candidate-screening", "efficiency", "lessons-learned"]
+      },
+      {
+        "id": "sg-007",
+        "title": "Data Requirement Spec Generator",
+        "prompt": "Given a strategy hypothesis, output the exact data requirements specification needed to backtest it. Include: (1) required fields with data types and precision (e.g. 'bid_price: float64, 2 decimal places'), (2) minimum lookback window in calendar days and the reasoning for that window, (3) required frequency (tick, 1m, 5m, 1h, 1d) and whether lower-frequency data would degrade the signal, (4) any derived fields needed (e.g. 'volume-weighted average price over 5-minute rolling window'), (5) the specific APIs or data sources that can provide each field (be exact — name the endpoint, not the platform), and (6) a freshness requirement: can this be tested on historical snapshots, or does it need live-streaming data? Output as a structured JSON specification a data engineering agent could consume without additional context.",
+        "tags": ["quant", "data-engineering", "specification", "backtesting"]
+      },
+      {
+        "id": "sg-008",
+        "title": "Multi-Instrument Generalization Test Design",
+        "prompt": "Design a multi-instrument validation test for a strategy currently proven on one instrument (e.g. BTC). Given the strategy's hypothesis, signal logic, and the original instrument's characteristics (volatility profile, liquidity tier, funding-rate regime), output: (1) a ranked list of 3-5 candidate instruments to test on, ordered by similarity to the original instrument, (2) for each candidate, the expected edge decay (none/moderate/significant/complete) and the reasoning, (3) the specific parameter adjustments needed per instrument (if the strategy uses a 14-period RSI on BTC 1h, what period is appropriate for SOL 5m?), (4) a Go/No-Go criterion: if the strategy fails on the 2nd and 3rd most similar instruments, do you generalize, park, or kill? Ground every recommendation in the principle that a single-instrument strategy is a data-mined artifact until proven otherwise.",
+        "tags": ["quant", "multi-instrument", "generalization", "validation"]
+      }
+    ],
+    "backtesting": [
+      {
+        "id": "bt-001",
+        "title": "Walk-Forward Validation Spec",
+        "prompt": "Design a walk-forward validation plan for a trading strategy. Given: available_data_start_date, available_data_end_date, strategy_type (trend-following/mean-reversion/breakout), and minimum_trades_required_for_statistical_significance (default 30). Output: (1) the initial training window length (start date to first test split) and why that length is appropriate for the strategy type, (2) the re-optimization frequency (how often you retrain — weekly, monthly, quarterly) and why, (3) the out-of-sample test window length per fold, (4) the total number of folds you'll produce, and (5) the specific metric you'll use to judge out-of-sample performance vs in-sample (must be a single number: Sharpe, profit factor, or win rate — pick one and justify). Rule: if total available data cannot produce at least 4 folds with 30+ trades each, flag the strategy as 'insufficient data for walk-forward' and recommend expanding the dataset before backtesting.",
+        "tags": ["backtesting", "walk-forward", "validation", "methodology"]
+      },
+      {
+        "id": "bt-002",
+        "title": "Transaction Cost Model",
+        "prompt": "Build a realistic transaction cost model for a perpetual futures strategy. Input: exchange (hyperliquid/binance/bybit), avg_position_size_usd, trades_per_day_estimated, and instrument_type (major/small_cap/meme). Output a JSON with: (1) maker_fee_bps and taker_fee_bps using the exchange's actual tiered fee schedule, (2) estimated_slippage_bps based on position size relative to instrument liquidity (use the formula: slippage = 0.1 * sqrt(position_usd / daily_volume_usd) * 10000), (3) funding_rate_cost_bps assuming average holding time, (4) total_roundtrip_cost_bps, and (5) the minimum edge_bps the strategy needs just to break even after costs. If total_roundtrip_cost_bps > 10, warn that micro-cap/meme coin strategies often fail cost modeling and recommend testing with double the estimated slippage to be conservative.",
+        "tags": ["backtesting", "transaction-costs", "realism", "perpetuals"]
+      },
+      {
+        "id": "bt-003",
+        "title": "Overfitting Detection Suite",
+        "prompt": "Given in-sample and out-of-sample performance metrics for a strategy (sharpe_in, sharpe_out, win_rate_in, win_rate_out, profit_factor_in, profit_factor_out, total_trades_in, total_trades_out), assess overfitting risk. Output: {overfit_score: 0-1, signal: 'clean'|'suspect'|'overfit', evidence: [str], recommendation: str}. Rules: (1) if profit_factor_out / profit_factor_in < 0.3, score += 0.4 and flag 'performance collapse', (2) if win_rate_out - win_rate_in < -0.15, score += 0.3 and flag 'win rate decay', (3) if total_trades_out < 20, score += 0.2 and flag 'insufficient OOS sample', (4) if the in-sample Sharpe > 3.0 AND out-of-sample Sharpe < 0.5, score += 0.4 and flag 'classic overfit pattern'. If overfit_score > 0.6, recommendation = 'KILL — do not promote, do not paper trade'. If 0.3-0.6, 'PARK — collect more OOS data, re-evaluate in 30 days'. If <0.3, 'CLEAN — proceed to paper observation.",
+        "tags": ["backtesting", "overfitting", "validation", "discipline"]
+      },
+      {
+        "id": "bt-004",
+        "title": "Parameter Sensitivity Analyzer",
+        "prompt": "Given a strategy with N tunable parameters (each with: name, base_value, and test_range [min, max]), analyze parameter sensitivity. For each parameter: (1) compute the performance metric (Sharpe or profit factor — whichever the strategy uses as its primary metric) at 5 evenly-spaced values across the test_range while holding all other parameters at base_value, (2) compute sensitivity as abs(performance_at_max - performance_at_min) / performance_at_base, (3) if sensitivity > 0.5 for any single parameter, flag it as 'fragile' — the strategy is overfit to that parameter, (4) if 3+ parameters have sensitivity > 0.3, flag the entire strategy as 'parameter-dependent' and recommend killing or simplifying to fewer parameters. Output a structured JSON with per-parameter sensitivity scores and an overall fragility assessment. Rule of thumb from production: strategies with >3 tunable parameters fail out-of-sample at ~80% rate.",
+        "tags": ["backtesting", "parameter-sensitivity", "robustness", "overfitting"]
+      },
+      {
+        "id": "bt-005",
+        "title": "Monte Carlo Simulation Spec",
+        "prompt": "Given a strategy's trade history (list of {entry_time, exit_time, pnl_bps, holding_minutes}), design a Monte Carlo simulation to stress-test the strategy. Output: (1) the specific null hypothesis being tested (e.g. 'this strategy's returns are indistinguishable from random entry timing'), (2) the resampling method (trade shuffling, entry-time randomization, or bootstrapped returns) and why that method is appropriate, (3) the number of simulation runs (minimum 1,000 — more if trades < 100), (4) the specific ruin threshold ($ or % drawdown that counts as failure), (5) the pass criterion: the strategy passes if fewer than 5% of simulated runs hit the ruin threshold within the historical trade count. If Monte Carlo shows >5% ruin probability, recommend: reduce position size by (actual_ruin_pct / 5) * current_size to bring ruin probability under 5%.",
+        "tags": ["backtesting", "monte-carlo", "risk", "robustness"]
+      },
+      {
+        "id": "bt-006",
+        "title": "Regime-Conditional Performance Breakdown",
+        "prompt": "Given a strategy's trade log with regime labels attached to each trade (regime determined by an independent classifier, not the strategy itself), compute per-regime performance. Required output: for each regime {trending_up, trending_down, ranging, high_vol, low_vol}, report: trade_count, win_rate, avg_return_bps, profit_factor, and a verdict: 'edge_present', 'edge_absent', or 'insufficient_data'. If a regime has fewer than 10 trades, mark 'insufficient_data' and flag for re-evaluation. If two or more regimes show 'edge_absent' while one shows 'edge_present', the strategy is regime-dependent — not generalizable — and should be filtered to only trade during the edge-present regime. This is the exact pattern our desk discovered after deploying 6 signals: some win consistently in trending_up but lose everything in ranging.",
+        "tags": ["backtesting", "regime", "conditional-performance", "edge-validation"]
+      },
+      {
+        "id": "bt-007",
+        "title": "Benchmark Comparison Framework",
+        "prompt": "Compare a strategy's performance against appropriate benchmarks. Given the strategy's returns series and metadata (instrument, timeframe, direction), select and compute: (1) buy-and-hold return for the same instrument and period, (2) a naive version of the same signal class (e.g. for a mean-reversion strategy, compare to a simple RSI(14) overbought/oversold with no filters), (3) a risk-adjusted benchmark: the strategy's Sharpe vs the naive benchmark's Sharpe, expressed as a ratio. Output: {strategy_sharpe, benchmark_sharpe, sharpe_ratio: float, outperformance: bool, alpha_bps_per_trade: float}. A strategy with sharpe_ratio < 1.2 vs its naive benchmark should not be promoted — it's barely beating the dumb version. A strategy with sharpe_ratio > 2.0 is genuinely differentiated.",
+        "tags": ["backtesting", "benchmarking", "edge-quantification", "comparison"]
+      },
+      {
+        "id": "bt-008",
+        "title": "Minimum Sample Size Calculator",
+        "prompt": "Given a strategy's expected edge (win_rate - 0.5, or avg_return_bps per trade) and desired confidence level (default 95%), compute the minimum number of trades needed for statistical significance. Use the formula: n = (z_score^2 * p * (1-p)) / margin_of_error^2, where z_score for 95% confidence = 1.96, p = win_rate, margin_of_error = 0.5 * (1 - win_rate). If expected edge is in bps rather than win rate, convert using the strategy's avg win/avg loss ratio. Output: min_trades_required, current_trade_count, sufficient_sample: bool, recommendation: str. If current_trade_count < min_trades_required, recommendation = 'INSUFFICIENT — collect at least {deficit} more trades before drawing conclusions.' If sufficient, 'ADEQUATE — statistical significance threshold met.' This gate prevents our desk's most common mistake: promoting strategies with 12 trades and a lucky 75% win rate.",
+        "tags": ["backtesting", "statistics", "sample-size", "discipline"]
+      }
+    ],
+    "risk_management": [
+      {
+        "id": "rk-001",
+        "title": "Kelly Position Sizer",
+        "prompt": "Given a strategy's historical win_rate and avg_win_bps / avg_loss_bps, compute the optimal Kelly fraction: f* = win_rate - (1 - win_rate) / (avg_win / avg_loss). Then apply standard risk adjustments: (1) half-Kelly: f*/2 (standard practice — full Kelly overestimates edge in production), (2) quarter-Kelly: f*/4 (conservative — used when out-of-sample period < 2x in-sample), (3) max_drawdown_constraint: if historical max drawdown with half-Kelly exceeds 25%, reduce further until projected max drawdown < 25%. Output: {full_kelly: float, half_kelly: float, quarter_kelly: float, recommended_fraction: float, projected_max_drawdown: float, methodology_note: str}. Include the methodology note: 'Half-Kelly is the production default. Quarter-Kelly when OOS period < 2x in-sample. Never exceed full Kelly.'",
+        "tags": ["risk", "position-sizing", "kelly", "capital-allocation"]
+      },
+      {
+        "id": "rk-002",
+        "title": "Correlation Matrix Risk Check",
+        "prompt": "Given a portfolio of N active strategies (each with: name, direction, instrument, and returns_series as a list of daily PnL in bps), assess portfolio-level risk. Output: (1) the NxN correlation matrix (compute Pearson correlation on daily returns), (2) flag any strategy pair with correlation > 0.5 as 'highly_correlated', (3) compute the effective N (the number of independent bets): effective_n = N / (1 + (N-1)*avg_correlation), (4) if effective_n < N/2, flag the portfolio as 'over-concentrated' and recommend: consolidate correlated strategies by picking the one with higher Sharpe, or reduce position sizes proportionally, (5) compute portfolio-level max drawdown from the combined returns series. Rule from production: a portfolio of 6 strategies with avg correlation 0.3 is effectively ~3.5 independent bets — size accordingly.",
+        "tags": ["risk", "correlation", "portfolio", "diversification"]
+      },
+      {
+        "id": "rk-003",
+        "title": "Stop-Loss Placement Engine",
+        "prompt": "Given market context for an active position (entry_price, current_price, instrument, avg_true_range_14, nearest_support_level, nearest_resistance_level, and position_direction), compute the optimal stop-loss price. Rules: (1) the stop must be placed beyond the nearest structural level in the direction that would invalidate the thesis (for a long: below support minus 0.5 ATR; for a short: above resistance plus 0.5 ATR), (2) the maximum risk per trade (entry - stop) must not exceed 2% of portfolio equity — if it would, reduce position size instead of tightening the stop (tightening into noise guarantees getting stopped out), (3) if the current price has moved favorably and the stop can be moved to breakeven while staying beyond the nearest structural level, recommend trailing to breakeven, (4) output: {stop_price, risk_percent, position_size_recommendation, trailing_stop_recommendation}. Never place a stop at an obvious round number — market makers hunt those.",
+        "tags": ["risk", "stop-loss", "execution", "position-management"]
+      },
+      {
+        "id": "rk-004",
+        "title": "Drawdown Triage Protocol",
+        "prompt": "Given a strategy that has entered drawdown (current_drawdown_pct, max_historical_drawdown_pct, trades_since_peak, avg_win_rate, and regime_at_drawdown_start), triage the drawdown. Output: {severity: 'normal'|'concerning'|'critical', action: 'monitor'|'reduce_size'|'suspend', reasoning: str}. Rules: (1) if current_drawdown > max_historical_drawdown * 0.8, severity = 'concerning', (2) if current_drawdown > max_historical_drawdown, severity = 'critical' — this is uncharted territory regardless of what backtests say, (3) if trades_since_peak > 2x the strategy's average winning streak length AND win_rate_during_drawdown < avg_win_rate * 0.5, severity = 'critical' — the edge may have decayed, (4) if the regime at drawdown start differs from the strategy's historically profitable regimes, severity is capped at 'concerning' — regime mismatch explains the drawdown, edge may be intact. Action for 'critical': suspend immediately, write a kill card if it persists 10 more trades.",
+        "tags": ["risk", "drawdown", "triage", "edge-decay"]
+      },
+      {
+        "id": "rk-005",
+        "title": "Funding Rate Gate",
+        "prompt": "Given a perpetual futures position (instrument, direction, entry_funding_rate, current_funding_rate, avg_funding_rate_7d, position_duration_hours), assess whether funding costs are eroding the edge. Output: {funding_erosion_bps: float, edge_remaining_pct: float, gate_decision: 'pass'|'warn'|'close', reasoning: str}. Rules: (1) compute the total funding paid/received: funding_erosion_bps = (current_funding_rate - entry_funding_rate) * position_duration_hours / funding_interval_hours * position_size_bps, (2) if position_duration > 24 hours AND current_funding_rate > avg_funding_rate_7d * 1.5 AND direction is long (paying funding), gate_decision = 'warn' — funding is accelerating against you, (3) if funding_erosion_bps > estimated_edge_bps * 0.5, gate_decision = 'close' — funding has consumed half the expected edge, the trade is no longer +EV, (4) if direction is short AND current_funding_rate is negative (getting paid to short), funding is tailwind — gate_decision = 'pass' regardless. This pattern from production: several of our 6 deployed signals carry a funding-rate gate because we observed strategies winning on price but losing on funding carry.",
+        "tags": ["risk", "funding-rate", "perpetuals", "cost-modeling"]
+      },
+      {
+        "id": "rk-006",
+        "title": "Portfolio Heat Map",
+        "prompt": "Given a portfolio of active positions (each with: instrument, direction, notional_usd, unrealized_pnl_bps, and risk_factors as a dict mapping factor names to exposure scores 0-1), generate a risk heat map. Output: (1) total gross exposure as % of equity, (2) net directional exposure (long_notional - short_notional) / equity, (3) the top 3 risk factors by aggregate exposure and whether any exceeds 0.5 (concentration warning), (4) positions with overlapping risk factors flagged as 'correlated_exposure', (5) a single 'portfolio_heat' score 0-100 computed as: 0.3 * (gross_exposure_pct / 100) + 0.3 * (max_factor_exposure) + 0.4 * (largest_single_position / equity). If heat > 70, recommend reducing position sizes or hedging the dominant risk factor. If heat > 90, the portfolio is a single bet dressed as diversification — consolidate immediately.",
+        "tags": ["risk", "portfolio", "heat-map", "concentration"]
+      }
+    ],
+    "regime_detection": [
+      {
+        "id": "rd-001",
+        "title": "Markov Regime Classifier",
+        "prompt": "Given a time series of daily returns for an instrument over a lookback window, classify the current market regime using a 2-state Markov switching model. Output: {current_regime: 'trending'|'ranging', regime_confidence: 0-1, transition_probability: float, recommendation: str}. Rules: (1) fit the model on the most recent 60 days of returns, (2) classify the current state based on which state has higher posterior probability, (3) regime_confidence is the posterior probability of the classified state — if < 0.55, the classifier is uncertain and recommend 'reduce position size by 50%', (4) transition_probability is the estimated probability of switching to the other state in the next period — if > 0.3, the regime may be unstable, recommend 'tighten stops', (5) if the classifier has been in the same state for >20 consecutive periods AND transition_probability > 0.2, add a note: 'regime persistence is high but transition risk is building — watch for regime shift within 5 periods'. Do not use this classifier alone for trading decisions — it is one input to a signal gate.",
+        "tags": ["regime", "markov", "classification", "quant"]
+      },
+      {
+        "id": "rd-002",
+        "title": "VIX-Spot Correlation Regime",
+        "prompt": "Given daily VIX levels and SPX returns over a 21-day rolling window, classify the dealer gamma regime. Output: {regime: 'negative_gamma'|'positive_gamma'|'mixed', confidence: 0-1, amplification_factor: float}. Rules: (1) compute the 21-day rolling correlation between VIX changes and SPX returns, (2) if correlation < -0.5: 'negative_gamma' — dealers are short gamma, amplifying moves in both directions (expect higher intraday volatility and sharper reversals), amplification_factor = 1.3-1.5, (3) if correlation > -0.2: 'positive_gamma' — dealers are long gamma, dampening moves (expect range-bound action, mean reversion works better), amplification_factor = 0.7-0.9, (4) if correlation between -0.5 and -0.2: 'mixed' — no clear dealer bias. Confidence = abs(correlation + 0.35) / 0.65, clamped to 0-1. This is a well-known proxy used by practitioners — when VIX and spot move inversely, dealers are hedging in the direction of the move, amplifying it.",
+        "tags": ["regime", "gamma", "VIX", "options-flow"]
+      },
+      {
+        "id": "rd-003",
+        "title": "Funding Rate Regime Shift Detector",
+        "prompt": "Given a time series of hourly funding rates for a perpetual futures pair over a 7-day window, detect whether the funding regime has shifted. Output: {regime: 'neutral'|'bullish_perp_lead'|'bearish_perp_lead'|'extreme', shift_detected: bool, shift_confidence: 0-1, recommendation: str}. Rules: (1) compute the 24h rolling average funding rate, (2) compute the 7-day average as baseline, (3) if the 24h average deviates from the 7-day average by more than 2 standard deviations: shift_detected = true, (4) classify the direction: if 24h_avg > 0 AND shift_up: 'bullish_perp_lead' — perps are leading spot up, (5) if 24h_avg < 0 AND shift_down: 'bearish_perp_lead' — perps are leading spot down, (6) if abs(24h_avg) > 0.1% (annualized ~87%): 'extreme' — funding is unsustainably high, expect mean reversion in the perp premium. Recommendation for 'extreme': 'Fade the funding — open counter-trend position with tight stop, target funding normalization.' This signal appears in our production desk as a confluence input for the funding-rate gate deployed via OJ proposal #003.",
+        "tags": ["regime", "funding-rate", "perpetuals", "mean-reversion"]
+      },
+      {
+        "id": "rd-004",
+        "title": "Volatility Regime Classifier",
+        "prompt": "Given daily OHLCV data for an instrument over a 30-day window, classify the volatility regime. Output: {regime: 'low_vol'|'normal_vol'|'high_vol'|'extreme_vol', vol_percentile: float, recommendation: str}. Rules: (1) compute the 30-day realized volatility (annualized), (2) compute the percentile rank of current volatility within a 252-day rolling window, (3) classify: percentile 0-25 = 'low_vol' (expect breakouts — trend-following strategies favored), percentile 25-75 = 'normal_vol' (all strategies viable), percentile 75-95 = 'high_vol' (expect whipsaws — reduce position size by 30%, widen stops by 1.5x ATR), percentile 95-100 = 'extreme_vol' (capital preservation mode — reduce to minimum size or go flat, no new entries). Recommendation for 'extreme_vol': 'DO NOT TRADE — volatility is in the 95th+ percentile. Historical edge evaporates in this regime regardless of strategy type.'",
+        "tags": ["regime", "volatility", "risk-management", "classification"]
+      },
+      {
+        "id": "rd-005",
+        "title": "Volume Profile Regime Shift",
+        "prompt": "Given volume profile data (POC, VAH, VAL, total_volume) for the current session compared to the prior 5 sessions, detect whether the volume structure has shifted. Output: {shift_detected: bool, direction: 'higher_value'|'lower_value'|'expanding_range'|'contracting_range'|'none', confidence: 0-1, implications: str}. Rules: (1) if current POC > prior_5d_avg_VAH * 1.02: direction = 'higher_value' — buyers are accepting higher prices, (2) if current POC < prior_5d_avg_VAL * 0.98: 'lower_value' — sellers are accepting lower prices, (3) if (VAH-VAL) / prior_5d_avg_range > 1.3: 'expanding_range' — increased volatility, expect larger swings, (4) if (VAH-VAL) / prior_5d_avg_range < 0.7: 'contracting_range' — compression, expect breakout soon. Confidence is the magnitude of the deviation normalized to the 5-day standard deviation. Implications: 'higher_value' favors long entries at VAL with stops below VAL; 'expanding_range' favors breakout entries with wider stops; 'contracting_range' favors waiting for the breakout direction before entering.",
+        "tags": ["regime", "volume-profile", "market-structure", "auction-theory"]
+      },
+      {
+        "id": "rd-006",
+        "title": "Cross-Asset Regime Synchronization Check",
+        "prompt": "Given regime classifications for 3 correlated assets (e.g. BTC, ETH, SOL) over the same time window, check for regime synchronization. Output: {synchronized: bool, consensus_regime: str|null, divergence_asset: str|null, implication: str}. Rules: (1) if all 3 assets share the same regime (e.g. all 'trending_up'): synchronized = true, consensus_regime = 'trending_up', implication = 'Strong consensus — trend-following signals are reinforced. Normal position sizes.', (2) if 2 of 3 share a regime: synchronized = false, divergence_asset = the odd one out, implication = 'Partial consensus — the diverging asset may be leading or lagging. Reduce position size by 25% on the divergence asset.', (3) if all 3 differ: synchronized = false, divergence_asset = 'all', implication = 'No consensus — the market lacks directional clarity. Reduce all positions by 50% or go flat. Wait for re-synchronization before re-entering.' This pattern caught a false signal in production: SOL showed trending_up while BTC/ETH showed ranging — the SOL signal was a head-fake.",
+        "tags": ["regime", "cross-asset", "synchronization", "confluence"]
+      }
+    ],
+    "execution": [
+      {
+        "id": "ex-001",
+        "title": "Auction-Driven Entry Timing",
+        "prompt": "Given an entry zone (price_low, price_high), current order book (top 5 bid/ask levels with sizes), and recent price action (last 10 1-minute candles), determine whether to enter now, wait, or skip. Output: {decision: 'enter'|'wait'|'skip', entry_price: float|null, reasoning: str}. Rules: (1) price must have entered the zone AND printed a reversal candle (close > open for long, close < open for short) within the last 3 bars — do not enter on the first touch, (2) the order book must show bid depth > ask depth at the entry level (by at least 1.5x) — this confirms buyers are defending the level, (3) if price has spent >30 minutes inside the zone without a clean reversal, decision = 'skip' — the level is degrading (hold rate drops from ~50% to ~33% after 30min at a level, per backtested data), (4) if the reversal candle's volume is < 50% of the average volume of the last 10 bars, decision = 'wait' — low conviction reversal. This is the production entry discipline used by our quant desk: entries are auction-proven, not limit-chased.",
+        "tags": ["execution", "auction-theory", "entry-timing", "order-book"]
+      },
+      {
+        "id": "ex-002",
+        "title": "30-Minute Breakeven Rule",
+        "prompt": "Given an active position (entry_time, entry_price, current_price, current_time, instrument, and avg_true_range), apply the 30-minute breakeven rule. Rules: (1) if 30+ minutes have elapsed since entry AND the position has not progressed toward the target (price is within 0.3% of entry for equities, or within 1 ATR for crypto), move the stop to breakeven, (2) if the position HAS progressed >0.5% toward the target within 30 minutes, the rule does not apply — the thesis is working, (3) output: {time_elapsed_minutes, price_delta_pct, breakeven_triggered: bool, new_stop_price: float|null, reasoning: str}. This rule is backtest-proven: in our desk's NQ/ES backtests, applying the 30-minute breakeven rule improved P&L by ~79% on ES and ~140% on NQ by converting losing trades to scratches. The rule is mandatory for intraday positions, optional for swing positions (>24h hold time).",
+        "tags": ["execution", "breakeven", "risk-management", "intraday"]
+      },
+      {
+        "id": "ex-003",
+        "title": "Volume Shelf Target Selection",
+        "prompt": "Given a volume profile (price levels with volume at each level) for the current session and an active position with entry_price and direction, select the optimal profit target. Rules: (1) scan from entry_price upward (long) or downward (short) through the volume profile, (2) identify the next high-volume node (HVN) — a price level where volume > 1.5x the median volume across all levels, (3) set target_1 at the first HVN encountered (this is where passive supply/demand sits — expect the first resistance), (4) set target_2 at the next low-volume node (LVN) beyond target_1 — LVNs are 'thin air' where price can run fast with no supply overhead, (5) output: {target_1: float, target_1_type: 'HVN', target_2: float, target_2_type: 'LVN', take_partial_at_target_1: bool, reasoning: str}. Rule: take 50% off at target_1 (the HVN), let the rest run to target_2 (the LVN). Never set a fixed percentage target — the market doesn't know your target. Use the volume structure.",
+        "tags": ["execution", "volume-profile", "target-selection", "position-management"]
+      },
+      {
+        "id": "ex-004",
+        "title": "Time-at-Level Thesis Breaker",
+        "prompt": "Given a position held for multiple days (entry_date, entry_price, current_price, instrument, avg_daily_range), assess whether the position is stalling. Rules: (1) if 3+ days have passed AND price is within 2% of entry (or within 1 avg_daily_range for crypto) AND has made no progress toward the target: status = 'STALLING', (2) if 5+ days: status = 'STALE' — the market is building value at this level where previously there was none, the thesis is breaking, (3) output: {days_held, price_delta_pct, status: 'active'|'stalling'|'stale', recommendation: str}. Recommendation for 'stalling': 'Consider cutting 50%. The market is not rejecting this level — it's accepting it. Time is the thesis killer.' Recommendation for 'stale': 'CUT. The market has built value at your entry level. The original thesis (that this level would act as support/resistance) is invalidated. Exit and wait for a new setup.' This rule comes from production observation: positions that stall for 3+ days near entry rarely recover to hit the original target.",
+        "tags": ["execution", "position-management", "thesis-validation", "swing-trading"]
+      },
+      {
+        "id": "ex-005",
+        "title": "Execution Quality Audit",
+        "prompt": "Given a filled trade (entry_order_type, entry_price, entry_time, entry_slippage_bps, exit_order_type, exit_price, exit_time, exit_slippage_bps, and the 1-minute OHLCV at entry and exit times), audit execution quality. Output: {entry_quality: 'excellent'|'good'|'poor'|'unacceptable', exit_quality: 'excellent'|'good'|'poor'|'unacceptable', total_slippage_bps: float, recommendation: str}. Rules: (1) entry_slippage > 5 bps: 'poor' — you entered too aggressively or the order book was thin, (2) entry_slippage > 15 bps: 'unacceptable' — do not trade this instrument at this size during this time of day, (3) if exit_slippage > 2x entry_slippage: exits are costing more than entries — review whether you're exiting during high-spread periods (market open, news events), (4) compute the 1-minute high-low range at entry and exit times — if slippage exceeds the spread, you crossed the spread (took liquidity). Recommendation: 'Use limit orders during high-spread periods. Market orders during low-volume windows are giving away edge.' Track this per-trade. Aggregate quarterly to detect execution degradation.",
+        "tags": ["execution", "audit", "slippage", "quality"]
+      }
+    ],
+    "agent_orchestration": [
+      {
+        "id": "ao-001",
+        "title": "Maker-Checker Loop Exit Condition",
+        "prompt": "Design the exit condition for an autonomous maker-checker loop where a 'maker' agent produces work and a separate 'checker' agent grades it. Given the task description below, output exactly: (1) the objective, non-gameable success criterion the checker uses (must be a concrete measurable check, e.g. 'all tests pass AND lint returns zero errors', not a subjective judgment), (2) a hard maximum iteration count and the reasoning for that number given the task's complexity, (3) a token/cost budget ceiling, (4) the specific condition under which the loop escalates to a human instead of continuing, and (5) one way a bad-faith maker could try to game the checker's criterion, and how the criterion is written to prevent that. Task: {{TASK_DESCRIPTION}}",
+        "tags": ["agents", "loop-engineering", "automation", "reliability"]
+      },
+      {
+        "id": "ao-002",
+        "title": "Sub-Agent Task Decomposition",
+        "prompt": "You are an orchestrator agent breaking a complex goal into parallel sub-agent tasks. Given the goal below, output a JSON array of sub-tasks where each entry has: task_id, goal (self-contained — the sub-agent has no memory of this conversation), context (all facts, file paths, and constraints the sub-agent needs, since it starts from zero), depends_on (list of task_ids that must complete first, or empty if independent), and estimated_complexity (low/medium/high). Group tasks that can run in parallel by giving them no dependencies on each other. Flag any task that touches a protected/irreversible action (spending money, sending external communication, modifying production credentials) with a \"requires_human_approval\": true field. Goal: {{GOAL_DESCRIPTION}}",
+        "tags": ["agents", "orchestration", "delegation", "parallelization"]
+      },
+      {
+        "id": "ao-003",
+        "title": "Trace-to-Proposal Pattern Miner",
+        "prompt": "Given a batch of execution traces (each trace has: task_type, decision, quality_signal, and outcome), identify recurring patterns that would justify a process improvement. Rules: (1) if fewer than 5 traces share a task_type, do NOT claim a statistical pattern — output only structural observations (missing fields, inconsistent formatting), (2) if 5+ traces exist for a task_type, compute the actual success rate and cite the exact count (e.g. '4 of 6 decisions with X property succeeded' — never round or estimate), (3) never propose a change to a protected surface (trading execution, credentials, public communication) without explicitly flagging it requires human approval, (4) output format is a structured proposal with evidence.trace_ids populated with the real trace IDs that support the claim — an empty evidence array invalidates the whole proposal.",
+        "tags": ["agents", "learning-loop", "pattern-mining", "evidence-based"]
+      },
+      {
+        "id": "ao-004",
+        "title": "Model Affinity Router",
+        "prompt": "Given a task description and a history of which models were used for similar tasks (model, task_type, success: bool, tokens_used, latency_ms), route the task to the optimal model. Output: {selected_model: str, confidence: 0-1, fallback_model: str, reasoning: str}. Rules: (1) if the task_type has 5+ historical examples where the same model was used AND the success rate > 80%, pin to that model (model affinity — preserves warm prompt cache, which our router tests show reduces token cost by ~2x), (2) if no clear winner, rank models by: 0.4 * historical_success_rate + 0.3 * (1 / avg_tokens) + 0.3 * (1 / avg_latency), (3) always specify a fallback_model — if the primary model returns an error, retry with the fallback without re-classifying (saves one API call), (4) if the task involves reasoning about code or math, prefer models with known strength in those domains over pure cost optimization. This pattern implements the model affinity optimization documented in our desk's model_router.py.",
+        "tags": ["agents", "model-routing", "cost-optimization", "affinity"]
+      },
+      {
+        "id": "ao-005",
+        "title": "Context Compression Gate",
+        "prompt": "Given a conversation history that is approaching the model's context window limit, design a compression strategy. Input: current_token_count, context_limit, message_count, and a summary of the last 5 tool calls and their outcomes. Output: {compression_needed: bool, strategy: 'summarize'|'truncate_oldest'|'extract_key_decisions', compression_ratio_target: float, preserve_items: [str]}. Rules: (1) if current_token_count < context_limit * 0.7: compression_needed = false — no action, (2) if 0.7-0.9: strategy = 'summarize' — condense the oldest 50% of messages into a structured summary preserving: all user decisions, all tool call results that modified state, and all error messages, (3) if >0.9: strategy = 'extract_key_decisions' — keep only: user decisions, state-changing tool results, active blockers, and the last 5 messages for continuity — everything else becomes a bullet-point summary, (4) preserve_items must include: the current task goal, any unreverted file changes, active git branch, and any open blockers. Never compress away a destructive action that hasn't been committed — that's how our desk lost 4 working trees in the July 11 incident.",
+        "tags": ["agents", "context-management", "compression", "safety"]
+      },
+      {
+        "id": "ao-006",
+        "title": "Self-Audit Trigger",
+        "prompt": "Design a self-audit trigger for an autonomous agent that has been running unattended. Given: session_duration_minutes, tool_calls_made, files_modified, files_created, git_commits_made, errors_encountered, and protected_surfaces_touched (list). Output: {audit_needed: bool, severity: 'routine'|'elevated'|'critical', audit_scope: [str], escalation: bool}. Rules: (1) if session_duration > 360 minutes (6 hours) OR tool_calls > 300: severity = 'elevated' — the agent has been running long enough to drift, (2) if files_modified + files_created > 50 AND git_commits_made == 0: severity = 'critical' — uncommitted changes piling up, possible runaway, (3) if protected_surfaces_touched is non-empty: audit_needed = true, escalation = true regardless of other metrics — any protected surface contact requires human review, (4) if errors_encountered > 5: severity = 'elevated' — error rate suggests the agent is retrying something that isn't working, (5) audit_scope for 'critical': full file diff, tool call log review, protected surface audit, and recommendation to pause the agent. This pattern is implemented in our production SESSION_STATE.md and daily synthesis system.",
+        "tags": ["agents", "audit", "safety", "autonomous-operations"]
+      }
+    ],
+    "market_analysis": [
+      {
+        "id": "ma-001",
+        "title": "Funding Rate Divergence Narrative",
+        "prompt": "Given funding rate data for a perpetual futures pair across multiple exchanges (a list of {exchange, funding_rate, funding_interval_hours, open_interest}), write a 2-3 sentence trader-facing narrative explaining: (1) which exchange has the most extreme funding rate and in which direction, (2) whether this divergence is likely driven by open-interest imbalance or a temporary liquidity event, and (3) the most likely mean-reversion or continuation implication for the next funding period. Do not use hedge words like 'may' or 'could' more than once — state the most probable read directly, then note the confidence level as a single word (high/medium/low) at the end.",
+        "tags": ["market-analysis", "funding-rate", "perpetuals", "narrative"]
+      },
+      {
+        "id": "ma-002",
+        "title": "Liquidation Cluster Risk Read",
+        "prompt": "Given a list of liquidation events (price, side, size_usd, timestamp) clustered near a specific price level, assess: (1) whether this cluster represents exhausted forced selling/buying (likely local reversal) or the start of a cascade (likely continuation), using the size and time-density of the cluster as your primary signal, (2) the nearest untested liquidity level above and below current price that could trigger the next cascade, and (3) a one-line risk note for a trader currently positioned in the direction of the cluster. Ground every claim in the specific numbers provided — do not generalize about 'liquidation clusters' as a category.",
+        "tags": ["market-analysis", "liquidations", "risk", "microstructure"]
+      },
+      {
+        "id": "ma-003",
+        "title": "Order Book Imbalance Signal",
+        "prompt": "Given an L2 order book snapshot (bid levels: [{price, size}], ask levels: [{price, size}]), compute the order book imbalance and assess near-term directional pressure. Output: {imbalance_ratio: float, direction: 'bid_heavy'|'ask_heavy'|'balanced', pressure_strength: 0-1, expected_move_bps: float}. Rules: (1) compute imbalance as: sum(top_10_bid_sizes) / (sum(top_10_bid_sizes) + sum(top_10_ask_sizes)), (2) if imbalance > 0.6: 'bid_heavy' — resting buy depth exceeds sell depth, expect upward pressure, (3) if imbalance < 0.4: 'ask_heavy' — resting sell depth exceeds buy depth, expect downward pressure, (4) pressure_strength = abs(imbalance - 0.5) * 2, (5) expected_move_bps = pressure_strength * (spread_bps_at_top_of_book) * 0.5 — a rough proxy for how far price might drift before depth absorbs the pressure, (6) if the top bid size is > 3x the median bid size at other levels: add a note about 'spoofing risk' — large resting orders at the top of the book are sometimes canceled before execution. This is the exact data our HL L2 collector captures.",
+        "tags": ["market-analysis", "order-book", "microstructure", "imbalance"]
+      },
+      {
+        "id": "ma-004",
+        "title": "Open Interest/Momentum Divergence",
+        "prompt": "Given price and open interest data for a perpetual futures pair over the last 8 hours (hourly candles with OI), detect OI/price divergence. Output: {divergence_type: 'bullish'|'bearish'|'none', confidence: 0-1, implication: str}. Rules: (1) compute the rolling 4-hour correlation between price change and OI change, (2) if price is rising (4h return > 1%) AND OI is falling (4h OI change < -2%): divergence_type = 'bearish' — the rally is driven by short covering, not new buying. Expect reversal when covering exhausts, (3) if price is falling AND OI is rising: divergence_type = 'bullish' — the selloff is driven by new short positions being opened (not longs exiting). When shorts cover, expect a sharp rally, (4) if price and OI move in the same direction: 'none' — the trend is conviction-driven, (5) confidence = strength of the divergence based on magnitude: scale 0-1 where 0 = OI change < 1% and 1 = OI change > 10%. This is a classic Wyckoff/Volume Spread Analysis pattern adapted for perpetual futures where OI replaces volume as the positioning indicator.",
+        "tags": ["market-analysis", "open-interest", "divergence", "positioning"]
+      },
+      {
+        "id": "ma-005",
+        "title": "Narrative-Driven Price Target",
+        "prompt": "Given a news event, current market positioning (long/short ratio, funding rate, OI change), and recent price action, construct a narrative-driven price target with explicit confidence bounds. Output: {narrative: str (1 sentence), bullish_target: float, bearish_target: float, most_likely_target: float, confidence_band: [float, float], narrative_risk: str}. Rules: (1) the narrative must reference a specific catalyst, not a vague sentiment ('ETF inflow of $300M' not 'market is bullish'), (2) the bullish target is the price where the narrative is fully priced in — compute using the size of the catalyst relative to market cap, (3) the bearish target is the price where the narrative is proven false and positioning unwinds — compute using the stop-loss cascade level from the liquidation cluster analysis, (4) the most_likely_target is weighted: 0.6 * bullish if positioning supports the narrative direction, else 0.6 * bearish, (5) the confidence band is the range between bullish and bearish targets, (6) narrative_risk is the one thing that would most quickly invalidate the narrative. Never present a single price target without the confidence band — single-point predictions are performative, not analytical.",
+        "tags": ["market-analysis", "narrative", "price-target", "catalyst"]
+      }
+    ]
+  }
+}
