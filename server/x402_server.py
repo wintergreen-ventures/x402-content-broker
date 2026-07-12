@@ -119,7 +119,7 @@ PRICE_ATOMIC = {k: _to_atomic(v) for k, v in PRICING.items()}
 
 _FREE_PATHS = {
     "/", "/health", "/pay", "/api/v1/catalog", "/.well-known/x402",
-    "/favicon.ico", "/openapi.json", "/docs", "/api/v1/trust",
+    "/favicon.ico", "/openapi.json", "/docs", "/api/v1/trust", "/api/v1/methodology",
 }
 
 _BASE_ACCEPTS = {
@@ -269,6 +269,17 @@ def _build_payment_routes():
             {"type": "object", "properties": {}},
             {},
             {"type": "object", "properties": {"endpoints": {"type": "array"}, "generated_at": {"type": "string"}}},
+        )},
+    }
+    PAYMENT_ROUTES["GET /api/v1/methodology/{pack_id}"] = {
+        "accepts": [_make_accepts("prompt_pack", "/api/v1/methodology/{pack_id}",
+            "Full methodology pack with overview, core methodology, evaluation framework, implementation notes, failure modes, and prompts.")],
+        "description": "Quant methodology pack — production-tested frameworks with evaluation and kill rules.",
+        "mimeType": "application/json",
+        "extensions": {"bazaar": _bazaar_extension(
+            {"type": "object", "properties": {"pack_id": {"type": "string"}}, "required": ["pack_id"]},
+            {"pack_id": "backtesting-methodology"},
+            {"type": "object", "properties": {"pack_id": {"type": "string"}, "title": {"type": "string"}, "prompts": {"type": "array"}}},
         )},
     }
     PAYMENT_ROUTES["GET /api/v1/trust/badge"] = {
@@ -492,7 +503,58 @@ async def catalog():
             "category_bundle": PRICING["category_prompts"],
             "full_pack": PRICING["prompt_pack"],
         },
+        "methodology_packs": "/api/v1/methodology",
     }
+
+
+# ── Methodology packs (free discovery, individual packs are gated) ──
+_METHODOLOGY_DIR = CONTENT_DIR / "prompts" / "packs"
+_methodology_cache: dict = {}
+
+def _load_methodology_packs() -> list:
+    if "packs" not in _methodology_cache:
+        packs = []
+        if _METHODOLOGY_DIR.exists():
+            for f in sorted(_METHODOLOGY_DIR.glob("*.json")):
+                try:
+                    with open(f, "r") as fh:
+                        data = json.load(fh)
+                    packs.append({
+                        "pack_id": data["pack_id"],
+                        "title": data["title"],
+                        "prompt_count": len(data.get("prompts", [])),
+                        "overview": data.get("overview", "")[:200],
+                    })
+                except (json.JSONDecodeError, KeyError):
+                    continue
+        _methodology_cache["packs"] = packs
+    return _methodology_cache["packs"]
+
+
+@app.get("/api/v1/methodology")
+async def methodology_catalog():
+    """Free: list all methodology packs with summaries."""
+    packs = _load_methodology_packs()
+    return {
+        "service": "Wintergreen Quant Methodology Packs",
+        "description": "Production-tested quant methodology — strategy design, backtesting, risk, regime detection, execution, agent orchestration, and market analysis. Each pack includes evaluation frameworks, kill rules, and real failure modes.",
+        "total_packs": len(packs),
+        "pricing": {
+            "single_pack": PRICING["prompt_pack"],
+            "bundle_all": "Coming soon",
+        },
+        "packs": packs,
+    }
+
+
+@app.get("/api/v1/methodology/{pack_id}")
+async def get_methodology_pack(pack_id: str):
+    """Paid: full methodology pack with all sections and prompts. $0.25"""
+    pack_file = _METHODOLOGY_DIR / f"{pack_id}.json"
+    if not pack_file.exists():
+        raise HTTPException(status_code=404, detail=f"Pack not found: {pack_id}. Available: {[p['pack_id'] for p in _load_methodology_packs()]}")
+    with open(pack_file, "r") as f:
+        return json.load(f)
 
 
 # ── Paid endpoints ──
