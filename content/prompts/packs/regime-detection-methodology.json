@@ -1,0 +1,50 @@
+{
+  "pack_id": "regime-detection-methodology",
+  "title": "Regime Detection Methodology — Multi-Signal Classification Framework",
+  "version": "2.0",
+  
+  "overview": "Markets spend ~30% of time trending, ~50% ranging, and ~20% transitioning. A strategy that works in one regime will hemorrhage in another. The desk discovered this the hard way: 6 deployed signals showed dramatically different performance across regimes — some winning consistently in trending_up while losing everything in ranging. This methodology combines multiple independent classifiers (Markov, VIX-spot correlation, funding rate shifts, volatility percentiles, volume profile structure, and cross-asset synchronization) into a unified regime assessment. No single classifier is authoritative — the consensus across classifiers determines confidence. When classifiers disagree, reduce size. When they agree, the signal is reinforced.",
+  
+  "core_methodology": "1. MARKOV REGIME CLASSIFIER: 2-state model on 60-day returns. Classify current state by posterior probability. Confidence = posterior of classified state. If < 0.55 → uncertain, reduce size. Transition probability > 0.3 → regime may be unstable. 2. VIX-SPOT GAMMA REGIME: 21-day rolling correlation of VIX changes vs SPX returns. Correlation < -0.5 → negative gamma (dealers amplifying). Correlation > -0.2 → positive gamma (dealers dampening). Between → mixed. 3. FUNDING RATE REGIME SHIFT: Compare 24h rolling avg funding to 7-day baseline. Deviation > 2 std → shift detected. Classify direction: positive shift → bullish_perp_lead (perps leading spot). Negative → bearish_perp_lead. Abs(24h_avg) > 0.1% → extreme (unsustainable, expect mean reversion). 4. VOLATILITY REGIME: 30-day realized vol percentile vs 252-day window. 0-25 → low_vol (breakouts favored). 25-75 → normal. 75-95 → high_vol (reduce size 30%, widen stops 1.5x). 95-100 → extreme_vol (capital preservation — go flat). 5. VOLUME PROFILE SHIFT: Current POC/VAH/VAL vs prior 5-session average. POC > avg VAH → higher_value (buyers accepting higher prices). VAH-VAL expanding >1.3x → expanding_range (increased vol). Contracting <0.7x → compression (breakout pending). 6. CROSS-ASSET SYNC: Check regime consensus across BTC/ETH/SOL. All 3 same → strong consensus, normal sizing. 2 of 3 → partial, reduce divergence asset 25%. All 3 different → no consensus, reduce all 50% or go flat.",
+  
+  "evaluation_framework": "CONFIDENCE SCORING: Each classifier outputs a confidence 0-1. Composite confidence = mean of all classifier confidences. If composite < 0.5 → regime uncertain, reduce all positions 50%. If composite > 0.7 AND classifiers agree on direction → high-confidence regime call. TRANSITION RISK: Track how often classifiers change their assessments. If >2 classifiers flip within 5 periods → regime transition likely in progress. The desk's auto-re-audit trigger fires when sub-regime weights shift by >= 0.05. KILL RULES: If 3 consecutive regime classifications disagree (no consensus) → do not trade. Wait for re-synchronization. If the volatility classifier shows extreme_vol → override all other signals and go flat.",
+  
+  "implementation_notes": "Each classifier can run independently. The Markov and volatility classifiers are the most compute-intensive (need historical data). The funding rate and volume profile classifiers are light (current snapshot). The VIX-spot classifier is equities-focused but the gamma regime affects crypto via risk-on/risk-off correlation. For crypto-only desks: the funding rate and volume profile classifiers are the most actionable. Add the cross-asset sync check if trading multiple instruments. The desk runs daily regime snapshots for BTC and SOL with all classifiers active. These feed into the OJ learning loop for regime-conditional edge detection (OJ proposals #002, #006, #007).",
+  
+  "common_failure_modes": "1. OVERWEIGHTING ONE CLASSIFIER: 'The Markov model says trending_up, so I'm going long.' The Markov model has a systematic confidence ceiling (~0.74 in our data). If 5 classifiers say ranging and Markov says trending, trust the consensus. 2. IGNORING TRANSITION PROBABILITY: A regime with confidence 0.70 but transition probability 0.35 is unstable. The classifier is confident about NOW but uncertain about TOMORROW. Size for tomorrow. 3. REGIME LAG: Classifiers use historical data. They tell you what regime you WERE in, not what regime you're entering. The funding rate shift detector has the lowest lag (24h window). Use it for early warning. 4. OVERFITTING THE CLASSIFIER: Tuning classifier parameters to match a specific backtest period. The classifiers should be stable across regimes — if you're tuning them, you're overfitting. 5. SINGLE-ASSET MYOPIA: BTC in trending_up doesn't mean SOL is. Always check cross-asset sync before sizing.",
+  
+  "regime_considerations": "This pack IS the regime consideration framework for all other packs. The classifiers here tell the other methodologies which regime they're operating in. When backtesting uses regime-conditional breakdowns, it's using the output of these classifiers. When risk management adjusts sizing by regime, it's using these classifiers. The regime detection methodology is infrastructure — it feeds every other methodology.",
+  
+  "prompts": [
+    {
+      "id": "rd-001", "title": "Markov Regime Classifier",
+      "prompt": "Given 60-day daily returns, classify regime using 2-state Markov switching model. Output: current_regime, regime_confidence (posterior probability — if <0.55, reduce size 50%), transition_probability (if >0.3, regime unstable — tighten stops). If same state >20 periods AND transition prob >0.2 → watch for shift within 5 periods.",
+      "tags": ["regime", "markov", "classification"]
+    },
+    {
+      "id": "rd-002", "title": "VIX-Spot Correlation Regime",
+      "prompt": "Given daily VIX and SPX returns over 21-day window. Compute correlation. <-0.5 → negative_gamma (amplification 1.3-1.5x). >-0.2 → positive_gamma (dampening 0.7-0.9x). Between → mixed. Confidence = abs(correlation + 0.35) / 0.65.",
+      "tags": ["regime", "gamma", "VIX", "options-flow"]
+    },
+    {
+      "id": "rd-003", "title": "Funding Rate Regime Shift Detector",
+      "prompt": "Given hourly funding rates over 7-day window. Compute 24h rolling avg vs 7-day baseline. If deviation > 2 std → shift detected. Positive shift → bullish_perp_lead. Negative → bearish_perp_lead. Abs(24h_avg) > 0.1% → extreme (unsustainable — fade the funding). This signal appears in our desk as a confluence input for the funding-rate gate (OJ proposal #003).",
+      "tags": ["regime", "funding-rate", "perpetuals"]
+    },
+    {
+      "id": "rd-004", "title": "Volatility Regime Classifier",
+      "prompt": "Given 30-day realized vol, compute percentile vs 252-day window. 0-25 → low_vol (breakouts). 25-75 → normal. 75-95 → high_vol (reduce size 30%, widen stops 1.5x). 95-100 → extreme_vol (DO NOT TRADE — edge evaporates regardless of strategy type).",
+      "tags": ["regime", "volatility", "risk-management"]
+    },
+    {
+      "id": "rd-005", "title": "Volume Profile Regime Shift",
+      "prompt": "Given current session volume profile (POC, VAH, VAL, total_volume) vs prior 5 sessions. POC > avg VAH * 1.02 → higher_value (buyers accepting). POC < avg VAL * 0.98 → lower_value (sellers accepting). Range > 1.3x avg → expanding (increased vol). Range < 0.7x → contracting (breakout pending).",
+      "tags": ["regime", "volume-profile", "market-structure"]
+    },
+    {
+      "id": "rd-006", "title": "Cross-Asset Regime Synchronization",
+      "prompt": "Given regime classifications for BTC, ETH, SOL. All 3 same → strong consensus (normal sizing). 2 of 3 → partial (reduce divergence asset 25%). All 3 different → no consensus (reduce all 50% or go flat). This caught a false signal: SOL trending_up while BTC/ETH ranging → SOL signal was a head-fake.",
+      "tags": ["regime", "cross-asset", "synchronization"]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "pack_id": "agent-orchestration-methodology",
+  "title": "Agent Orchestration Methodology — Autonomous Loop Engineering",
+  "version": "2.0",
+  
+  "overview": "Autonomous agents fail in predictable ways: they loop without exit conditions, they overfit to their own context, they lose state across model switches, and they can't detect when they're wrong. This methodology is built from operating a production Hermes+OpenJarvis dual-OS loop with maker-checker architecture, model affinity routing, context compression, and self-audit triggers. The core principle: the loop is the product. A well-engineered loop with a mediocre model outperforms a badly-engineered loop with a frontier model. Exit conditions, independent verification, and state persistence are infrastructure — not afterthoughts.",
+  
+  "core_methodology": "1. MAKER-CHECKER ARCHITECTURE: A 'maker' agent produces work. A separate 'checker' agent grades it using objective, non-gameable criteria. The checker is adversarial — it assumes the maker's output is wrong until proven correct. This prevents self-evaluation bias (the most common agent failure mode). 2. HARD EXIT CONDITIONS: Every autonomous loop needs: a measurable success criterion, a maximum iteration count, a token/cost budget ceiling, and a human escalation trigger. Without all four, the loop is unbounded. 3. MODEL AFFINITY ROUTING: Pin the model to the task after first selection. Switching models mid-task throws away warm prompt cache and can erase ~2x token savings. Route once per task, not per call. 4. CONTEXT COMPRESSION GATE: When approaching context window limits, compress aggressively but preserve: all user decisions, all state-changing tool results, all error messages, active blockers, and the last 5 messages for continuity. Never compress away an uncommitted destructive action. 5. SELF-AUDIT TRIGGERS: After 6 hours OR 300 tool calls → elevated audit. After 50+ uncommitted changes → critical audit — possible runaway. Any protected surface contact → escalate to human.",
+  
+  "evaluation_framework": "LOOP HEALTH METRICS: (1) Maker success rate (checker passes / total attempts) — should be > 80% for routine tasks, > 60% for complex tasks, (2) Average iterations per task — if > 5 for routine tasks, the checker criteria are too strict or the maker is thrashing, (3) Token cost per completed task — track weekly, flag if increasing > 20% month-over-month, (4) Human escalation rate — should be < 5% of tasks; if higher, the checker criteria need calibration, (5) False positive rate (checker passed but output was wrong) — track per task type; if > 10%, the checker criteria are gameable. KILL RULES: If a loop exceeds 3x its expected iteration count, kill it and escalate. If token cost > 2x budget, kill. If checker false positive rate > 20%, the checker is broken — fix the checker before running more tasks.",
+  
+  "implementation_notes": "The maker-checker pattern is the highest-ROI improvement for any autonomous agent. A 30-line checker prompt that verifies 'all tests pass AND lint returns zero' catches 90% of bad outputs. The context compression gate is critical for agents that run long sessions — our desk's July 11 incident (4 repos lost working trees) was caused by context compression that removed evidence of a destructive operation. The self-audit trigger would have caught the uncommitted changes before the crash. For agent-to-agent communication: use structured traces (JSON with trace_id, stage, decision, context_refs) rather than natural language summaries. Structured traces are machine-readable and survive compression.",
+  
+  "common_failure_modes": "1. SELF-EVALUATION BIAS: The maker grades its own work. Of course it passes. Fix: separate checker agent. 2. UNBOUNDED LOOPS: Goal = 'fix the bug' with no iteration limit. The agent loops forever. Fix: hard max iterations + token budget + success criterion. 3. MODEL SWITCH CORRUPTION: Switching models mid-task loses context. The new model hallucinates what the old model was doing. Fix: model affinity — pin once per task. 4. CHECKER GAMING: The maker learns to write outputs that pass the checker without actually being correct ('add a comment saying the test passes'). Fix: checker criteria must verify ground truth (actual test execution, actual file content), not output claims. 5. CONTEXT COMPRESSION DATA LOSS: Compressing a session removes the evidence of what went wrong. Fix: preserve state-changing tool results and user decisions. 6. CREDENTIAL DRIFT: The agent keeps retrying with expired credentials, burning tokens. Fix: check credential validity before entering a loop.",
+  
+  "regime_considerations": "Not applicable in the market sense — agent orchestration regimes are about task complexity: SIMPLE TASKS (single file, single tool): minimal orchestration — single-turn or 2-3 iterations. The cost of the orchestration can exceed the cost of the task. MODERATE TASKS (multi-file, 3-5 tools): maker-checker with 3-5 iteration limit. Model affinity matters here — switching models mid-task on moderate complexity is the most common failure. COMPLEX TASKS (multi-repo, 10+ tools, parallel agents): full orchestration with sub-agent decomposition, dependency tracking, and a meta-checker that verifies cross-agent consistency. The orchestration overhead is worth it — a complex task without orchestration fails ~80% of the time.",
+  
+  "prompts": [
+    {
+      "id": "ao-001", "title": "Maker-Checker Loop Exit Condition",
+      "prompt": "Design exit condition for maker-checker loop. Output: (1) objective non-gameable success criterion (e.g. 'all tests pass AND lint returns zero', not subjective), (2) hard max iterations with reasoning, (3) token/cost budget ceiling, (4) human escalation condition, (5) one way maker could game the checker and how criterion prevents it.",
+      "tags": ["agents", "loop-engineering", "automation"]
+    },
+    {
+      "id": "ao-002", "title": "Sub-Agent Task Decomposition",
+      "prompt": "Break complex goal into parallel sub-agent tasks. Each: task_id, goal (self-contained — sub-agent starts from zero), context (all facts/file paths/constraints), depends_on (task_ids or empty), estimated_complexity. Group independent tasks for parallelism. Flag protected/irreversible actions with requires_human_approval: true.",
+      "tags": ["agents", "orchestration", "delegation"]
+    },
+    {
+      "id": "ao-003", "title": "Trace-to-Proposal Pattern Miner",
+      "prompt": "Given execution traces (task_type, decision, quality_signal, outcome): <5 traces → structural observations only (no statistical claims). 5+ traces → compute actual success rate, cite exact counts. Never propose changes to protected surfaces without human-approval flag. Evidence.trace_ids must be populated — empty array invalidates proposal. This is the exact pattern our OJ learning loop uses.",
+      "tags": ["agents", "learning-loop", "pattern-mining"]
+    },
+    {
+      "id": "ao-004", "title": "Model Affinity Router",
+      "prompt": "Route task to optimal model. If task_type has 5+ historical examples with same model AND success > 80% → pin to that model (preserves warm cache, ~2x token savings per our router tests). Otherwise rank by: 0.4*success_rate + 0.3*(1/avg_tokens) + 0.3*(1/avg_latency). Always specify fallback_model. For code/math tasks, prefer known-strong models over pure cost optimization.",
+      "tags": ["agents", "model-routing", "cost-optimization"]
+    },
+    {
+      "id": "ao-005", "title": "Context Compression Gate",
+      "prompt": "Given conversation approaching context limit: <70% → no compression. 70-90% → summarize oldest 50% preserving: user decisions, state-changing tool results, error messages. >90% → extract_key_decisions: keep only decisions, state changes, blockers, last 5 messages. Never compress away uncommitted destructive actions — this is how our desk lost 4 working trees on July 11.",
+      "tags": ["agents", "context-management", "compression"]
+    },
+    {
+      "id": "ao-006", "title": "Self-Audit Trigger",
+      "prompt": "Given session_duration, tool_calls, files_modified, files_created, git_commits, errors, protected_surfaces_touched. >360min OR >300 calls → elevated. >50 changes AND 0 commits → critical (runaway). Protected surfaces touched → escalate. >5 errors → elevated (retrying something broken). Output: audit_needed, severity, audit_scope, escalation.",
+      "tags": ["agents", "audit", "safety"]
+    }
+  ]
+}

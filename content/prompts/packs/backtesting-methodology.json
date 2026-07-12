@@ -1,0 +1,60 @@
+{
+  "pack_id": "backtesting-methodology",
+  "title": "Backtesting Methodology — Walk-Forward Validation Framework",
+  "version": "2.0",
+  
+  "overview": "Backtesting is the gate between a trading idea and real capital. Done wrong, it's the most expensive form of self-deception in quant finance. Done right, it's a kill switch for bad ideas before they touch money. This methodology is built from a production quant desk that killed 7 strategies in a row before finding 6 that work — the kill rate is the feature, not the bug. The core principle: in-sample performance is a lie the data tells you. Out-of-sample performance on a walk-forward split is the only evidence that matters. Every other metric (Sharpe, win rate, profit factor) is downstream of the split being honest.",
+  
+  "core_methodology": "1. DATA FREEZE: The dataset must be frozen at a specific date before any backtest runs. No 'just adding one more month' after seeing results. 2. WALK-FORWARD SPLIT: Train on period T, test on T+1. Re-optimize on T+1, test on T+2. Minimum 4 folds, minimum 30 trades per fold. 3. COST MODELING: Every trade pays taker fees + slippage. Slippage = 0.1 * sqrt(position_usd / daily_volume_usd) * 10000 bps. For small-cap/meme coins, double the estimate. 4. PARAMETER SENSITIVITY: Any strategy with >3 tunable parameters fails at ~80% rate out-of-sample. If changing one parameter by 20% drops Sharpe by >30%, the strategy is overfit. 5. KILL GATE: If profit_factor_out / profit_factor_in < 0.3, KILL. If win_rate_out - win_rate_in < -0.15, KILL. If OOS trades < 20, PARK — insufficient sample. 6. MINIMUM SAMPLE: n = (1.96^2 * p * (1-p)) / (0.5*(1-p))^2 trades required for 95% confidence. A strategy with 12 trades and 75% win rate is noise, not edge.",
+  
+  "evaluation_framework": "PASS/FAIL criteria: (1) Sharpe_out > 0.5 — below this, the strategy doesn't beat cash after costs, (2) Profit factor > 1.2 — below this, one bad trade wipes out 5 good ones, (3) Max drawdown < 25% — above this, the strategy is uninvestable regardless of returns, (4) OOS trades > 30 — below this, the sample is too small for statistical significance, (5) Benchmark comparison: Sharpe must exceed buy-and-hold Sharpe AND exceed a naive version of the same signal class (e.g. RSI(14) with no filters). If Sharpe_out / Sharpe_benchmark < 1.2, the strategy is barely beating the dumb version. If >2.0, it's genuinely differentiated. KILL RULES: Kill immediately if any of: (a) profit factor collapses >70% from in-sample to OOS, (b) win rate drops >15% absolute, (c) max drawdown in OOS exceeds in-sample max drawdown by >50%, (d) >2 regimes show edge_absent in regime-conditional breakdown. PARK RULES: Park (re-evaluate in 30 days) if: (a) OOS sample < 30 trades but metrics pass, (b) metrics are borderline across all criteria, (c) only one regime shows edge and the sample there is < 20 trades.",
+  
+  "implementation_notes": "BUILD ORDER: (1) Write the hypothesis decomposition first — if you can't state the null hypothesis and 2 confounding variables, you don't understand the strategy yet. (2) Acquire and freeze the dataset. Timestamp the freeze. Never modify it. (3) Implement the signal logic exactly as specified — no 'while I'm here' improvements during backtesting. (4) Run the walk-forward with the exact cost model specified. (5) Run parameter sensitivity on every tunable parameter. (6) Run regime-conditional breakdown. (7) Run Monte Carlo with 1,000+ simulations. (8) Write the kill/promote decision with evidence. PIPELINE INTEGRATION: This methodology is designed to feed into a paper trading observation period and then a controlled live canary. Each stage has its own gate. The backtest is the first gate — if it fails here, the candidate never reaches paper. DATA REQUIREMENTS: Minimum 6 months of historical data, preferably 12+. The walk-forward needs at least 4 folds, each with enough trades for statistical significance. If you don't have enough data, PARK the candidate and collect more — do not relax the standards.",
+  
+  "common_failure_modes": "1. LOOK-AHEAD BIAS: Using data that wasn't available at the time of the trade. Most common form: using the close price of the same bar for entry signals. Fix: use only data from bars that closed BEFORE the entry bar. 2. SURVIVORSHIP BIAS: Backtesting on instruments that still exist, ignoring delisted ones. Fix: include delisted instruments in the dataset. 3. OVERFITTING TO THE TEST SET: Iterating on the strategy after seeing OOS results. Each iteration leaks information. Fix: the OOS period is sacred — you get ONE look. If you change the strategy, you need a new OOS period. 4. IGNORING TRANSACTION COSTS: 'It's only 2.5 bps per trade.' Over 1,000 trades, that's 50% of your edge. Fix: always model taker fees + slippage. 5. SMALL SAMPLE DELUSION: 12 trades with 75% win rate is not evidence — it's a coin flip that happened to land heads. Fix: enforce minimum sample size. 6. REGIME OVERFITTING: The strategy only works in one regime (e.g. trending_up) but the backtest period was dominated by that regime. Fix: regime-conditional breakdown is mandatory. 7. PARAMETER GARDENING: Trying 50 parameter combinations and picking the best one. Of course one will look good — that's multiple hypothesis testing. Fix: pre-register parameters before backtesting. 8. THE 'ONE MORE MONTH' TRAP: Adding data after seeing poor results, hoping the new data will save the strategy. Fix: the data freeze is immutable. The desk killed a strategy (Path B) that had PF 2.48 in-sample and 0.00 out-of-sample — the kill was correct because the methodology worked.",
+  
+  "regime_considerations": "TRENDING UP: Trend-following and breakout strategies thrive. Mean-reversion strategies fail — the trend is your enemy. Position sizing: normal. Stop placement: wider (1.5x ATR) — trends have pullbacks. TRENDING DOWN: Short-biased strategies thrive. Long strategies fail. Funding rates: typically negative (you get paid to short). Be aware that bear trends have sharper reversals — tighten stops on counter-trend bounces. RANGING: Mean-reversion strategies thrive. Trend-following dies in choppy markets. Position sizing: reduce by 25% — range breakouts are false more often than true. Stop placement: tight (0.75x ATR) — levels are well-defined in ranges. HIGH VOL: All strategies degrade. Reduce position size by 30-50%. Widen stops by 1.5x to avoid getting noise-stopped. The Sharpe ratio of every strategy drops in high vol — don't overreact to a drawdown that's vol-driven rather than edge-driven. LOW VOL: Breakout strategies outperform — compression precedes expansion. Position sizing: normal. Be patient — low vol periods can persist for weeks. The regime-conditional performance breakdown in the prompts will tell you which strategies survive which regimes. Trust the data, not your intuition.",
+  
+  "prompts": [
+    {
+      "id": "bt-001", "title": "Walk-Forward Validation Spec",
+      "prompt": "Design a walk-forward validation plan for a trading strategy. Given: available_data_start_date, available_data_end_date, strategy_type (trend-following/mean-reversion/breakout), and minimum_trades_required_for_statistical_significance (default 30). Output: (1) the initial training window length and why that length is appropriate for the strategy type, (2) the re-optimization frequency, (3) the out-of-sample test window per fold, (4) the total number of folds, (5) the specific metric to judge OOS vs in-sample performance. Rule: if total available data cannot produce at least 4 folds with 30+ trades each, flag as 'insufficient data' and recommend expanding dataset before backtesting.",
+      "tags": ["backtesting", "walk-forward", "validation"]
+    },
+    {
+      "id": "bt-002", "title": "Transaction Cost Model",
+      "prompt": "Build a realistic transaction cost model for a perpetual futures strategy. Input: exchange, avg_position_size_usd, trades_per_day_estimated, instrument_type. Output: maker_fee_bps, taker_fee_bps, estimated_slippage_bps using slippage = 0.1 * sqrt(position_usd / daily_volume_usd) * 10000, funding_rate_cost_bps, total_roundtrip_cost_bps, and minimum_edge_bps to break even. If total_roundtrip_cost_bps > 10, warn that micro-cap/meme coin strategies often fail cost modeling.",
+      "tags": ["backtesting", "transaction-costs", "realism"]
+    },
+    {
+      "id": "bt-003", "title": "Overfitting Detection Suite",
+      "prompt": "Given in-sample and out-of-sample performance metrics (sharpe_in, sharpe_out, win_rate_in, win_rate_out, profit_factor_in, profit_factor_out, total_trades_in, total_trades_out), assess overfitting risk. Rules: if profit_factor_out/profit_factor_in < 0.3, score += 0.4 ('performance collapse'). If win_rate_out - win_rate_in < -0.15, score += 0.3. If OOS trades < 20, score += 0.2. If in-sample Sharpe > 3.0 AND OOS Sharpe < 0.5, score += 0.4 ('classic overfit'). Overfit_score > 0.6 → KILL. 0.3-0.6 → PARK. <0.3 → CLEAN.",
+      "tags": ["backtesting", "overfitting", "validation"]
+    },
+    {
+      "id": "bt-004", "title": "Parameter Sensitivity Analyzer",
+      "prompt": "Given a strategy with N tunable parameters, analyze parameter sensitivity. For each parameter: compute performance at 5 values across test_range while holding others at base. Sensitivity = abs(perf_at_max - perf_at_min) / perf_at_base. If sensitivity > 0.5 for any parameter → 'fragile'. If 3+ parameters have sensitivity > 0.3 → 'parameter-dependent' — recommend killing. Rule of thumb: strategies with >3 tunable parameters fail OOS at ~80% rate.",
+      "tags": ["backtesting", "parameter-sensitivity", "robustness"]
+    },
+    {
+      "id": "bt-005", "title": "Monte Carlo Simulation Spec",
+      "prompt": "Given a strategy's trade history, design Monte Carlo simulation. Output: null hypothesis, resampling method, number of runs (min 1,000), ruin threshold, pass criterion (<5% ruin probability). If Monte Carlo shows >5% ruin probability, recommend reducing position size. A strategy that passes backtests but fails Monte Carlo is overfit to the specific sequence of trades — the edge is fragile.",
+      "tags": ["backtesting", "monte-carlo", "risk"]
+    },
+    {
+      "id": "bt-006", "title": "Regime-Conditional Performance Breakdown",
+      "prompt": "Given a strategy's trade log with regime labels, compute per-regime performance. For each regime: trade_count, win_rate, avg_return_bps, profit_factor, verdict (edge_present/edge_absent/insufficient_data). If 2+ regimes show edge_absent while one shows edge_present, the strategy is regime-dependent — filter to only trade during the edge-present regime. This is the exact pattern discovered after deploying 6 signals: some win consistently in trending_up but lose everything in ranging.",
+      "tags": ["backtesting", "regime", "conditional-performance"]
+    },
+    {
+      "id": "bt-007", "title": "Benchmark Comparison Framework",
+      "prompt": "Compare strategy against: (1) buy-and-hold same instrument/period, (2) naive version of same signal class (e.g. RSI(14) with no filters), (3) risk-adjusted: strategy Sharpe vs benchmark Sharpe. Output: strategy_sharpe, benchmark_sharpe, sharpe_ratio, outperformance: bool. If sharpe_ratio < 1.2 vs naive benchmark → do not promote. If > 2.0 → genuinely differentiated.",
+      "tags": ["backtesting", "benchmarking", "edge-quantification"]
+    },
+    {
+      "id": "bt-008", "title": "Minimum Sample Size Calculator",
+      "prompt": "Given strategy's expected edge and desired confidence level (default 95%), compute minimum trades needed: n = (1.96^2 * p * (1-p)) / (0.5*(1-p))^2. Output: min_trades_required, current_trade_count, sufficient_sample: bool, recommendation. If insufficient, recommendation = 'collect at least {deficit} more trades before drawing conclusions.' This gate prevents the most common mistake: promoting strategies with 12 trades and a lucky 75% win rate.",
+      "tags": ["backtesting", "statistics", "sample-size"]
+    }
+  ]
+}

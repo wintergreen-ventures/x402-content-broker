@@ -1,0 +1,60 @@
+{
+  "pack_id": "strategy-generation-methodology",
+  "title": "Strategy Generation Methodology — From Hypothesis to Kill Card",
+  "version": "2.0",
+  
+  "overview": "Most quant researchers generate 100 hypotheses and test 100. The pros generate 10 with rigorous pre-backtest filtering and test 3. The difference is the kill rate — not how many strategies you test, but how fast you kill the bad ones. This methodology is built from a desk that killed 7 strategies in a row before finding 6 that work. The kill battery (19 rules, redesigned after a strategy with PF 2.48 in-sample collapsed to 0.00 out-of-sample) is the core asset. The key insight: every strategy candidate must be (1) falsifiable — you must be able to prove it wrong, (2) differentiated — it must exploit a different market inefficiency than every killed candidate, and (3) independently confirmed — signal confluence only works if the signals are actually independent (the desk learned this at a cost of weeks of wasted backtesting).",
+  
+  "core_methodology": "1. HYPOTHESIS DECOMPOSITION: Every strategy starts as a plain-English hypothesis. Before any code: state the null hypothesis (what would prove it wrong), identify 2+ confounding variables, specify the exact data fields and lookback window required, and define the walk-forward split that would falsify it. 2. CANDIDATE DIFFERENTIATION: Compare against every killed candidate. If the hypothesis structure is similar to a dead idea (not just same instrument/timeframe), kill it without backtesting. The desk burned weeks on RSI variants after killing 6 RSI-based strategies. 3. SIGNAL INDEPENDENCE CHECK: If combining multiple signals, measure pairwise correlation. Any pair > 0.7 correlation → they're not independent. The composite score gets discounted proportionally to average correlation. This prevents the exact failure that killed our signal-confluence strategy. 4. EDGE DECAY MONITORING: Track rolling 30-day Sharpe. If slope is negative AND last 5 periods below mean → decaying (reduce size 50%). If Sharpe < 0 in most recent period → dead (suspend, write kill card). 5. KILL CARD DISCIPLINE: Every killed strategy gets a structured post-mortem with kill_reason code, concrete evidence numbers, and generalizable lessons. The kill card library is the desk's institutional memory.",
+  
+  "evaluation_framework": "PROMOTION LADDER: RAW_ARTIFACT → NORMALIZED_HYPOTHESIS → STANDARD_BACKTESTED → WALK_FORWARD_REVIEWED → QA_REVIEWED → PAPER_OBSERVATION → CANARY. Each stage has a gate. No skipping stages. KILL GATES: Kill immediately if: (a) hypothesis is not falsifiable, (b) candidate is not differentiated from any killed strategy (differentiation_score < 0.3), (c) signal independence check fails (any pair > 0.7 correlation), (d) data requirements cannot be met with available datasets, (e) edge decay detector shows 'dead'. The desk's 19-rule kill battery replaced a broken 7-rule battery that let the PF 2.48→0.00 strategy through.",
+  
+  "implementation_notes": "The strategy generation pipeline feeds candidates into the backtesting pipeline. Use the data requirement spec generator (sg-007) to produce a machine-readable specification. Use the multi-instrument generalization test (sg-008) before promoting a single-instrument strategy. The kill card generator (sg-003) should be run on EVERY killed candidate — not just the interesting ones. The kill card library becomes training data for the OJ learning loop — OJ proposal #001 discovered that killed candidates cluster by hypothesis structure, which led to the candidate differentiator prompt.",
+  
+  "common_failure_modes": "1. PET STRATEGY SYNDROME: Falling in love with a hypothesis before testing it. The data is the judge, not your intuition. Fix: write the kill card BEFORE the backtest — it forces you to state what failure looks like. 2. HYPOTHESIS CREEP: 'RSI mean-reversion' becomes 'RSI mean-reversion with volume filter and trend filter and funding-rate filter.' Every filter is a new overfitting opportunity. Fix: pre-register the hypothesis. Changes after seeing data = new strategy, new OOS period. 3. REPACKAGING DEAD IDEAS: 'This isn't RSI mean-reversion, it's momentum exhaustion with a 14-period lookback on overbought conditions.' It's RSI mean-reversion. Fix: candidate differentiator check is mandatory. 4. SINGLE-INSTRUMENT OVERFITTING: A strategy that works only on BTC 1h is a data-mined artifact, not an edge. Fix: multi-instrument generalization test before promoting.",
+  
+  "regime_considerations": "The regime-aware signal gate (sg-002) is the primary interface. A strategy should declare which regimes it's designed for. A mean-reversion strategy designed for ranging markets should NOT fire in trending_up — that's the regime gate's job. The edge decay detector flags strategies whose edge is regime-dependent before they reach live trading. During strategy design: specify the expected behavior in each regime. If you can't predict how the strategy performs in ranging vs trending, you don't understand it well enough to backtest.",
+  
+  "prompts": [
+    {
+      "id": "sg-001", "title": "Hypothesis-to-Backtest Bridge",
+      "prompt": "Given a trading hypothesis in plain English, decompose into: (1) falsifiable null hypothesis, (2) exact entry/exit signal logic in pseudocode, (3) minimum data fields and lookback window, (4) 2+ confounding variables for false positive, (5) specific walk-forward split that would falsify. Do not write backtest code — output structured specification only.",
+      "tags": ["quant", "strategy", "hypothesis"]
+    },
+    {
+      "id": "sg-002", "title": "Regime-Aware Signal Gate",
+      "prompt": "Evaluate whether signal should fire given current regime. Input: signal_name, direction, current_regime, regime_confidence (0-1), historical_win_rate_by_regime. Signal must NOT fire if regime_confidence < 0.5 OR win_rate[current_regime] < 0.45. Output JSON: fire (bool), confidence_adjusted (float), reasoning (one sentence referencing specific regime and win rate).",
+      "tags": ["quant", "regime", "signal-filtering"]
+    },
+    {
+      "id": "sg-003", "title": "Kill Card Generator",
+      "prompt": "Write structured post-mortem for failed strategy: strategy_name, hypothesis_summary (1 sentence), kill_reason (insufficient_edge/overfit_to_backtest/regime_dependent_only/transaction_costs_erase_edge/data_leakage/correlated_to_existing), supporting_evidence (2-3 concrete numbers), lessons_for_future (1-2 generalizable insights). Blunt, evidence-based. No hedging.",
+      "tags": ["quant", "risk", "post-mortem"]
+    },
+    {
+      "id": "sg-004", "title": "Signal Confluence Scorer",
+      "prompt": "Given N independent signals (direction, confidence, edge_estimate_bps, max_correlation_to_others). Weight each by confidence * edge_estimate. Discount composite proportionally to avg pairwise correlation. Any pair > 0.7 → independence_warning. This prevents the failure that killed our signal-confluence strategy (PF 2.48 in-sample, 0.00 OOS).",
+      "tags": ["quant", "signal-confluence", "independence"]
+    },
+    {
+      "id": "sg-005", "title": "Edge Decay Detector",
+      "prompt": "Given rolling 30-day Sharpe time series. Linear regression on slope. Negative slope AND last 5 periods below mean → 'decaying' (reduce size 50%, re-evaluate in 15 days). Negative slope AND most recent Sharpe < 0 → 'dead' (suspend, write kill card). Flat or positive → 'stable'.",
+      "tags": ["quant", "edge-decay", "monitoring"]
+    },
+    {
+      "id": "sg-006", "title": "Candidate Differentiator",
+      "prompt": "Compare new candidate against killed candidates (each with hypothesis_summary + kill_reason). Determine if genuinely novel. Compare hypothesis structure, not instrument/timeframe. If differentiation_score < 0.3 → kill without backtesting (this class of strategy already disproven). Prevents waste: desk burned weeks retesting RSI variants.",
+      "tags": ["quant", "candidate-screening", "efficiency"]
+    },
+    {
+      "id": "sg-007", "title": "Data Requirement Spec Generator",
+      "prompt": "Given strategy hypothesis, output exact data requirements: required fields with types/precision, minimum lookback window with reasoning, required frequency, derived fields, specific API endpoints per field, freshness requirement. Output as structured JSON a data engineering agent could consume without additional context.",
+      "tags": ["quant", "data-engineering", "specification"]
+    },
+    {
+      "id": "sg-008", "title": "Multi-Instrument Generalization Test",
+      "prompt": "Design multi-instrument validation for strategy proven on one instrument. Output: ranked list of 3-5 candidate instruments (by similarity), expected edge decay per candidate, parameter adjustments needed, Go/No-Go criterion (if fails on 2nd+3rd most similar → do not generalize). Single-instrument strategy = data-mined artifact until proven otherwise.",
+      "tags": ["quant", "multi-instrument", "generalization"]
+    }
+  ]
+}

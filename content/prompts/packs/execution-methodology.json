@@ -1,0 +1,45 @@
+{
+  "pack_id": "execution-methodology",
+  "title": "Execution Methodology — Auction-Driven Entry & Position Management",
+  "version": "2.0",
+  
+  "overview": "A good entry signal is worth zero if the execution bleeds edge. This methodology is built from production patterns: auction-driven entries (prove the level holds before entering), the 30-minute breakeven rule (backtested +79% P&L delta on ES, +140% on NQ), volume-shelf targets (exit at structure, not arbitrary percentages), and time-at-level thesis breakers (positions that stall for 3+ days near entry rarely recover). The core principle: the market is an auction. Your entry must prove the auction accepts your price before you commit capital. Your exit must be at the next volume shelf where passive supply/demand sits. Your stop must be beyond the structural level that would invalidate the thesis.",
+  
+  "core_methodology": "1. AUCTION-DRIVEN ENTRY: Price must enter the zone AND print a reversal candle within the last 3 bars. The order book must show bid depth > ask depth at entry by 1.5x. If price spends >30 minutes at the level without a clean reversal, SKIP — the level is degrading (hold rate drops from ~50% to ~33%). 2. 30-MINUTE BREAKEVEN RULE: If 30+ minutes elapsed since entry AND price hasn't progressed toward target (within 0.3% for equities, 1 ATR for crypto), move stop to breakeven. Converts losing trades to scratches. Backtested on NQ/ES. 3. VOLUME SHELF TARGETS: Target 1 = first HVN (high-volume node) beyond entry. Target 2 = next LVN (low-volume node) beyond target 1. Take 50% off at target 1, let rest run to target 2. 4. TIME-AT-LEVEL THESIS BREAKER: If 3+ days have passed AND price is within 2% of entry AND no progress toward target → STALLING (cut 50%). If 5+ days → STALE (cut entirely — the market built value at your entry level). 5. EXECUTION AUDIT: Track slippage per trade. Entry slippage > 5 bps → poor. > 15 bps → unacceptable (wrong instrument/size/time). Exit slippage > 2x entry slippage → exiting during high-spread windows.",
+  
+  "evaluation_framework": "AUDIT METRICS: (1) % of entries that triggered on first touch vs after multiple touches (first-touch ratio < 50% = you're chasing entries), (2) % of trades where 30-min BE rule triggered and the trade later hit target anyway (false positive rate — should be < 20%), (3) avg slippage per trade in bps, tracked weekly, (4) % of exits at target 1 vs target 2 (if >80% exit at target 1, you're leaving money on the table — review whether targets are too tight), (5) time-at-level stall rate (positions that hit STALLING status). KILL RULES: If entry slippage avg > 10 bps over 20 trades, the execution method is broken for this instrument/size. If 30-min BE rule triggers AND the trade would have hit target without it > 30% of the time, the rule parameters need adjustment.",
+  
+  "implementation_notes": "The auction-driven entry requires real-time order book data. Our HL L2 collector captures this. For backtesting, simulate the auction logic: check if price entered the zone, reversed within 3 bars, and had volume confirmation. You can't perfectly simulate order book depth in backtests, but you can approximate with volume-at-price. The 30-min BE rule is the easiest to implement — just a timer from entry. Start with the BE rule if you implement nothing else. The volume-shelf targets require volume profile data (POC, VAH, VAL, HVNs, LVNs). Our session-va-levels x402 endpoint provides this.",
+  
+  "common_failure_modes": "1. ENTERING ON FIRST TOUCH: The most common execution error. 'Price hit my level, I'm in.' The level hasn't proven it holds. You're buying a falling knife. Fix: wait for the reversal candle. 2. TIGHTENING STOPS INTO NOISE: 'I'll just tighten the stop so I can size up.' You've guaranteed getting stopped out by random walk. Fix: reduce size, not stop distance. 3. EXITING AT ARBITRARY TARGETS: '+5% and I'm out.' The market doesn't know your 5%. The volume shelf does. Exit at the shelf. 4. HOLDING STALLING POSITIONS: 'It'll come back.' After 3 days at entry with no progress, the market is building value at your level. The thesis is dead. Cut it. 5. EXECUTION DEGRADATION DRIFT: Slippage creeps up over weeks. You don't notice until you audit. Fix: weekly execution quality audit.",
+  
+  "regime_considerations": "TRENDING: Auction entries work well — pullbacks to structure in a trend are high-probability. 30-min BE rule: still apply but give more room (1.5 ATR instead of 1.0). Volume shelf targets: trending markets build new HVNs as they go — your target 1 may be closer than expected. RANGING: Auction entries are critical — ranges are full of false breakouts. The reversal candle confirmation is your best defense. 30-min BE rule: apply strictly — ranges have no momentum to save stalled positions. Volume shelf targets: HVNs in ranges are well-defined and reliable. HIGH VOL: Skip auction entries entirely if spread > 3x normal. The order book is too thin to trust depth signals. 30-min BE rule: widen to 2 ATR — high vol means wider noise bands. Position size: reduce 50% regardless of other signals.",
+  
+  "prompts": [
+    {
+      "id": "ex-001", "title": "Auction-Driven Entry Timing",
+      "prompt": "Given entry zone (price_low, price_high), current order book (top 5 bid/ask with sizes), and last 10 1-minute candles. Rules: price must be in zone AND have printed a reversal candle within 3 bars. Order book must show bid depth > ask depth at entry by 1.5x. If price spent >30min in zone without reversal → SKIP (level degrading). If reversal candle volume < 50% of 10-bar avg → WAIT. Output: decision (enter/wait/skip), entry_price, reasoning.",
+      "tags": ["execution", "auction-theory", "entry-timing"]
+    },
+    {
+      "id": "ex-002", "title": "30-Minute Breakeven Rule",
+      "prompt": "Given active position (entry_time, entry_price, current_price, current_time, instrument, ATR). If 30+ min elapsed AND price within 0.3% of entry (equities) or 1 ATR (crypto) AND no progress toward target → move stop to breakeven. If price has progressed >0.5% toward target → rule does not apply. Output: time_elapsed, price_delta_pct, breakeven_triggered, new_stop_price. Backtested: +79% P&L delta on ES, +140% on NQ.",
+      "tags": ["execution", "breakeven", "risk-management"]
+    },
+    {
+      "id": "ex-003", "title": "Volume Shelf Target Selection",
+      "prompt": "Given volume profile for current session and active position. Scan from entry toward target. Target 1 = first HVN (volume > 1.5x median). Target 2 = next LVN beyond target 1. Take 50% at target 1, rest runs to target 2. Never set fixed percentage targets — use volume structure. Output: target_1, target_1_type, target_2, target_2_type, take_partial_at_target_1.",
+      "tags": ["execution", "volume-profile", "target-selection"]
+    },
+    {
+      "id": "ex-004", "title": "Time-at-Level Thesis Breaker",
+      "prompt": "Given position held multiple days (entry_date, entry_price, current_price, instrument, avg_daily_range). If 3+ days AND price within 2% of entry AND no target progress → STALLING (cut 50%). If 5+ days → STALE (cut entirely — market built value at entry level). Output: days_held, price_delta_pct, status, recommendation. From production observation: positions stalling 3+ days near entry rarely recover.",
+      "tags": ["execution", "position-management", "thesis-validation"]
+    },
+    {
+      "id": "ex-005", "title": "Execution Quality Audit",
+      "prompt": "Given filled trade (entry/exit order_type, price, time, slippage_bps, 1-min OHLCV at entry/exit). Entry slippage > 5 bps → poor. > 15 bps → unacceptable. Exit slippage > 2x entry → exiting during high-spread windows. Compute 1-min high-low range at entry/exit — if slippage exceeds spread, you crossed the spread. Output: entry_quality, exit_quality, total_slippage_bps, recommendation. Track per-trade. Aggregate weekly.",
+      "tags": ["execution", "audit", "slippage", "quality"]
+    }
+  ]
+}
