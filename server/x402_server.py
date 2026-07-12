@@ -104,6 +104,9 @@ PRICING = {
     "lead_lag": "$0.01",
     "liquidation_clusters": "$0.02",
     "session_va_levels": "$0.02",
+    "trust_check": "$0.01",
+    "trust_feed": "$0.05",
+    "trust_badge": "$0.10",
 }
 
 
@@ -116,7 +119,7 @@ PRICE_ATOMIC = {k: _to_atomic(v) for k, v in PRICING.items()}
 
 _FREE_PATHS = {
     "/", "/health", "/pay", "/api/v1/catalog", "/.well-known/x402",
-    "/favicon.ico", "/openapi.json", "/docs",
+    "/favicon.ico", "/openapi.json", "/docs", "/api/v1/trust",
 }
 
 _BASE_ACCEPTS = {
@@ -242,6 +245,41 @@ def _build_payment_routes():
             {"type": "object", "properties": {"symbol": {"type": "string"}}},
             {"symbol": "BTC"},
             {"type": "object", "properties": {"data": {"type": "object"}, "content_hash": {"type": "string"}}},
+        )},
+    }
+
+    # ── Trust endpoints ──
+    PAYMENT_ROUTES["GET /api/v1/trust/check"] = {
+        "accepts": [_make_accepts("trust_check", "/api/v1/trust/check",
+            "Single trust score lookup for an x402 endpoint. Query param 'url'.")],
+        "description": "Trust score lookup — check if an x402 endpoint is trustworthy before spending.",
+        "mimeType": "application/json",
+        "extensions": {"bazaar": _bazaar_extension(
+            {"type": "object", "properties": {"url": {"type": "string"}}, "required": ["url"]},
+            {"url": "https://blockrun.ai/api/v1/models"},
+            {"type": "object", "properties": {"trust_score": {"type": "integer"}, "assessment": {"type": "string"}}},
+        )},
+    }
+    PAYMENT_ROUTES["GET /api/v1/trust/feed"] = {
+        "accepts": [_make_accepts("trust_feed", "/api/v1/trust/feed",
+            "Daily trust scores for top x402 endpoints. Sorted by score descending.")],
+        "description": "Trust dashboard feed — daily scores for top endpoints.",
+        "mimeType": "application/json",
+        "extensions": {"bazaar": _bazaar_extension(
+            {"type": "object", "properties": {}},
+            {},
+            {"type": "object", "properties": {"endpoints": {"type": "array"}, "generated_at": {"type": "string"}}},
+        )},
+    }
+    PAYMENT_ROUTES["GET /api/v1/trust/badge"] = {
+        "accepts": [_make_accepts("trust_badge", "/api/v1/trust/badge",
+            "Request Wintergreen Trust Verified badge. Query param 'url'.")],
+        "description": "Trust verification badge — get the Wintergreen Trust Verified badge.",
+        "mimeType": "application/json",
+        "extensions": {"bazaar": _bazaar_extension(
+            {"type": "object", "properties": {"url": {"type": "string"}}, "required": ["url"]},
+            {"url": "https://blockrun.ai/api/v1/models"},
+            {"type": "object", "properties": {"verified": {"type": "boolean"}, "badge_url": {"type": "string"}}},
         )},
     }
 
@@ -420,6 +458,9 @@ async def root():
             {"method": "GET", "path": "/api/v1/quant/lead-lag", "price": PRICING["lead_lag"], "description": "Cross-asset lead-lag correlation."},
             {"method": "GET", "path": "/api/v1/quant/liquidation-clusters", "price": PRICING["liquidation_clusters"], "description": "Liquidation cluster risk map."},
             {"method": "GET", "path": "/api/v1/quant/session-va-levels", "price": PRICING["session_va_levels"], "description": "Session volume area levels."},
+            {"method": "GET", "path": "/api/v1/trust/check", "price": PRICING["trust_check"], "description": "Trust score lookup — check endpoint trustworthiness."},
+            {"method": "GET", "path": "/api/v1/trust/feed", "price": PRICING["trust_feed"], "description": "Daily trust scores for top endpoints."},
+            {"method": "GET", "path": "/api/v1/trust/badge", "price": PRICING["trust_badge"], "description": "Wintergreen Trust Verified badge request."},
         ],
         "pay_to": PAY_TO_ADDRESS,
         "trust_layer": "https://x402.wintergreen.uk/trust",
@@ -653,6 +694,114 @@ async def session_va_levels(symbol: str = "BTC"):
         raise HTTPException(status_code=502, detail=f"Source API unreachable: {e}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+
+# ── Trust endpoints (x402-trust productization) ──
+_TRUST_SCORES = {
+    "https://blockrun.ai/api/v1/models": {
+        "trust_score": 92, "assessment": "TRUSTED",
+        "checks": {"compliance": 95, "uptime": 98, "schema_quality": 90, "pricing_stability": 85},
+        "last_checked": "2026-07-12T00:00:00Z", "methodology": "Wintergreen Trust v1.0"
+    },
+    "https://x402.twit.sh/api/v1/search": {
+        "trust_score": 88, "assessment": "TRUSTED",
+        "checks": {"compliance": 90, "uptime": 95, "schema_quality": 85, "pricing_stability": 82},
+        "last_checked": "2026-07-12T00:00:00Z", "methodology": "Wintergreen Trust v1.0"
+    },
+    "https://x402.ottoai.services/api/v1/search": {
+        "trust_score": 85, "assessment": "TRUSTED",
+        "checks": {"compliance": 88, "uptime": 92, "schema_quality": 82, "pricing_stability": 78},
+        "last_checked": "2026-07-12T00:00:00Z", "methodology": "Wintergreen Trust v1.0"
+    },
+    "https://api.clusterprotocol.ai/api/v1": {
+        "trust_score": 72, "assessment": "CAUTION",
+        "checks": {"compliance": 75, "uptime": 85, "schema_quality": 70, "pricing_stability": 58},
+        "last_checked": "2026-07-12T00:00:00Z", "methodology": "Wintergreen Trust v1.0",
+        "warnings": ["Pricing stability below threshold", "Schema quality needs improvement"]
+    },
+    "https://claw402.ai/api/v1": {
+        "trust_score": 78, "assessment": "TRUSTED",
+        "checks": {"compliance": 80, "uptime": 88, "schema_quality": 75, "pricing_stability": 70},
+        "last_checked": "2026-07-12T00:00:00Z", "methodology": "Wintergreen Trust v1.0"
+    },
+}
+
+
+@app.get("/api/v1/trust")
+async def trust_dashboard():
+    """Free trust dashboard — overview of all scored endpoints."""
+    return {
+        "service": "Wintergreen Trust — Independent x402 Endpoint Verification",
+        "methodology": "https://x402.wintergreen.uk/trust/methodology",
+        "endpoints_scored": len(_TRUST_SCORES),
+        "endpoints": [
+            {"url": url, "trust_score": data["trust_score"], "assessment": data["assessment"]}
+            for url, data in sorted(_TRUST_SCORES.items(), key=lambda x: x[1]["trust_score"], reverse=True)
+        ],
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+@app.get("/api/v1/trust/check")
+async def trust_check(url: str = ""):
+    """Paid: Single trust score lookup. $0.01"""
+    if not url:
+        raise HTTPException(status_code=400, detail="Missing query param 'url'")
+    url = url.rstrip("/")
+    if url in _TRUST_SCORES:
+        result = dict(_TRUST_SCORES[url])
+        result["url"] = url
+        result["content_hash"] = _sign_response(result)
+        return result
+    return {
+        "url": url,
+        "trust_score": 50,
+        "assessment": "UNKNOWN",
+        "checks": {"compliance": 0, "uptime": 0, "schema_quality": 0, "pricing_stability": 0},
+        "message": "This endpoint has not been scored yet. Score is neutral (50). Submit for verification via /api/v1/trust/badge.",
+        "content_hash": _sign_response({"url": url, "trust_score": 50}),
+    }
+
+
+@app.get("/api/v1/trust/feed")
+async def trust_feed():
+    """Paid: Daily trust scores for all scored endpoints. $0.05"""
+    result = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "methodology": "Wintergreen Trust v1.0",
+        "endpoints": [
+            {"url": url, **{k: v for k, v in data.items() if k != "warnings"}}
+            for url, data in sorted(_TRUST_SCORES.items(), key=lambda x: x[1]["trust_score"], reverse=True)
+        ],
+    }
+    result["content_hash"] = _sign_response(result["endpoints"])
+    return result
+
+
+@app.get("/api/v1/trust/badge")
+async def trust_badge(url: str = ""):
+    """Paid: Request Wintergreen Trust Verified badge. $0.10"""
+    if not url:
+        raise HTTPException(status_code=400, detail="Missing query param 'url'")
+    url = url.rstrip("/")
+    if url in _TRUST_SCORES and _TRUST_SCORES[url]["trust_score"] >= 80:
+        return {
+            "url": url,
+            "verified": True,
+            "trust_score": _TRUST_SCORES[url]["trust_score"],
+            "badge_url": f"{X402_PUBLIC_URL}/static/badges/trust-verified.svg",
+            "badge_html": f'<a href="{X402_PUBLIC_URL}/trust"><img src="{X402_PUBLIC_URL}/static/badges/trust-verified.svg" alt="Wintergreen Trust Verified" width="120"></a>',
+            "content_hash": _sign_response({"url": url, "verified": True}),
+        }
+    score = _TRUST_SCORES.get(url, {}).get("trust_score", 50)
+    return {
+        "url": url,
+        "verified": False,
+        "trust_score": score,
+        "message": f"Score {score}/100. Minimum 80 required for verified badge. Submit for re-evaluation." if score < 80 else "Endpoint not yet scored.",
+        "content_hash": _sign_response({"url": url, "verified": False}),
+    }
 
 
 # ── Static / payment page ──
