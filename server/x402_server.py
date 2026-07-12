@@ -697,8 +697,23 @@ async def session_va_levels(symbol: str = "BTC"):
 
 
 
-# ── Trust endpoints (x402-trust productization) ──
-_TRUST_SCORES = {
+# ── Trust scores (loaded from probe harness output, fallback to static seed) ──
+_TRUST_SCORES_FILE = Path(__file__).resolve().parent / "trust_scores.json"
+
+def _load_trust_scores() -> dict:
+    if _TRUST_SCORES_FILE.exists():
+        try:
+            with open(_TRUST_SCORES_FILE, "r") as f:
+                data = json.load(f)
+            scores = {}
+            for ep in data.get("endpoints", []):
+                scores[ep["url"]] = {k: v for k, v in ep.items() if k != "url"}
+            if scores:
+                return scores
+        except (json.JSONDecodeError, KeyError):
+            pass
+    # Fallback: static seed data
+    return {
     "https://blockrun.ai/api/v1/models": {
         "trust_score": 92, "assessment": "TRUSTED",
         "checks": {"compliance": 95, "uptime": 98, "schema_quality": 90, "pricing_stability": 85},
@@ -726,6 +741,8 @@ _TRUST_SCORES = {
         "last_checked": "2026-07-12T00:00:00Z", "methodology": "Wintergreen Trust v1.0"
     },
 }
+
+_TRUST_SCORES = _load_trust_scores()
 
 
 @app.get("/api/v1/trust")

@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-07-12T23:21:09.579919+00:00",
+  "endpoints_scored": 7,
+  "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness",
+  "endpoints": [
+    {
+      "url": "https://blockrun.ai/api/v1/models",
+      "name": "BlockRun",
+      "tags": [
+        "routing",
+        "models"
+      ],
+      "trust_score": 72,
+      "assessment": "CAUTION",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-12T23:21:09.867069+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://x402.twit.sh/api/v1/search",
+      "name": "twit.sh",
+      "tags": [
+        "search",
+        "social"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:21:10.135435+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://x402.ottoai.services/api/v1/search",
+      "name": "Otto AI",
+      "tags": [
+        "multi-service",
+        "utility"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:21:10.458784+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://claw402.ai/api/v1",
+      "name": "claw402",
+      "tags": [
+        "proxy",
+        "utility"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:21:10.782263+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://api.tavily.com/search",
+      "name": "Tavily",
+      "tags": [
+        "search"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:21:11.057593+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://exa.ai/api/search",
+      "name": "Exa",
+      "tags": [
+        "search"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:21:11.207084+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://x402.wintergreen.uk/health",
+      "name": "Wintergreen",
+      "tags": [
+        "self"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:21:11.334930+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    }
+  ]
+}
