@@ -1,0 +1,3 @@
+[submodule "x402_trust"]
+	path = x402_trust
+	url = https://github.com/wintergreen-ventures/x402-trust.git

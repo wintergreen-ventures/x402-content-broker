@@ -1,0 +1,61 @@
+{
+  "pack_id": "wg-agent-prompts-v1",
+  "title": "Wintergreen Agent Prompt Pack v1",
+  "description": "Production-tested prompts for building autonomous trading/research agents, orchestration loops, and quant workflows.",
+  "categories": {
+    "strategy_generation": [
+      {
+        "id": "sg-001",
+        "title": "Hypothesis-to-Backtest Bridge",
+        "prompt": "Given a trading hypothesis stated in plain English (e.g. 'BTC tends to mean-revert after a funding rate spike above 0.1%'), decompose it into: (1) a precise, falsifiable null hypothesis, (2) the exact entry/exit signal logic in pseudocode, (3) the minimum data fields required (OHLCV, funding, orderbook depth, etc.) and their required lookback window, (4) at least 2 confounding variables that could produce a false positive, and (5) the specific walk-forward validation split (train/test date ranges) that would falsify this hypothesis if it doesn't generalize. Do not write backtest code yet — output only the structured specification a backtesting engine could consume.",
+        "tags": ["quant", "strategy", "hypothesis", "backtesting"]
+      },
+      {
+        "id": "sg-002",
+        "title": "Regime-Aware Signal Gate",
+        "prompt": "You are evaluating whether a trading signal should fire given the current market regime. Input: signal_name, signal_direction (long/short), current_regime (trending_up/trending_down/ranging/high_vol/low_vol), regime_confidence (0-1), and historical_win_rate_by_regime (a dict mapping regime name to win rate for this exact signal). Output a single JSON decision: {\"fire\": bool, \"confidence_adjusted\": float, \"reasoning\": str}. The signal should NOT fire if regime_confidence < 0.5, or if historical_win_rate_by_regime[current_regime] < 0.45. Explain your reasoning in one sentence referencing the specific regime and win rate that drove the decision.",
+        "tags": ["quant", "regime", "signal-filtering", "risk"]
+      },
+      {
+        "id": "sg-003",
+        "title": "Kill Card Generator",
+        "prompt": "Write a kill card for a trading strategy candidate that failed validation. A kill card is a structured post-mortem with these exact fields: strategy_name, hypothesis_summary (1 sentence), kill_reason (one of: insufficient_edge, overfit_to_backtest_window, regime_dependent_only, transaction_costs_erase_edge, data_leakage_suspected, correlated_to_existing_signal), supporting_evidence (2-3 concrete numbers: sharpe, max_drawdown, win_rate, or p-value), and lessons_for_future_candidates (1-2 sentences of generalizable insight, not specific to this strategy). The tone should be blunt and evidence-based — no hedging language like 'might not' or 'could potentially'.",
+        "tags": ["quant", "risk", "post-mortem", "discipline"]
+      }
+    ],
+    "agent_orchestration": [
+      {
+        "id": "ao-001",
+        "title": "Maker-Checker Loop Exit Condition",
+        "prompt": "Design the exit condition for an autonomous maker-checker loop where a 'maker' agent produces work and a separate 'checker' agent grades it. Given the task description below, output exactly: (1) the objective, non-gameable success criterion the checker uses (must be a concrete measurable check, e.g. 'all tests pass AND lint returns zero errors', not a subjective judgment), (2) a hard maximum iteration count and the reasoning for that number given the task's complexity, (3) a token/cost budget ceiling, (4) the specific condition under which the loop escalates to a human instead of continuing, and (5) one way a bad-faith maker could try to game the checker's criterion, and how the criterion is written to prevent that. Task: {{TASK_DESCRIPTION}}",
+        "tags": ["agents", "loop-engineering", "automation", "reliability"]
+      },
+      {
+        "id": "ao-002",
+        "title": "Sub-Agent Task Decomposition",
+        "prompt": "You are an orchestrator agent breaking a complex goal into parallel sub-agent tasks. Given the goal below, output a JSON array of sub-tasks where each entry has: task_id, goal (self-contained — the sub-agent has no memory of this conversation), context (all facts, file paths, and constraints the sub-agent needs, since it starts from zero), depends_on (list of task_ids that must complete first, or empty if independent), and estimated_complexity (low/medium/high). Group tasks that can run in parallel by giving them no dependencies on each other. Flag any task that touches a protected/irreversible action (spending money, sending external communication, modifying production credentials) with a \"requires_human_approval\": true field. Goal: {{GOAL_DESCRIPTION}}",
+        "tags": ["agents", "orchestration", "delegation", "parallelization"]
+      },
+      {
+        "id": "ao-003",
+        "title": "Trace-to-Proposal Pattern Miner",
+        "prompt": "Given a batch of execution traces (each trace has: task_type, decision, quality_signal, and outcome), identify recurring patterns that would justify a process improvement. Rules: (1) if fewer than 5 traces share a task_type, do NOT claim a statistical pattern — output only structural observations (missing fields, inconsistent formatting), (2) if 5+ traces exist for a task_type, compute the actual success rate and cite the exact count (e.g. '4 of 6 decisions with X property succeeded' — never round or estimate), (3) never propose a change to a protected surface (trading execution, credentials, public communication) without explicitly flagging it requires human approval, (4) output format is a structured proposal with evidence.trace_ids populated with the real trace IDs that support the claim — an empty evidence array invalidates the whole proposal.",
+        "tags": ["agents", "learning-loop", "pattern-mining", "evidence-based"]
+      }
+    ],
+    "market_analysis": [
+      {
+        "id": "ma-001",
+        "title": "Funding Rate Divergence Narrative",
+        "prompt": "Given funding rate data for a perpetual futures pair across multiple exchanges (a list of {exchange, funding_rate, funding_interval_hours, open_interest}), write a 2-3 sentence trader-facing narrative explaining: (1) which exchange has the most extreme funding rate and in which direction, (2) whether this divergence is likely driven by open-interest imbalance or a temporary liquidity event, and (3) the most likely mean-reversion or continuation implication for the next funding period. Do not use hedge words like 'may' or 'could' more than once — state the most probable read directly, then note the confidence level as a single word (high/medium/low) at the end.",
+        "tags": ["market-analysis", "funding-rate", "perpetuals", "narrative"]
+      },
+      {
+        "id": "ma-002",
+        "title": "Liquidation Cluster Risk Read",
+        "prompt": "Given a list of liquidation events (price, side, size_usd, timestamp) clustered near a specific price level, assess: (1) whether this cluster represents exhausted forced selling/buying (likely local reversal) or the start of a cascade (likely continuation), using the size and time-density of the cluster as your primary signal, (2) the nearest untested liquidity level above and below current price that could trigger the next cascade, and (3) a one-line risk note for a trader currently positioned in the direction of the cluster. Ground every claim in the specific numbers provided — do not generalize about 'liquidation clusters' as a category.",
+        "tags": ["market-analysis", "liquidations", "risk", "microstructure"]
+      }
+    ]
+  }
+}
