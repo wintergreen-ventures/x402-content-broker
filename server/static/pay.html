@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wintergreen x402 — Pay</title>
+<style>
+  body { font-family: -apple-system, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #111; color: #eee; }
+  select, button { padding: 10px; margin: 8px 0; width: 100%; font-size: 14px; border-radius: 6px; border: 1px solid #333; background: #222; color: #eee; }
+  button { background: #2d5a3d; cursor: pointer; font-weight: bold; }
+  button:hover { background: #3a704d; }
+  button:disabled { background: #333; cursor: not-allowed; }
+  .result { margin-top: 16px; padding: 12px; background: #1a1a1a; border-radius: 6px; font-family: monospace; font-size: 13px; white-space: pre-wrap; word-break: break-all; }
+  .error { color: #f55; }
+  .success { color: #5f5; }
+</style>
+</head>
+<body>
+<h2>Wintergreen x402 — Pay</h2>
+<p>Select an endpoint to purchase. You'll sign with your wallet (EIP-712).</p>
+
+<label>Endpoint:</label>
+<select id="endpoint">
+  <option value="/api/v1/trust/check?url=https://blockrun.ai/api/v1/models">Trust Check — BlockRun ($0.01)</option>
+  <option value="/api/v1/trust/feed">Trust Feed — All Scores ($0.05)</option>
+  <option value="/api/v1/trust/badge?url=https://blockrun.ai/api/v1/models">Trust Badge — BlockRun ($0.10)</option>
+  <option value="/api/v1/methodology/backtesting-methodology">Backtesting Methodology Pack ($0.25)</option>
+  <option value="/api/v1/methodology/risk-management-methodology">Risk Management Methodology Pack ($0.25)</option>
+  <option value="/api/v1/prompts/sg-001">Single Prompt — Hypothesis-to-Backtest ($0.05)</option>
+  <option value="/api/v1/search?q=backtest">Search — "backtest" ($0.01)</option>
+</select>
+
+<button id="payBtn" onclick="pay()">Pay with Wallet</button>
+<div class="result" id="result"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7/dist/ethers.umd.min.js"></script>
+<script>
+const ENDPOINT = window.location.origin;
+const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+
+async function pay() {
+  const btn = document.getElementById('payBtn');
+  const result = document.getElementById('result');
+  btn.disabled = true;
+  result.textContent = "Connecting to wallet...";
+
+  try {
+    if (!window.ethereum) throw new Error("No wallet found. Install MetaMask or Coinbase Wallet.");
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const chainId = (await provider.getNetwork()).chainId;
+    if (chainId !== 8453) {
+      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] });
+    }
+
+    const path = document.getElementById('endpoint').value;
+    const url = ENDPOINT + path;
+    result.textContent = "Fetching payment terms...";
+
+    const resp = await fetch(url);
+    if (resp.status !== 402) throw new Error(`Expected 402, got ${resp.status}`);
+    const body = await resp.json();
+    const pmt = body.accepts[0];
+    const amount = parseInt(pmt.amount);
+    const amountDisplay = (amount / 1_000_000).toFixed(2);
+
+    result.textContent = `Payment required: $${amountDisplay} USDC. Signing...`;
+
+    const domain = { name: "USD Coin", version: "2", chainId: 8453, verifyingContract: USDC };
+    const types = {
+      TransferWithAuthorization: [
+        { name: "from", type: "address" },
+        { name: "to", type: "address" },
+        { name: "value", type: "uint256" },
+        { name: "validAfter", type: "uint256" },
+        { name: "validBefore", type: "uint256" },
+        { name: "nonce", type: "bytes32" }
+      ]
+    };
+    const now = Math.floor(Date.now() / 1000);
+    const nonce = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+    const message = {
+      from: await signer.getAddress(),
+      to: pmt.payTo,
+      value: ethers.BigNumber.from(amount.toString()),
+      validAfter: ethers.BigNumber.from(0),
+      validBefore: ethers.BigNumber.from(now + 3600),
+      nonce: nonce
+    };
+
+    const signature = await signer._signTypedData(domain, types, message);
+
+    const payload = {
+      x402Version: 2,
+      resource: { url: pmt.resource || url, description: body.description || "", mimeType: body.mimeType || "application/json" },
+      accepted: { scheme: pmt.scheme, network: pmt.network, amount: pmt.amount, asset: pmt.asset, payTo: pmt.payTo, maxTimeoutSeconds: pmt.maxTimeoutSeconds, extra: pmt.extra || {} },
+      payload: { signature, authorization: { from: message.from, to: message.to, value: message.value.toString(), validAfter: "0", validBefore: message.validBefore.toString(), nonce: message.nonce } }
+    };
+    const paymentB64 = btoa(JSON.stringify(payload));
+
+    result.textContent = "Sending payment...";
+    const payResp = await fetch(url, { headers: { "X-PAYMENT": paymentB64 } });
+    if (payResp.ok) {
+      const data = await payResp.json();
+      result.innerHTML = `<span class="success">✅ Payment settled!</span>\n${JSON.stringify(data, null, 2).substring(0, 2000)}`;
+    } else {
+      const err = await payResp.text();
+      result.innerHTML = `<span class="error">❌ Payment failed: ${payResp.status}</span>\n${err.substring(0, 500)}`;
+    }
+  } catch (e) {
+    result.innerHTML = `<span class="error">Error: ${e.message}</span>`;
+  }
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
