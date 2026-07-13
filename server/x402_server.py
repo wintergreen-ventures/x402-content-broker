@@ -90,45 +90,51 @@ app.add_middleware(
 
 # ── x402 resource server setup ──
 resource_server = None
+_setup_done = False
+_CDP_KEY_NAME = os.environ.get("CDP_API_KEY_NAME", "")
+_CDP_KEY_SECRET = os.environ.get("CDP_API_KEY_PRIVATE_KEY", "")
+
 if _X402_ENABLED:
-    CDP_KEY_NAME = os.environ.get("CDP_API_KEY_NAME", "")
-    CDP_KEY_SECRET = os.environ.get("CDP_API_KEY_PRIVATE_KEY", "")
-    
-    if CDP_KEY_NAME and CDP_KEY_SECRET and USE_CDP:
-        from x402.http.facilitator_client import CreateHeadersAuthProvider
-        from cdp.auth import generate_jwt
-        from cdp.auth.utils.jwt import JwtOptions
-        
-        def _make_jwt(method, path):
-            return generate_jwt(JwtOptions(
-                api_key_id=CDP_KEY_NAME,
-                api_key_secret=CDP_KEY_SECRET,
-                request_method=method,
-                request_host="api.cdp.coinbase.com",
-                request_path=path,
-            ))
-        
-        def _cdp_auth_headers():
-            return {
-                "supported": {"Authorization": f"Bearer {_make_jwt('GET', '/platform/v2/x402/supported')}"},
-                "verify":    {"Authorization": f"Bearer {_make_jwt('POST', '/platform/v2/x402/verify')}"},
-                "settle":    {"Authorization": f"Bearer {_make_jwt('POST', '/platform/v2/x402/settle')}"},
-                "bazaar":    {"Authorization": f"Bearer {_make_jwt('GET', '/platform/v2/x402/discovery/resources')}"},
-            }
-        
-        fc = HTTPFacilitatorClient(FacilitatorConfig(
-            url=FACILITATOR_URL,
-            auth_provider=CreateHeadersAuthProvider(_cdp_auth_headers),
-        ))
-    else:
-        fc = HTTPFacilitatorClient(FacilitatorConfig(url=FACILITATOR_URL))
-    
-    resource_server = x402ResourceServer(fc).register(NETWORK, ExactEvmServerScheme())
 
     @app.on_event("startup")
     async def _init_x402():
-        await resource_server.initialize()
-        print(f"[x402] Resource server initialized — facilitator: {FACILITATOR_URL}")
+        global resource_server, _setup_done
+        if _setup_done:
+            return
+        try:
+            if _CDP_KEY_NAME and _CDP_KEY_SECRET and USE_CDP:
+                from x402.http.facilitator_client import CreateHeadersAuthProvider
+                from cdp.auth import generate_jwt
+                from cdp.auth.utils.jwt import JwtOptions
+
+                def _make_jwt(method, path):
+                    return generate_jwt(JwtOptions(
+                        api_key_id=_CDP_KEY_NAME,
+                        api_key_secret=_CDP_KEY_SECRET,
+                        request_method=method,
+                        request_host="api.cdp.coinbase.com",
+                        request_path=path,
+                    ))
+                fc = HTTPFacilitatorClient(FacilitatorConfig(
+                    url=FACILITATOR_URL,
+                    auth_provider=CreateHeadersAuthProvider(lambda: {
+                        "supported": {"Authorization": f"Bearer {_make_jwt('GET', '/platform/v2/x402/supported')}"},
+                        "verify":    {"Authorization": f"Bearer {_make_jwt('POST', '/platform/v2/x402/verify')}"},
+                        "settle":    {"Authorization": f"Bearer {_make_jwt('POST', '/platform/v2/x402/settle')}"},
+                        "bazaar":    {"Authorization": f"Bearer {_make_jwt('GET', '/platform/v2/x402/discovery/resources')}"},
+                    }),
+                ))
+            else:
+                fc = HTTPFacilitatorClient(FacilitatorConfig(url=FACILITATOR_URL))
+
+            resource_server = x402ResourceServer(fc).register(NETWORK, ExactEvmServerScheme())
+            await resource_server.initialize()
+            print(f"[x402] Resource server initialized — facilitator: {FACILITATOR_URL}")
+            _setup_done = True
+        except Exception as e:
+            print(f"[x402] Init failed — running in free mode: {e}")
+            resource_server = None
+            _setup_done = True
 
 # ── Pricing (two-tier: discovery $0.01-0.02, premium $0.05-0.25) ──
 PRICING = {
