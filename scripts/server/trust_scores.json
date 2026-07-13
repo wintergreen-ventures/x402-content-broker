@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-12T23:22:37.970069+00:00",
-  "endpoints_scored": 7,
+  "generated_at": "2026-07-12T23:19:42.737828+00:00",
+  "endpoints_scored": 9,
   "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness",
   "endpoints": [
     {
@@ -10,18 +10,18 @@
         "routing",
         "models"
       ],
-      "trust_score": 76,
+      "trust_score": 69,
       "assessment": "CAUTION",
       "checks": {
-        "compliance": 70,
+        "compliance": 60,
         "uptime": 100,
         "schema": 50,
-        "pricing": 97.75
+        "pricing": 70
       },
       "warnings": [
         "No 402 gating \u2014 may be free-tier only"
       ],
-      "last_probed": "2026-07-12T23:22:38.192951+00:00",
+      "last_probed": "2026-07-12T23:19:42.973354+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     },
     {
@@ -31,18 +31,18 @@
         "search",
         "social"
       ],
-      "trust_score": 27,
+      "trust_score": 23,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing": 70
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:38.501485+00:00",
+      "last_probed": "2026-07-12T23:19:43.305071+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     },
     {
@@ -52,18 +52,39 @@
         "multi-service",
         "utility"
       ],
-      "trust_score": 27,
+      "trust_score": 23,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing": 70
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:38.771075+00:00",
+      "last_probed": "2026-07-12T23:19:43.654791+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://api.clusterprotocol.ai/api/v1",
+      "name": "Cluster Protocol",
+      "tags": [
+        "trading",
+        "defi"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:19:43.946664+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     },
     {
@@ -73,18 +94,18 @@
         "proxy",
         "utility"
       ],
-      "trust_score": 27,
+      "trust_score": 23,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing": 70
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.093661+00:00",
+      "last_probed": "2026-07-12T23:19:44.156598+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     },
     {
@@ -93,18 +114,39 @@
       "tags": [
         "search"
       ],
-      "trust_score": 27,
+      "trust_score": 23,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing": 70
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.343382+00:00",
+      "last_probed": "2026-07-12T23:19:44.406718+00:00",
+      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+    },
+    {
+      "url": "https://api.apify.com/v2",
+      "name": "Apify",
+      "tags": [
+        "scraping",
+        "automation"
+      ],
+      "trust_score": 23,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing": 70
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-12T23:19:44.717807+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     },
     {
@@ -113,38 +155,40 @@
       "tags": [
         "search"
       ],
-      "trust_score": 27,
+      "trust_score": 23,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing": 70
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.492855+00:00",
+      "last_probed": "2026-07-12T23:19:44.907763+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     },
     {
-      "url": "https://x402.wintergreen.uk/health",
+      "url": "https://x402.wintergreen.uk/api/v1/search",
       "name": "Wintergreen",
       "tags": [
+        "quant",
+        "prompts",
         "self"
       ],
-      "trust_score": 27,
+      "trust_score": 23,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing": 70
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.618188+00:00",
+      "last_probed": "2026-07-12T23:19:45.045902+00:00",
       "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
     }
   ]

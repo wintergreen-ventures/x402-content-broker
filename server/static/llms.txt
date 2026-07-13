@@ -1,0 +1,65 @@
+# Wintergreen x402 Content Broker
+
+> AI agent prompts, quant methodology packs, trading datasets, and trust scoring. Pay with USDC via x402.
+
+## Quickstart
+
+Base URL: `https://x402.wintergreen.uk`
+
+All paid endpoints return HTTP 402 with payment details. Sign with EIP-712 (USDC on Base), retry with `X-PAYMENT` header.
+
+## Endpoints
+
+### Free Discovery
+- `GET /` — Service catalog, all endpoints, pricing
+- `GET /api/v1/catalog` — Full prompt pack catalog
+- `GET /api/v1/methodology` — Quant methodology pack summaries (7 packs, $3/pack, $15/bundle)
+- `GET /health` — Health check
+- `GET /pay` — Browser payment page
+- `GET /llms.txt` — This file
+- `GET /.well-known/agent-card.json` — Agent discovery metadata
+- `GET /.well-known/x402` — x402 resource listing
+
+### Prompt Packs ($0.01-$0.25)
+- `GET /api/v1/search?q={query}` — Search prompts by keyword ($0.01)
+- `GET /api/v1/prompts/{prompt_id}` — Single prompt by ID ($0.05)
+- `GET /api/v1/prompts/category/{category}` — Category bundle ($0.10)
+- `GET /api/v1/prompts/pack` — Full prompt pack ($0.25)
+
+### Quant Methodology Packs ($3-$15)
+- `GET /api/v1/methodology/{pack_id}` — Individual methodology pack ($3.00)
+- `GET /api/v1/methodology/bundle` — All 7 packs bundle ($15.00)
+  - backtesting-methodology: Walk-forward validation framework, overfitting detection, kill gates
+  - strategy-generation-methodology: Hypothesis to kill card, signal independence, candidate differentiation
+  - risk-management-methodology: Kelly sizing, stop placement, drawdown triage, funding gates
+  - regime-detection-methodology: Multi-signal regime classification, Markov filters
+  - execution-methodology: Auction-driven entry, position management
+  - market-analysis-methodology: Multi-signal narrative framework, orderbook analysis
+  - agent-orchestration-methodology: Autonomous loop engineering, state management
+
+### Quant Data ($0.01-$0.02)
+- `GET /api/v1/quant/funding-divergence?symbol=BTC` — Cross-exchange funding divergence ($0.01)
+- `GET /api/v1/quant/lead-lag?pair=BTC-SOL` — Cross-asset lead-lag correlation ($0.01)
+- `GET /api/v1/quant/liquidation-clusters?symbol=ETH` — Liquidation cluster risk map ($0.02)
+- `GET /api/v1/quant/session-va-levels?symbol=BTC` — Session volume area levels ($0.02)
+
+### Trust ($0.01-$0.10)
+- `GET /api/v1/trust/check?url={url}` — Trust score lookup ($0.01)
+- `GET /api/v1/trust/feed` — Daily trust scores ($0.05)
+- `GET /api/v1/trust/badge?url={url}` — Trust verification badge ($0.10)
+
+## Payment
+
+- Protocol: x402 v2
+- Network: Base (eip155:8453)
+- Asset: USDC (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)
+- Facilitator: Coinbase CDP
+- PayTo: 0xAe9834d71F1Bd989A0dc17593451af823E31CeeD
+
+## For Agents
+
+1. Call any paid endpoint → receive HTTP 402 with `Payment-Required` header
+2. Decode the payment requirements from the response body
+3. Sign an EIP-712 TransferWithAuthorization for the USDC amount
+4. Retry the request with `X-PAYMENT: <base64-encoded-payment-payload>`
+5. Receive the paid resource

@@ -136,7 +136,7 @@ if _X402_ENABLED:
             resource_server = None
             _setup_done = True
 
-# ── Pricing (two-tier: discovery $0.01-0.02, premium $0.05-0.25) ──
+# ── Pricing (three-tier: discovery $0.01-0.02, packs $0.05-0.25, premium methodology $3-15) ──
 PRICING = {
     "search": "$0.01",
     "single_prompt": "$0.05",
@@ -149,6 +149,9 @@ PRICING = {
     "trust_check": "$0.01",
     "trust_feed": "$0.05",
     "trust_badge": "$0.10",
+    "methodology_single": "$3.00",
+    "methodology_bundle": "$15.00",
+    "methodology_premium": "$5.00",
 }
 
 
@@ -162,6 +165,7 @@ PRICE_ATOMIC = {k: _to_atomic(v) for k, v in PRICING.items()}
 _FREE_PATHS = {
     "/", "/health", "/pay", "/api/v1/catalog", "/.well-known/x402",
     "/favicon.ico", "/openapi.json", "/docs", "/api/v1/trust", "/api/v1/methodology",
+    "/llms.txt", "/.well-known/agent-card.json",
 }
 
 _BASE_ACCEPTS = {
@@ -314,14 +318,25 @@ def _build_payment_routes():
         )},
     }
     PAYMENT_ROUTES["GET /api/v1/methodology/{pack_id}"] = {
-        "accepts": [_make_accepts("prompt_pack", "/api/v1/methodology/{pack_id}",
-            "Full methodology pack with overview, core methodology, evaluation framework, implementation notes, failure modes, and prompts.")],
-        "description": "Quant methodology pack — production-tested frameworks with evaluation and kill rules.",
+        "accepts": [_make_accepts("methodology_single", "/api/v1/methodology/{pack_id}",
+            "Quant methodology pack — kill rules, backtest validation gates, walk-forward optimization, strategy evaluation prompts. $3.00/pack.")],
+        "description": "Quant methodology pack — kill battery rules, backtest validation, walk-forward optimization, regime detection. $3.00/pack.",
         "mimeType": "application/json",
         "extensions": {"bazaar": _bazaar_extension(
             {"type": "object", "properties": {"pack_id": {"type": "string"}}, "required": ["pack_id"]},
             {"pack_id": "backtesting-methodology"},
             {"type": "object", "properties": {"pack_id": {"type": "string"}, "title": {"type": "string"}, "prompts": {"type": "array"}}},
+        )},
+    }
+    PAYMENT_ROUTES["GET /api/v1/methodology/bundle"] = {
+        "accepts": [_make_accepts("methodology_bundle", "/api/v1/methodology/bundle",
+            "Complete 7-pack quant methodology bundle — backtesting, kill battery, risk, regime, execution, market analysis, agent orchestration. $15.00 (save $6).")],
+        "description": "Complete quant methodology bundle — all 7 packs: backtest validation, kill rules, Kelly sizing, regime filters. $15.00.",
+        "mimeType": "application/json",
+        "extensions": {"bazaar": _bazaar_extension(
+            {"type": "object", "properties": {}},
+            {},
+            {"type": "object", "properties": {"bundle_id": {"type": "string"}, "total_packs": {"type": "integer"}, "packs": {"type": "array"}}},
         )},
     }
     PAYMENT_ROUTES["GET /api/v1/trust/badge"] = {
@@ -582,8 +597,8 @@ async def methodology_catalog():
         "description": "Production-tested quant methodology — strategy design, backtesting, risk, regime detection, execution, agent orchestration, and market analysis. Each pack includes evaluation frameworks, kill rules, and real failure modes.",
         "total_packs": len(packs),
         "pricing": {
-            "single_pack": PRICING["prompt_pack"],
-            "bundle_all": "Coming soon",
+            "single_pack": PRICING["methodology_single"],
+            "bundle_all": PRICING["methodology_bundle"],
         },
         "packs": packs,
     }
@@ -591,12 +606,36 @@ async def methodology_catalog():
 
 @app.get("/api/v1/methodology/{pack_id}")
 async def get_methodology_pack(pack_id: str):
-    """Paid: full methodology pack with all sections and prompts. $0.25"""
+    """Paid: full methodology pack with all sections and prompts. $3.00 per pack."""
     pack_file = _METHODOLOGY_DIR / f"{pack_id}.json"
     if not pack_file.exists():
         raise HTTPException(status_code=404, detail=f"Pack not found: {pack_id}. Available: {[p['pack_id'] for p in _load_methodology_packs()]}")
     with open(pack_file, "r") as f:
         return json.load(f)
+
+
+@app.get("/api/v1/methodology/bundle")
+async def get_methodology_bundle():
+    """Paid: all 7 methodology packs in one bundle. $15.00 — save $6 vs individual."""
+    packs = _load_methodology_packs()
+    full = []
+    for p in packs:
+        pack_file = _METHODOLOGY_DIR / f"{p['pack_id']}.json"
+        if pack_file.exists():
+            with open(pack_file, "r") as f:
+                full.append(json.load(f))
+    return {
+        "bundle_id": "methodology-full-bundle",
+        "title": "Wintergreen Quant Methodology — Complete Bundle",
+        "description": "All 7 methodology packs: backtesting walk-forward validation, strategy generation with kill battery, risk management with Kelly sizing, regime detection, execution methodology, market analysis, and agent orchestration.",
+        "total_packs": len(full),
+        "packs": full,
+        "pricing": {
+            "bundle_price": "$15.00",
+            "individual_total": "$21.00",
+            "savings": "$6.00"
+        }
+    }
 
 
 # ── Paid endpoints ──
@@ -943,6 +982,22 @@ async def favicon():
     from fastapi.responses import Response
     svg = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><rect width="32" height="32" fill="#2d5a3d"/><text x="4" y="24" font-size="20" fill="#fff">W</text></svg>'
     return Response(content=svg, media_type="image/svg+xml")
+
+
+@app.get("/llms.txt")
+async def llms_txt():
+    llms = STATIC_DIR / "llms.txt"
+    if llms.exists():
+        return FileResponse(llms, media_type="text/plain")
+    return JSONResponse({"error": "llms.txt not found"}, status_code=404)
+
+
+@app.get("/.well-known/agent-card.json")
+async def agent_card():
+    card = STATIC_DIR / "agent-card.json"
+    if card.exists():
+        return FileResponse(card, media_type="application/json")
+    return JSONResponse({"error": "agent-card.json not found"}, status_code=404)
 
 
 # ── Run ──

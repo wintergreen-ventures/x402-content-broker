@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "agent_name": "Wintergreen x402 Content Broker",
+  "agent_description": "Payment-gated quant methodology packs, trading signals, backtesting kill rules, regime detection frameworks, and agent prompts. Production-tested on a quant desk with 13 killed strategies and 6 active signals.",
+  "base_url": "https://x402.wintergreen.uk",
+  "payment_protocol": "x402",
+  "payment_version": 2,
+  "networks": ["eip155:8453"],
+  "asset": "USDC",
+  "pay_to": "0xAe9834d71F1Bd989A0dc17593451af823E31CeeD",
+  "contact": "peyton3cramer@gmail.com",
+  "capabilities": [
+    {
+      "id": "methodology-packs",
+      "name": "Quant Methodology Packs",
+      "description": "Production-tested quant methodology: backtesting walk-forward validation, strategy kill battery (19 rules), risk management with Kelly sizing, regime detection, execution frameworks, and agent orchestration patterns. Built from a real quant desk that killed 13 strategies before finding 6 that work.",
+      "price_range": "$3.00 - $15.00",
+      "endpoints": [
+        "GET /api/v1/methodology/{pack_id}",
+        "GET /api/v1/methodology/bundle"
+      ]
+    },
+    {
+      "id": "prompt-packs",
+      "name": "AI Agent Prompt Packs",
+      "description": "Production-tested prompts for building autonomous trading/research agents, orchestration loops, and quant workflows. Categories: strategy generation, agent orchestration, market analysis.",
+      "price_range": "$0.01 - $0.25",
+      "endpoints": [
+        "GET /api/v1/search",
+        "GET /api/v1/prompts/{prompt_id}",
+        "GET /api/v1/prompts/category/{category}",
+        "GET /api/v1/prompts/pack"
+      ]
+    },
+    {
+      "id": "quant-data",
+      "name": "Live Quant Data",
+      "description": "Real-time Hyperliquid-sourced data: cross-exchange funding divergence, cross-asset lead-lag correlation, liquidation cluster density maps, session volume-area levels. Staleness-guarded with content hashing.",
+      "price_range": "$0.01 - $0.02",
+      "endpoints": [
+        "GET /api/v1/quant/funding-divergence",
+        "GET /api/v1/quant/lead-lag",
+        "GET /api/v1/quant/liquidation-clusters",
+        "GET /api/v1/quant/session-va-levels"
+      ]
+    },
+    {
+      "id": "trust-scoring",
+      "name": "x402 Trust Scoring",
+      "description": "Trust scores for x402 endpoints. Weighted probe harness. Check individual endpoints, get daily feeds, or request Wintergreen Trust Verified badges.",
+      "price_range": "$0.01 - $0.10",
+      "endpoints": [
+        "GET /api/v1/trust/check",
+        "GET /api/v1/trust/feed",
+        "GET /api/v1/trust/badge"
+      ]
+    }
+  ],
+  "discovery": {
+    "llms_txt": "https://x402.wintergreen.uk/llms.txt",
+    "well_known_x402": "https://x402.wintergreen.uk/.well-known/x402",
+    "catalog": "https://x402.wintergreen.uk/api/v1/catalog",
+    "methodology": "https://x402.wintergreen.uk/api/v1/methodology"
+  },
+  "trust": {
+    "methodology": "Wintergreen Trust v1.0 — weighted probe harness",
+    "badge_available": true,
+    "trust_endpoint": "https://x402.wintergreen.uk/api/v1/trust"
+  },
+  "stats": {
+    "total_endpoints": 16,
+    "free_endpoints": 8,
+    "paid_endpoints": 8,
+    "methodology_packs": 7,
+    "quant_signals_active": 6,
+    "strategies_killed": 13,
+    "kill_battery_rules": 19
+  }
+}
