@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-07-13T21:00:00Z",
+  "methodology": "Wintergreen Trust v2.0 \u2014 payment-verified probe harness",
+  "payments_tested": [
+    {
+      "url": "https://blockrun.ai/api/v1/models",
+      "name": "BlockRun",
+      "paid": true,
+      "amount_paid_usd": 0.027,
+      "calls_made": 9,
+      "delivery_verified": true,
+      "caching_detected": true,
+      "min_payment_floor": 0.003,
+      "pricing_model": "flat_minimum",
+      "models_tested": [
+        "deepseek/deepseek-v4-pro",
+        "google/gemini-2.5-flash-lite",
+        "openai/gpt-5.4-mini",
+        "anthropic/claude-sonnet-5",
+        "anthropic/claude-opus-4.7",
+        "xai/grok-4.3",
+        "minimax/minimax-m3"
+      ],
+      "notes": "9 paid calls via ClawRouter proxy across 7 model families. All delivered. Responses cached. $0.003 flat minimum per call. 100% delivery rate.",
+      "tested_at": "2026-07-13T21:00:00Z"
+    },
+    {
+      "url": "https://2s.io/api/ai/chat",
+      "name": "2s.io",
+      "paid": true,
+      "amount_paid_usd": 0.001,
+      "calls_made": 3,
+      "delivery_verified": false,
+      "caching_detected": false,
+      "min_payment_floor": 0.001,
+      "pricing_model": "per_call",
+      "notes": "P2D tested: payment reaches server (402\u2192POST\u2192402), server processes payment header but facilitator verification fails. Likely CDP facilitator mismatch between client and server. Payment creation and signing works. 232 models available. Requires POST, not GET. Next step: configure CDP facilitator on client side.",
+      "tested_at": "2026-07-13T23:20:00Z"
+    },
+    {
+      "url": "https://api.jarvisclaw.ai/v1/models",
+      "name": "JarvisClaw",
+      "paid": false,
+      "amount_paid_usd": 0,
+      "calls_made": 0,
+      "delivery_verified": false,
+      "caching_detected": null,
+      "min_payment_floor": null,
+      "pricing_model": "api_key",
+      "notes": "Returns 401 (Invalid token) \u2014 API-key-gated, not a true x402 payment endpoint. Confirmed via diagnostic endpoint. Skip P2D testing.",
+      "tested_at": null
+    },
+    {
+      "url": "https://x402.wintergreen.uk/api/v1/trust/check",
+      "name": "Wintergreen",
+      "paid": false,
+      "amount_paid_usd": 0,
+      "calls_made": 0,
+      "delivery_verified": false,
+      "caching_detected": null,
+      "min_payment_floor": 0.01,
+      "pricing_model": "per_call",
+      "notes": "402 endpoint confirmed. Direct payment not yet tested. Priced at $0.01/check.",
+      "tested_at": null
+    }
+  ]
+}

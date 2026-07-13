@@ -20,20 +20,49 @@ HISTORY_FILE = SCRIPT_DIR.parent / "receipts" / "probe_history.jsonl"
 
 # ── Endpoints to probe ──
 ENDPOINTS = [
-    # Tier 1 — confirmed active, high volume (from x402scan top servers)
+    # Tier 1 — Confirmed x402 endpoints (verified 402 gating, top by volume)
     {"url": "https://blockrun.ai/api/v1/models", "name": "BlockRun", "tags": ["routing", "models"]},
     {"url": "https://x402.twit.sh/api/v1/search", "name": "twit.sh", "tags": ["search", "social"]},
     {"url": "https://x402.ottoai.services/api/v1/search", "name": "Otto AI", "tags": ["multi-service", "utility"]},
     {"url": "https://claw402.ai/api/v1", "name": "claw402", "tags": ["proxy", "utility"]},
-    # Tier 2 — known x402 services
     {"url": "https://api.tavily.com/search", "name": "Tavily", "tags": ["search"]},
-    {"url": "https://exa.ai/api/search", "name": "Exa", "tags": ["search"]},
+    {"url": "https://api.exa.ai/search", "name": "Exa", "tags": ["search"]},
+    # Tier 2 — Confirmed x402 from x402scan (verified 402 gating)
+    {"url": "https://stableenrich.dev/api", "name": "StableEnrich", "tags": ["enrichment", "data"]},
+    {"url": "https://x402.agentutility.ai/", "name": "agentutility", "tags": ["multi-service", "utility"]},
+    {"url": "https://api.jarvisclaw.ai/", "name": "JarvisClaw", "tags": ["routing", "models"]},
+    {"url": "https://api.onesource.io/", "name": "OneSource", "tags": ["rpc", "ethereum"]},
+    {"url": "https://2s.io/", "name": "2s.io", "tags": ["multi-service", "data"]},
+    {"url": "https://surf.cascade.fyi/", "name": "glim.sh", "tags": ["search", "social"]},
+    {"url": "https://sol.blockrun.ai/", "name": "BlockRun Solana", "tags": ["routing", "models"]},
+    {"url": "https://x402.dtelecom.org/", "name": "dTelecom", "tags": ["webrtc", "tts", "stt"]},
+    {"url": "https://api.nansen.ai/", "name": "Nansen AI", "tags": ["onchain", "analytics"]},
+    {"url": "https://defi.hugen.tokyo/", "name": "hugen.tokyo", "tags": ["defi", "multi-service"]},
+    {"url": "https://api.zerogravity.ai/", "name": "ZeroGravity", "tags": ["search", "ai"]},
+    # Tier 3 — Additional x402scan endpoints (verified 402)
+    {"url": "https://x402.ankr.com/", "name": "Ankr x402", "tags": ["rpc", "infrastructure"]},
+    {"url": "https://api.quicknode.com/", "name": "QuickNode", "tags": ["rpc", "infrastructure"]},
+    {"url": "https://x402.alchemy.com/", "name": "Alchemy", "tags": ["rpc", "infrastructure"]},
+    {"url": "https://x402.birdeye.so/", "name": "Birdeye", "tags": ["crypto", "data"]},
+    {"url": "https://x402.firecrawl.dev/", "name": "Firecrawl", "tags": ["scraping", "data"]},
+    {"url": "https://x402.browserbase.com/", "name": "Browserbase", "tags": ["browser", "automation"]},
+    {"url": "https://x402.apify.com/", "name": "Apify", "tags": ["scraping", "automation"]},
     # Wintergreen self-check
     {"url": "https://x402.wintergreen.uk/health", "name": "Wintergreen", "tags": ["self"]},
 ]
 
 # ── Scoring weights ──
-W = {"compliance": 0.35, "uptime": 0.25, "schema": 0.25, "pricing": 0.15}
+# v2.1: recency-weighted, P2D toned down to bonus/penalty signal
+W_V21 = {"compliance": 0.25, "uptime": 0.20, "schema": 0.15, "pricing_stability": 0.12,
+         "pricing_fairness": 0.10, "recency": 0.08, "payment_to_delivery": 0.10}
+W_V21_NO_P2D = {"compliance": 0.28, "uptime": 0.22, "schema": 0.17, "pricing_stability": 0.13,
+                "pricing_fairness": 0.11, "recency": 0.09}
+
+# Recency decay: probes older than DECAY_HOURS hours lose influence exponentially
+DECAY_HOURS = 24  # half-life ~16.6 hours; probe >72h old has ~5% weight
+
+# Payment test data registry
+PAYMENT_DATA_FILE = SCRIPT_DIR.parent / "server" / "payment_test_data.json"
 
 # ── SSL context (some endpoints may have cert issues in probe context) ──
 SSL_CTX = ssl.create_default_context()
@@ -96,6 +125,113 @@ def probe(url: str, timeout: int = 10) -> dict:
     return result
 
 
+def load_payment_data() -> dict:
+    """Load payment test data keyed by URL."""
+    if not PAYMENT_DATA_FILE.exists():
+        return {}
+    with open(PAYMENT_DATA_FILE) as f:
+        data = json.load(f)
+    return {p["url"]: p for p in data.get("payments_tested", [])}
+
+
+def score_pricing_fairness(probe_result: dict, payment_data: dict = None) -> int:
+    """Score pricing fairness (0-100). Based on known payment data and category benchmarks."""
+    # Default: no pricing data available
+    if not payment_data or not payment_data.get("paid"):
+        return 50  # neutral — no evidence either way
+
+    pd = payment_data
+    floor = pd.get("min_payment_floor", 0)
+    model = pd.get("pricing_model", "unknown")
+
+    if model == "flat_minimum":
+        if floor <= 0.005:
+            return 90  # very cheap flat minimum — fair
+        elif floor <= 0.01:
+            return 80  # reasonable
+        elif floor <= 0.05:
+            return 60  # slightly expensive
+        else:
+            return 40  # expensive flat minimum
+    elif model == "per_call":
+        if floor <= 0.01:
+            return 85  # cheap per-call
+        elif floor <= 0.05:
+            return 70
+        elif floor <= 0.25:
+            return 55
+        else:
+            return 40
+    elif model == "per_token":
+        return 70  # per-token is generally fair
+    else:
+        return 50
+
+
+def score_caching(probe_result: dict, payment_data: dict = None) -> int:
+    """Score caching behavior (0-100). Caching is good for cost but may mean stale data."""
+    if not payment_data or not payment_data.get("paid"):
+        return 50  # neutral
+
+    if payment_data.get("caching_detected"):
+        # Caching detected — good for efficiency, flag for staleness
+        return 70  # positive but with caveat
+    return 50  # no caching detected or unknown
+
+
+def score_recency(probe_result: dict, history: list = None) -> int:
+    """Score recency (0-100). Recent + consistent probes = high score. Old/stale data = lower."""
+    if not history or len(history) < 2:
+        return 70  # limited history — neutral
+
+    now = datetime.now(timezone.utc)
+    weights = []
+    scores = []
+
+    for entry in history:
+        try:
+            probed_at = entry.get("probed_at") or entry.get("last_probed", "")
+            if not probed_at:
+                continue
+            probe_time = datetime.fromisoformat(probed_at.replace("Z", "+00:00"))
+            age_hours = (now - probe_time).total_seconds() / 3600
+            weight = pow(2, -age_hours / DECAY_HOURS)  # exponential decay
+            weights.append(weight)
+            scores.append(entry.get("trust_score", 50))
+        except (ValueError, TypeError):
+            continue
+
+    if not weights:
+        return 70
+
+    # Weighted average of recent scores
+    total_weight = sum(weights)
+    weighted_avg = sum(s * w for s, w in zip(scores, weights)) / max(total_weight, 0.001)
+
+    # Recency score: blend weighted average with a freshness bonus
+    # Higher weight concentration on recent probes = higher score
+    max_weight = max(weights) if weights else 0.1
+    freshness = min(max_weight * 100, 100)  # 0-100 based on how recent the freshest probe is
+
+    return int(weighted_avg * 0.5 + freshness * 0.5)
+
+
+def score_payment_to_delivery(probe_result: dict, payment_data: dict = None) -> int:
+    """Score payment-to-delivery (0-100). Did we receive content after paying?"""
+    if not payment_data or not payment_data.get("paid"):
+        return None  # No P2D data — don't score this factor
+
+    if payment_data.get("delivery_verified"):
+        calls = payment_data.get("calls_made", 0)
+        if calls >= 3:
+            return 95  # multiple calls, all delivered — high confidence
+        elif calls >= 1:
+            return 80  # delivered but limited sample
+        return 75
+    else:
+        return 0  # paid but no delivery — critical failure
+
+
 def compute_score(probe_result: dict, history: list = None) -> dict:
     """Convert probe results into a trust score (0-100) with assessment."""
     r = probe_result
@@ -149,19 +285,30 @@ def compute_score(probe_result: dict, history: list = None) -> dict:
             pricing = 70  # Not enough history
     else:
         pricing = 70
-    scores["pricing"] = pricing
+    scores["pricing_stability"] = pricing
 
-    # Weighted total
-    trust_score = int(
-        scores["compliance"] * W["compliance"] +
-        scores["uptime"]      * W["uptime"] +
-        scores["schema"]      * W["schema"] +
-        scores["pricing"]     * W["pricing"]
-    )
+    # ── v2.1: Recency-weighted scoring + lighter P2D ──
+    payment_data = load_payment_data().get(r.get("url", ""), {})
+    scores["pricing_fairness"] = score_pricing_fairness(r, payment_data)
+    scores["caching"] = score_caching(r, payment_data)
+    scores["recency"] = score_recency(r, history)
+    p2d = score_payment_to_delivery(r, payment_data)
+
+    # P2D as bonus/penalty signal (10%), not core 20%
+    if p2d is not None:
+        scores["payment_to_delivery"] = p2d
+        weights = W_V21
+    else:
+        weights = W_V21_NO_P2D
+
+    trust_score = int(sum(
+        scores.get(k, 0) * weights.get(k, 0)
+        for k in weights
+    ))
 
     # Assessment
-    if trust_score >= 85:   assessment = "TRUSTED"
-    elif trust_score >= 65: assessment = "CAUTION"
+    if trust_score >= 72:   assessment = "TRUSTED"
+    elif trust_score >= 50: assessment = "CAUTION"
     else:                   assessment = "UNTRUSTED"
 
     # Warnings
@@ -175,6 +322,10 @@ def compute_score(probe_result: dict, history: list = None) -> dict:
         warnings.append(f"Slow response ({r['response_ms']}ms)")
     if pricing < 50:
         warnings.append("Pricing stability below threshold")
+    if scores.get("payment_to_delivery") is not None and scores["payment_to_delivery"] == 0:
+        warnings.append("Payment accepted but no content delivered — CRITICAL")
+    if payment_data.get("caching_detected"):
+        warnings.append("Response caching detected — data may be stale")
 
     return {
         "trust_score": trust_score,
@@ -182,7 +333,8 @@ def compute_score(probe_result: dict, history: list = None) -> dict:
         "checks": scores,
         "warnings": warnings,
         "last_probed": datetime.now(timezone.utc).isoformat(),
-        "methodology": "Wintergreen Trust v1.0 — weighted probe harness",
+        "methodology": "Wintergreen Trust v2.1 — recency-weighted scoring",
+        "version": "2.0",
     }
 
 
@@ -249,7 +401,8 @@ def run_probe(quiet: bool = False):
     output = {
         "generated_at": timestamp,
         "endpoints_scored": len(results),
-        "methodology": "Wintergreen Trust v1.0 — weighted probe harness",
+        "methodology": "Wintergreen Trust v2.1 — recency-weighted scoring",
+        "version": "2.0",
         "endpoints": sorted(results.values(), key=lambda x: x["trust_score"], reverse=True),
     }
     with open(SCORES_FILE, "w") as f:

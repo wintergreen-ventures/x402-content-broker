@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wintergreen Trust — x402 Endpoint Trust Scores</title>
+<style>
+  :root { --bg: #0a0a0f; --card: #13131a; --border: #1e1e2a; --text: #e0e0e8; --muted: #6b6b7b; --green: #2ecc71; --amber: #f39c12; --red: #e74c3c; --accent: #7c3aed; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; line-height:1.6; }
+  .container { max-width:900px; margin:0 auto; padding:40px 24px; }
+  h1 { font-size:2em; margin-bottom:8px; }
+  h1 span { color:var(--accent); }
+  .subtitle { color:var(--muted); margin-bottom:32px; }
+  .stat-row { display:flex; gap:16px; margin-bottom:32px; flex-wrap:wrap; }
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; text-align:center; flex:1; min-width:100px; }
+  .stat .num { font-size:1.8em; font-weight:700; }
+  .stat .label { color:var(--muted); font-size:0.85em; }
+  .num.red { color:var(--red); }
+  .num.amber { color:var(--amber); }
+  .num.green { color:var(--green); }
+  table { width:100%; border-collapse:collapse; margin-bottom:32px; }
+  th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-size:0.85em; text-transform:uppercase; }
+  .score { font-weight:700; font-size:1.1em; }
+  .score-trusted { color:var(--green); }
+  .score-caution { color:var(--amber); }
+  .score-untrusted { color:var(--red); }
+  .badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.75em; font-weight:600; }
+  .badge-p2d { background:#1a3a2a; color:var(--green); }
+  .badge-402 { background:#1a2a3a; color:#3498db; }
+  .badge-401 { background:#3a2a1a; color:var(--amber); }
+  .links { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
+  .links a { color:var(--accent); text-decoration:none; border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:0.9em; }
+  .links a:hover { border-color:var(--accent); }
+  .footer { color:var(--muted); font-size:0.85em; margin-top:40px; padding-top:20px; border-top:1px solid var(--border); }
+  .footer a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Wintergreen <span>Trust</span></h1>
+  <p class="subtitle">Independent, verifiable trust scores for x402 payment endpoints. 52 endpoints scored. 1 payment-verified.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num red">0</div><div class="label">TRUSTED (85+)</div></div>
+    <div class="stat"><div class="num amber">13</div><div class="label">CAUTION (65-84)</div></div>
+    <div class="stat"><div class="num red">39</div><div class="label">UNTRUSTED</div></div>
+    <div class="stat"><div class="num green">1</div><div class="label">Payment-Verified</div></div>
+  </div>
+
+  <div class="links">
+    <a href="/trust/scores">📊 JSON API</a>
+    <a href="/trust/check?url=https://blockrun.ai/api/v1/models">🔍 Check Endpoint</a>
+    <a href="https://github.com/wintergreen-ventures/x402-trust">📦 MCP Tool</a>
+    <a href="/trust/report">📄 Full Report</a>
+  </div>
+
+  <h2>Top Endpoints</h2>
+  <table>
+    <tr><th>Rank</th><th>Endpoint</th><th>Score</th><th>Assessment</th><th>Signals</th></tr>
+    <tr><td>1</td><td>2s.io</td><td class="score score-caution">89</td><td>CAUTION</td><td><span class="badge badge-402">Proper 402</span></td></tr>
+    <tr><td>2</td><td>BlockRun</td><td class="score score-caution">80</td><td>CAUTION</td><td><span class="badge badge-p2d">P2D Verified</span></td></tr>
+    <tr><td>3</td><td>JarvisClaw</td><td class="score score-caution">71</td><td>CAUTION</td><td><span class="badge badge-401">401 Pattern</span></td></tr>
+    <tr><td>4</td><td>OneSource</td><td class="score score-caution">71</td><td>CAUTION</td><td></td></tr>
+    <tr><td>5</td><td>dTelecom</td><td class="score score-caution">68</td><td>CAUTION</td><td></td></tr>
+    <tr><td>6</td><td>Wintergreen</td><td class="score score-caution">66</td><td>CAUTION</td><td><span class="badge badge-402">Self</span></td></tr>
+  </table>
+
+  <h2>Key Findings</h2>
+  <p style="color:var(--muted); margin-bottom:8px;">• Only 3 of 52 endpoints return proper x402 (402 Payment Required).</p>
+  <p style="color:var(--muted); margin-bottom:8px;">• 5+ endpoints return 401 (API-key-gated) — they cannot accept x402 payments.</p>
+  <p style="color:var(--muted); margin-bottom:8px;">• BlockRun is the only payment-verified endpoint: 9/9 calls delivered, 100% rate.</p>
+  <p style="color:var(--muted); margin-bottom:8px;">• 35 endpoints are completely unreachable.</p>
+
+  <div class="footer">
+    Wintergreen Trust v2.0 — Deterministic, reproducible, independent. <a href="https://x402.wintergreen.uk/trust/scores">JSON API</a> · <a href="https://github.com/wintergreen-ventures/x402-trust">GitHub</a> · <a href="https://pypi.org/project/x402-trust">PyPI</a>
+  </div>
+</div>
+</body>
+</html>

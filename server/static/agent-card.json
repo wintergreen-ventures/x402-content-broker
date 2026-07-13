@@ -5,7 +5,9 @@
   "base_url": "https://x402.wintergreen.uk",
   "payment_protocol": "x402",
   "payment_version": 2,
-  "networks": ["eip155:8453"],
+  "networks": [
+    "eip155:8453"
+  ],
   "asset": "USDC",
   "pay_to": "0xAe9834d71F1Bd989A0dc17593451af823E31CeeD",
   "contact": "peyton3cramer@gmail.com",
@@ -63,9 +65,11 @@
     "methodology": "https://x402.wintergreen.uk/api/v1/methodology"
   },
   "trust": {
-    "methodology": "Wintergreen Trust v1.0 — weighted probe harness",
+    "methodology": "Wintergreen Trust v2.0 \u2014 payment-verified scoring",
     "badge_available": true,
-    "trust_endpoint": "https://x402.wintergreen.uk/api/v1/trust"
+    "trust_endpoint": "https://x402.wintergreen.uk/api/v1/trust/check",
+    "dashboard": "https://x402.wintergreen.uk/static/trust.html",
+    "report": "State of x402 Trust \u2014 July 2026"
   },
   "stats": {
     "total_endpoints": 16,

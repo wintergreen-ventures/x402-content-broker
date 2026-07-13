@@ -1,7 +1,8 @@
 {
-  "generated_at": "2026-07-12T23:22:37.970069+00:00",
-  "endpoints_scored": 7,
-  "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness",
+  "generated_at": "2026-07-13T23:16:26.009698+00:00",
+  "endpoints_scored": 25,
+  "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring",
+  "version": "2.0",
   "endpoints": [
     {
       "url": "https://blockrun.ai/api/v1/models",
@@ -10,19 +11,265 @@
         "routing",
         "models"
       ],
-      "trust_score": 76,
-      "assessment": "CAUTION",
+      "trust_score": 81,
+      "assessment": "TRUSTED",
       "checks": {
         "compliance": 70,
         "uptime": 100,
         "schema": 50,
-        "pricing": 97.75
+        "pricing_stability": 92.16,
+        "pricing_fairness": 90,
+        "caching": 70,
+        "recency": 88,
+        "payment_to_delivery": 95
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only",
+        "Response caching detected \u2014 data may be stale"
+      ],
+      "last_probed": "2026-07-13T23:16:26.474745+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://api.jarvisclaw.ai/",
+      "name": "JarvisClaw",
+      "tags": [
+        "routing",
+        "models"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 95.75,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 86
       },
       "warnings": [
         "No 402 gating \u2014 may be free-tier only"
       ],
-      "last_probed": "2026-07-12T23:22:38.192951+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:34.012259+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://api.onesource.io/",
+      "name": "OneSource",
+      "tags": [
+        "rpc",
+        "ethereum"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 93.5,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 86
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:34.480970+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://2s.io/",
+      "name": "2s.io",
+      "tags": [
+        "multi-service",
+        "data"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 95.75,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 86
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:34.957660+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.dtelecom.org/",
+      "name": "dTelecom",
+      "tags": [
+        "webrtc",
+        "tts",
+        "stt"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 93.8125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 85
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:36.469455+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://api.nansen.ai/",
+      "name": "Nansen AI",
+      "tags": [
+        "onchain",
+        "analytics"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 95.75,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 86
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:36.653483+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.alchemy.com/",
+      "name": "Alchemy",
+      "tags": [
+        "rpc",
+        "infrastructure"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 95.75,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 86
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:37.597478+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.browserbase.com/",
+      "name": "Browserbase",
+      "tags": [
+        "browser",
+        "automation"
+      ],
+      "trust_score": 75,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 95.75,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 86
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:37.855626+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://surf.cascade.fyi/",
+      "name": "glim.sh",
+      "tags": [
+        "search",
+        "social"
+      ],
+      "trust_score": 73,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 90,
+        "schema": 50,
+        "pricing_stability": 95.5,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 85
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:35.896669+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.wintergreen.uk/health",
+      "name": "Wintergreen",
+      "tags": [
+        "self"
+      ],
+      "trust_score": 73,
+      "assessment": "TRUSTED",
+      "checks": {
+        "compliance": 70,
+        "uptime": 100,
+        "schema": 50,
+        "pricing_stability": 84.0,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 78
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only"
+      ],
+      "last_probed": "2026-07-13T23:16:38.023425+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.agentutility.ai/",
+      "name": "agentutility",
+      "tags": [
+        "multi-service",
+        "utility"
+      ],
+      "trust_score": 60,
+      "assessment": "CAUTION",
+      "checks": {
+        "compliance": 70,
+        "uptime": 40,
+        "schema": 50,
+        "pricing_stability": 79.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 84
+      },
+      "warnings": [
+        "No 402 gating \u2014 may be free-tier only",
+        "Slow response (5422ms)"
+      ],
+      "last_probed": "2026-07-13T23:16:33.620586+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     },
     {
       "url": "https://x402.twit.sh/api/v1/search",
@@ -31,19 +278,22 @@
         "search",
         "social"
       ],
-      "trust_score": 27,
+      "trust_score": 31,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing_stability": 94.16,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:38.501485+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:26.749224+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     },
     {
       "url": "https://x402.ottoai.services/api/v1/search",
@@ -52,19 +302,22 @@
         "multi-service",
         "utility"
       ],
-      "trust_score": 27,
+      "trust_score": 31,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing_stability": 94.16,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:38.771075+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:27.028614+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     },
     {
       "url": "https://claw402.ai/api/v1",
@@ -73,19 +326,22 @@
         "proxy",
         "utility"
       ],
-      "trust_score": 27,
+      "trust_score": 31,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing_stability": 94.16,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.093661+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:27.397754+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     },
     {
       "url": "https://api.tavily.com/search",
@@ -93,59 +349,261 @@
       "tags": [
         "search"
       ],
-      "trust_score": 27,
+      "trust_score": 31,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing_stability": 94.16,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.343382+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:27.631556+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     },
     {
-      "url": "https://exa.ai/api/search",
+      "url": "https://api.exa.ai/search",
       "name": "Exa",
       "tags": [
         "search"
       ],
-      "trust_score": 27,
+      "trust_score": 30,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.492855+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:27.860313+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     },
     {
-      "url": "https://x402.wintergreen.uk/health",
-      "name": "Wintergreen",
+      "url": "https://stableenrich.dev/api",
+      "name": "StableEnrich",
       "tags": [
-        "self"
+        "enrichment",
+        "data"
       ],
-      "trust_score": 27,
+      "trust_score": 30,
       "assessment": "UNTRUSTED",
       "checks": {
         "compliance": 0,
         "uptime": 0,
         "schema": 50,
-        "pricing": 100.0
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
       },
       "warnings": [
         "Endpoint unreachable"
       ],
-      "last_probed": "2026-07-12T23:22:39.618188+00:00",
-      "methodology": "Wintergreen Trust v1.0 \u2014 weighted probe harness"
+      "last_probed": "2026-07-13T23:16:28.073482+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://sol.blockrun.ai/",
+      "name": "BlockRun Solana",
+      "tags": [
+        "routing",
+        "models"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:36.119274+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://defi.hugen.tokyo/",
+      "name": "hugen.tokyo",
+      "tags": [
+        "defi",
+        "multi-service"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.153350+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://api.zerogravity.ai/",
+      "name": "ZeroGravity",
+      "tags": [
+        "search",
+        "ai"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.197006+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.ankr.com/",
+      "name": "Ankr x402",
+      "tags": [
+        "rpc",
+        "infrastructure"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.212052+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://api.quicknode.com/",
+      "name": "QuickNode",
+      "tags": [
+        "rpc",
+        "infrastructure"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.405651+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.birdeye.so/",
+      "name": "Birdeye",
+      "tags": [
+        "crypto",
+        "data"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.614510+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.firecrawl.dev/",
+      "name": "Firecrawl",
+      "tags": [
+        "scraping",
+        "data"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.629040+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
+    },
+    {
+      "url": "https://x402.apify.com/",
+      "name": "Apify",
+      "tags": [
+        "scraping",
+        "automation"
+      ],
+      "trust_score": 30,
+      "assessment": "UNTRUSTED",
+      "checks": {
+        "compliance": 0,
+        "uptime": 0,
+        "schema": 50,
+        "pricing_stability": 85.3125,
+        "pricing_fairness": 50,
+        "caching": 50,
+        "recency": 63
+      },
+      "warnings": [
+        "Endpoint unreachable"
+      ],
+      "last_probed": "2026-07-13T23:16:37.869151+00:00",
+      "methodology": "Wintergreen Trust v2.1 \u2014 recency-weighted scoring"
     }
   ]
 }

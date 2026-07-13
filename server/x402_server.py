@@ -165,7 +165,7 @@ PRICE_ATOMIC = {k: _to_atomic(v) for k, v in PRICING.items()}
 _FREE_PATHS = {
     "/", "/health", "/pay", "/api/v1/catalog", "/.well-known/x402",
     "/favicon.ico", "/openapi.json", "/docs", "/api/v1/trust", "/api/v1/methodology",
-    "/llms.txt", "/.well-known/agent-card.json",
+    "/api/v1/trust/diagnose", "/llms.txt", "/.well-known/agent-card.json",
 }
 
 _BASE_ACCEPTS = {
@@ -510,7 +510,13 @@ async def health():
 
 
 @app.get("/")
-async def root():
+async def root(request: Request):
+    """Serve landing page to browsers, JSON catalog to API clients."""
+    accept = request.headers.get("accept", "")
+    if "text/html" in accept:
+        index_path = STATIC_DIR / "index.html"
+        if index_path.exists():
+            return FileResponse(index_path)
     return {
         "service": "Wintergreen x402 Content Broker",
         "description": "Payment-gated AI agent prompts, trading datasets, and market analysis. Pay with USDC via x402.",
@@ -532,6 +538,7 @@ async def root():
         ],
         "pay_to": PAY_TO_ADDRESS,
         "trust_layer": "https://x402.wintergreen.uk/trust",
+        "trust_diagnose": "/api/v1/trust/diagnose?url=YOUR_ENDPOINT_URL",
         "contact": "peyton3cramer@gmail.com",
     }
 
@@ -917,9 +924,9 @@ async def trust_check(url: str = ""):
     return {
         "url": url,
         "trust_score": 50,
-        "assessment": "UNKNOWN",
+        "assessment": "CAUTION",
         "checks": {"compliance": 0, "uptime": 0, "schema_quality": 0, "pricing_stability": 0},
-        "message": "This endpoint has not been scored yet. Score is neutral (50). Submit for verification via /api/v1/trust/badge.",
+        "message": "This endpoint has not been scored yet. Neutral score (50). Submit for verification via /api/v1/trust/diagnose?url=YOUR_URL or /api/v1/trust/badge.",
         "content_hash": _sign_response({"url": url, "trust_score": 50}),
     }
 
@@ -945,7 +952,7 @@ async def trust_badge(url: str = ""):
     if not url:
         raise HTTPException(status_code=400, detail="Missing query param 'url'")
     url = url.rstrip("/")
-    if url in _TRUST_SCORES and _TRUST_SCORES[url]["trust_score"] >= 80:
+    if url in _TRUST_SCORES and _TRUST_SCORES[url]["trust_score"] >= 72:
         return {
             "url": url,
             "verified": True,
@@ -959,9 +966,301 @@ async def trust_badge(url: str = ""):
         "url": url,
         "verified": False,
         "trust_score": score,
-        "message": f"Score {score}/100. Minimum 80 required for verified badge. Submit for re-evaluation." if score < 80 else "Endpoint not yet scored.",
+        "message": f"Score {score}/100. Minimum 72 required for verified badge. Submit for re-evaluation via /api/v1/trust/diagnose?url={url}." if score < 72 else "Endpoint not yet scored.",
         "content_hash": _sign_response({"url": url, "verified": False}),
     }
+
+
+# ── Trust Diagnostic Endpoint (FREE — real-time endpoint probe with actionable fixes) ──
+@app.get("/api/v1/trust/diagnose")
+async def trust_diagnose(url: str = ""):
+    """Free: Real-time diagnostic probe of an x402 endpoint.
+    Returns specific issues, severity levels, and fix instructions.
+    No payment required — this is the top-of-funnel for trust adoption."""
+    if not url:
+        raise HTTPException(status_code=400, detail="Missing query param 'url'")
+
+    url = url.rstrip("/")
+    import ssl as _ssl
+    _ssl_ctx = _ssl.create_default_context()
+    _ssl_ctx.check_hostname = False
+    _ssl_ctx.verify_mode = _ssl.CERT_NONE
+
+    probed_at = datetime.now(timezone.utc).isoformat()
+    issues = []
+    passes = []
+    raw = {"reachable": False, "status_code": 0, "response_ms": 0, "is_402": False}
+
+    # ── Probe the endpoint ──
+    t0 = time.time()
+    resp_body = ""
+    resp_headers = {}
+    try:
+        req = urllib.request.Request(url, method="GET",
+            headers={"User-Agent": "Wintergreen-Trust-Diagnose/1.0", "Accept": "application/json"})
+        resp = urllib.request.urlopen(req, timeout=10, context=_ssl_ctx)
+        raw["response_ms"] = int((time.time() - t0) * 1000)
+        raw["status_code"] = resp.status
+        raw["reachable"] = True
+        resp_body = resp.read().decode("utf-8", errors="replace")
+        resp_headers = dict(resp.headers)
+    except urllib.error.HTTPError as e:
+        raw["status_code"] = e.code
+        raw["response_ms"] = int((time.time() - t0) * 1000)
+        raw["reachable"] = True
+        try:
+            resp_body = e.read().decode("utf-8", errors="replace")
+        except:
+            pass
+        resp_headers = dict(e.headers) if hasattr(e, 'headers') else {}
+    except Exception as e:
+        raw["errors"] = [str(e)[:200]]
+        raw["response_ms"] = int((time.time() - t0) * 1000)
+
+    # ── Parse response body ──
+    data = {}
+    try:
+        data = json.loads(resp_body) if resp_body else {}
+    except json.JSONDecodeError:
+        issues.append({
+            "severity": "high",
+            "check": "json_response",
+            "detail": "Response body is not valid JSON. x402 endpoints must return JSON.",
+            "fix": "Add x402Version field to your 402 response JSON body. Required key: x402Version with value 2.",
+        })
+
+    # ── Check 1: Reachability ──
+    if raw["reachable"]:
+        passes.append({"check": "reachable", "detail": f"Endpoint reachable in {raw['response_ms']}ms"})
+    else:
+        issues.append({
+            "severity": "critical",
+            "check": "unreachable",
+            "detail": f"Endpoint unreachable: {raw.get('errors', ['Unknown error'])[0][:200]}",
+            "fix": "Ensure your server is running and accessible from the public internet. Check DNS, firewall, and tunnel configuration."
+        })
+
+    # ── Check 2: HTTP status code ──
+    if raw["reachable"]:
+        sc = raw["status_code"]
+        if sc == 402:
+            raw["is_402"] = True
+            passes.append({"check": "402_status", "detail": "Returns HTTP 402 Payment Required — correct x402 gating."})
+        elif sc == 401:
+            issues.append({
+                "severity": "critical",
+                "check": "wrong_status_code",
+                "detail": "Returns HTTP 401 (Unauthorized) instead of 402 (Payment Required). This endpoint uses API-key authentication, not x402 payment protocol.",
+                "fix": "Replace your API-key auth middleware with x402 payment middleware. Return HTTP 402 with 'PAYMENT-REQUIRED' header and JSON body containing 'accepts' array."
+            })
+        elif sc == 200:
+            issues.append({
+                "severity": "critical",
+                "check": "no_payment_gating",
+                "detail": "Returns HTTP 200 — serves content for free with no payment gating. Not a paid x402 endpoint.",
+                "fix": "Add x402 payment middleware to gate your paid endpoints. Return HTTP 402 with payment terms for unauthenticated requests."
+            })
+        elif sc in (403, 404, 502, 503):
+            issues.append({
+                "severity": "high",
+                "check": "error_status",
+                "detail": f"Returns HTTP {sc} — endpoint is reachable but not functioning correctly.",
+                "fix": f"Investigate why your endpoint returns {sc}. Check server logs, route configuration, and upstream dependencies."
+            })
+        else:
+            issues.append({
+                "severity": "medium",
+                "check": "unexpected_status",
+                "detail": f"Returns HTTP {sc} — unexpected status code for an x402 endpoint.",
+                "fix": "x402 paid endpoints should return HTTP 402 for unauthenticated requests. Review your HTTP status code usage."
+            })
+
+    # ── Check 3: x402Version in body ──
+    if raw["is_402"]:
+        if data.get("x402Version"):
+            passes.append({"check": "x402_version", "detail": f"x402Version {data['x402Version']} present in 402 response body."})
+        else:
+            issues.append({
+                "severity": "high",
+                "check": "missing_x402_version",
+                "detail": "Missing 'x402Version' field in 402 response body. Required for Bazaar/x402scan indexing.",
+                "fix": "Add x402Version field to your 402 response JSON body. Required key: x402Version with value 2.",
+            })
+
+    # ── Check 4: Accepts array ──
+    if raw["is_402"]:
+        accepts = data.get("accepts", [])
+        if accepts and isinstance(accepts, list) and len(accepts) > 0:
+            a0 = accepts[0] if isinstance(accepts[0], dict) else {}
+            passes.append({"check": "accepts_array", "detail": f"accepts[] present with {len(accepts)} payment option(s)."})
+
+            # Check pricing format
+            amount = a0.get("amount") or a0.get("maxAmountRequired", "")
+            price_str = a0.get("price", "")
+            if amount and isinstance(amount, str) and amount.isdigit():
+                usd = int(amount) / 1_000_000
+                passes.append({"check": "pricing_format", "detail": f"Pricing in micro-units ({amount} = ${usd:.4f}) — correct format."})
+            elif price_str and price_str.startswith("$"):
+                issues.append({
+                    "severity": "high",
+                    "check": "pricing_format",
+                    "detail": f"Pricing in dollar string format ('{price_str}') instead of micro-units. Bazaar/x402scan may reject this.",
+                    "fix": "Convert pricing to micro-units: multiply USD by 1,000,000. '$0.05' becomes '50000'. Use 'amount' field, not 'price'."
+                })
+            elif amount:
+                issues.append({
+                    "severity": "medium",
+                    "check": "pricing_format",
+                    "detail": f"Pricing format unclear: '{amount}'. Expected integer string in micro-units (e.g., '50000' for $0.05).",
+                    "fix": "Use integer micro-units as a string: '$0.05' → '50000'. Store under 'amount' key in accepts[]."
+                })
+            else:
+                issues.append({
+                    "severity": "high",
+                    "check": "missing_pricing",
+                    "detail": "No 'amount' or pricing field found in accepts[]. Agents cannot determine payment cost.",
+                    "fix": "Add 'amount': '50000' (for $0.05) to your accepts[] entry."
+                })
+
+            # Check network
+            network = a0.get("network", "")
+            if network:
+                passes.append({"check": "network_declared", "detail": f"Network declared: {network}."})
+            else:
+                issues.append({
+                    "severity": "high",
+                    "check": "missing_network",
+                    "detail": "No 'network' field in accepts[]. Required for payment routing.",
+                    "fix": "Add 'network': 'eip155:8453' (Base mainnet) or your supported chain to accepts[]."
+                })
+
+            # Check payTo
+            pay_to = a0.get("payTo") or a0.get("pay_to", "")
+            if pay_to:
+                passes.append({"check": "pay_to", "detail": f"payTo address present."})
+            else:
+                issues.append({
+                    "severity": "high",
+                    "check": "missing_pay_to",
+                    "detail": "No 'payTo' address in accepts[]. Agents cannot route payment.",
+                    "fix": "Add your receiving wallet address as 'payTo' in accepts[]."
+                })
+
+            # Check schemas
+            has_schemas = a0.get("extensions") or a0.get("inputSchema") or a0.get("input_schema")
+            if has_schemas:
+                passes.append({"check": "schemas", "detail": "Input/output schemas declared in accepts[]."})
+            else:
+                issues.append({
+                    "severity": "medium",
+                    "check": "missing_schemas",
+                    "detail": "No input/output schemas in accepts[]. Bazaar discovery requires schemas for better search ranking.",
+                    "fix": "Add bazaar extension with input_schema and OutputConfig to your route registration. See x402 SDK docs for declare_discovery_extension()."
+                })
+        else:
+            issues.append({
+                "severity": "critical",
+                "check": "missing_accepts",
+                "detail": "Missing or empty 'accepts' array in 402 response. This is the core of x402 — agents need payment terms.",
+                "fix": "Add 'accepts': [{'scheme': 'exact', 'network': 'eip155:8453', 'amount': '50000', 'payTo': '0x...', 'asset': '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'}] to your 402 response."
+            })
+
+    # ── Check 5: Payment-Required header ──
+    if raw["is_402"]:
+        has_pr_header = any("payment-required" in k.lower() for k in resp_headers.keys())
+        if has_pr_header:
+            passes.append({"check": "payment_required_header", "detail": "PAYMENT-REQUIRED header present."})
+        else:
+            issues.append({
+                "severity": "medium",
+                "check": "missing_payment_header",
+                "detail": "Missing 'PAYMENT-REQUIRED' header. Some x402 clients rely on this header for payment flow.",
+                "fix": "Add 'PAYMENT-REQUIRED' header with base64-encoded payment terms to your 402 response."
+            })
+
+    # ── Check 6: Response time ──
+    if raw["reachable"]:
+        rt = raw["response_ms"]
+        if rt < 500:
+            passes.append({"check": "response_time", "detail": f"Fast response ({rt}ms)."})
+        elif rt < 2000:
+            passes.append({"check": "response_time", "detail": f"Acceptable response time ({rt}ms)."})
+        elif rt < 5000:
+            issues.append({
+                "severity": "medium",
+                "check": "slow_response",
+                "detail": f"Slow response ({rt}ms). May timeout for agents making rapid decisions.",
+                "fix": "Optimize endpoint performance. Add caching, reduce upstream API calls, or use async processing."
+            })
+        else:
+            issues.append({
+                "severity": "high",
+                "check": "very_slow_response",
+                "detail": f"Very slow response ({rt}ms). Likely to timeout for most agents.",
+                "fix": "Investigate performance bottlenecks. Consider async pre-computation and caching."
+            })
+
+    # ── Compute trust score from diagnostics ──
+    score = 100
+    for issue in issues:
+        if issue["severity"] == "critical":
+            score -= 30
+        elif issue["severity"] == "high":
+            score -= 15
+        elif issue["severity"] == "medium":
+            score -= 7
+        elif issue["severity"] == "low":
+            score -= 3
+    score = max(score, 0)
+
+    if score >= 72:
+        assessment = "TRUSTED"
+    elif score >= 50:
+        assessment = "CAUTION"
+    else:
+        assessment = "UNTRUSTED"
+
+    # ── Fix estimate ──
+    critical_count = sum(1 for i in issues if i["severity"] == "critical")
+    high_count = sum(1 for i in issues if i["severity"] == "high")
+    medium_count = sum(1 for i in issues if i["severity"] == "medium")
+    low_count = sum(1 for i in issues if i["severity"] == "low")
+
+    if critical_count > 0:
+        fix_estimate = "~1-2 hours to resolve critical issues (requires code changes to payment flow)"
+    elif high_count > 0:
+        fix_estimate = "~30-45 minutes to resolve high-severity issues"
+    elif medium_count > 0:
+        fix_estimate = "~15-20 minutes to resolve medium-severity issues"
+    elif low_count > 0:
+        fix_estimate = "~5-10 minutes for minor polish"
+    else:
+        fix_estimate = "No fixes needed — endpoint looks solid!"
+
+    # ── Compile result ──
+    result = {
+        "url": url,
+        "probed_at": probed_at,
+        "reachable": raw["reachable"],
+        "status_code": raw["status_code"],
+        "response_ms": raw["response_ms"],
+        "is_402": raw["is_402"],
+        "trust_score": score,
+        "assessment": assessment,
+        "total_issues": len(issues),
+        "issues": issues,
+        "passes": passes,
+        "fix_estimate": fix_estimate,
+        "next_steps": [
+            "Fix all critical and high-severity issues first.",
+            "Re-submit for diagnosis after fixes: GET /api/v1/trust/diagnose?url=YOUR_URL",
+            "Once score >= 80, request verified badge at /api/v1/trust/badge?url=YOUR_URL",
+            "View the full trust leaderboard at https://x402.wintergreen.uk/trust",
+        ],
+        "methodology": "Wintergreen Trust Diagnostic v1.0 — real-time probe with actionable fixes",
+        "content_hash": _sign_response({"url": url, "score": score, "issues": len(issues)}),
+    }
+    return result
 
 
 # ── Static / payment page ──
