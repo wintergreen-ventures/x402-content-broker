@@ -94,6 +94,11 @@ if _X402_ENABLED:
     fc = HTTPFacilitatorClient(FacilitatorConfig(url=FACILITATOR_URL))
     resource_server = x402ResourceServer(fc).register(NETWORK, ExactEvmServerScheme())
 
+    @app.on_event("startup")
+    async def _init_x402():
+        await resource_server.initialize()
+        print(f"[x402] Resource server initialized — facilitator: {FACILITATOR_URL}")
+
 # ── Pricing (two-tier: discovery $0.01-0.02, premium $0.05-0.25) ──
 PRICING = {
     "search": "$0.01",
