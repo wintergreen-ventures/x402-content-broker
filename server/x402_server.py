@@ -128,7 +128,7 @@ if _X402_ENABLED:
                 fc = HTTPFacilitatorClient(FacilitatorConfig(url=FACILITATOR_URL))
 
             resource_server = x402ResourceServer(fc).register(NETWORK, ExactEvmServerScheme())
-            await resource_server.initialize()
+            resource_server.initialize()
             print(f"[x402] Resource server initialized — facilitator: {FACILITATOR_URL}")
             _setup_done = True
         except Exception as e:
