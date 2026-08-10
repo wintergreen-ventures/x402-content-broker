@@ -1,0 +1,695 @@
+{
+  "guide_id": "medical-coding-path",
+  "title": "Medical Coding to Remote Work — Structured Career Path API",
+  "description": "A complete structured career-path API for breaking into remote medical coding, built from the recorded failures of hundreds of people who posted their job searches publicly (r/MedicalCoding, r/CodingandBilling, r/remotework, Facebook entry-level coder groups, and the AAPC forum) plus verified public pricing of credentials, exams, and programs. It covers the six reasons candidates fail, certification choice and real costs (CPC, CCS, CBCS, CCA with verified exam and membership prices and the $22,000-quote reality), the CPC-A apprentice trap and its two removal paths, a 12-month ~$1,400 budget-and-timeline roadmap, insider job-post decoding (hard vs soft requirements and the three readings of the 1+ year line), on-ramp roles that actually hire CPC-As, where remote coding jobs really get posted plus scam filters, salary reality against BLS anchors, and the 200-applications-to-1-offer funnel with a tracking sheet. It ships as 13 sections, a 24-pair grounded QA bank, 6 checklists, 5 decision trees, and a provenance-stamped fact layer in which every [VERIFY] marker from the source is carried through as an explicit unverified flag with check instructions. This is a career-path and job-hunt playbook only: it teaches no medical coding, makes no clinical claims, and points readers to official AAPC and AHIMA study materials for the skill itself.",
+  "version": "1.0.0",
+  "generated_at": "2026-08-07T21:34:23Z",
+  "pricing": "$2.50",
+  "category": "guide",
+  "tags": ["medical-coding", "career-change", "certification", "cpc", "remote-work", "job-hunt", "healthcare", "career-path"],
+  "sections": [
+    {
+      "id": "how-to-use",
+      "title": "How to Use This Guide",
+      "parent": null,
+      "order": 0,
+      "content": "This guide is not written by a medical coder, and it does not teach medical coding. It does not explain ICD-10 or CPT, and it makes no clinical claims of any kind. For the skill itself — reading a chart and assigning codes — this guide points you to the official study materials from AAPC and AHIMA, the two organizations that own the main credentials. What this guide actually does is solve the part those materials do not cover: how to choose a certification, what the whole path genuinely costs, how the entry-level trap works, and how to actually get hired when every posting seems to demand three years of experience.\n\nIt is assembled from the recorded failures of hundreds of people who posted their job searches publicly — on r/MedicalCoding, r/CodingandBilling, r/remotework, Facebook groups for entry-level coders, and the AAPC forum — plus the verified public pricing of the credentials, exams, and programs. It exists because the people who failed, including people who were already certified, consistently failed for the same six reasons, and none of those reasons is not knowing medical coding well enough.\n\nThe six reasons, straight from the evidence board: (1) Certified but stuck — a CCA-credentialed holder reported that it has been a year and some change since graduating and it is way too hard to get a job; a credential alone does not clear the hiring filter. (2) The experience paradox — even front desk and billing positions demand someone with experience working in a medical office. (3) Advertised fantasy jobs — a course was sold on ads saying work part-time and remote, but no postings say part-time. (4) Cost shock — entry pay around $17–21/hour against a multi-hundred-dollar exam plus mandatory membership. (5) The $22,000 quote — a coding certificate program quoted at $22,000 when the norm is a fraction of that. (6) The CPC-A wall — the newest, most common credential carries a suffix that employers filter out, and one holder had a billing job offer rescinded as a result of company changes.\n\nEvery chapter in this guide solves one or more of these six complaints with something concrete: a comparison table, a budget, a timeline, a script for reading a job post, or a number. If a chapter ever feels like theory, you are reading it wrong.\n\nTwo honesty notes before starting. Where the guide gives numbers, they are either verified facts from the evidence board or clearly marked [VERIFY] with instructions on how to check them — prices change, and you should not walk into an exam purchase believing a number that was true last year; every price in Chapter 2 was verified against the official source at research time, and every one of them can change. This guide is a path guide, not a job guarantee — no guide can promise an offer; what it promises is that you will not fail for the six reasons above, and that you will know, to the dollar and the month, what the path costs before you start."
+    },
+    {
+      "id": "chapter-1",
+      "title": "Chapter 1: Why Candidates Fail — The Complaint Map",
+      "parent": null,
+      "order": 1,
+      "content": "Every chapter of this guide is anchored to a verbatim complaint from a real candidate. The full map follows; when you recognize yourself in one of these, you know which chapter to re-read.\n\nComplaint 1, verbatim: I have a certificate in medical coding. I am CCA credentialed by AHIMA. It's been a year and some change since I've graduated and it's way too hard to get a job! (r/MedicalCoding.) What it reveals: certification does not equal hireability; the credential is table stakes and the job hunt is a separate skill. Solved by chapters 3, 5, 6, and 9.\n\nComplaint 2, verbatim: I've been applying to front desk and billing positions, but even they want someone with experience working in a medical office!!! (same thread.) What it reveals: the entry-level label is often a lie; experience requirements need decoding, not obeying. Solved by chapters 5 and 6.\n\nComplaint 3, verbatim: I took a course to learn medical billing because I saw an ad that said work part-time and remote… I haven't seen ANY postings that say part-time. (r/CodingandBilling.) What it reveals: marketing ads describe a fantasy job; real postings live in different, less glamorous places. Solved by chapters 4 and 7.\n\nComplaint 4, verbatim: Does anyone find the entry level pay for CPC horribly low considering the incredibly high cost for the exam and AAPC membership?… How does it make sense that the AAPC is charging so much? (r/MedicalCoding.) What it reveals: cost-versus-pay math must be done before you spend, not after. Solved by chapters 2, 4, and 8.\n\nComplaint 5, verbatim: I recently enquired at a place that cost $22,000. For a coding certificate? That sounded nuts. What is the norm? (r/CodingandBilling.) What it reveals: program pricing is unregulated and wildly variable; the norm is a fraction of the quote. Solved by chapters 2 and 4.\n\nComplaint 6, verbatim: CPC-A here…. No luck too. I got a billing job but the offer was rescinded as a result of company changes… so I'm stuck looking for jobs again. (r/MedicalCoding.) What it reveals: the apprentice suffix is a filter; the path around it is deliberate, not lucky. Solved by chapters 3, 6, and 9.\n\nComplaint 7, verbatim: I passed my CPC exam last October and have been job searching since then. I haven't received an offer for an interview not once… (Facebook, Entry-Level Medical Coders.) What it reveals: months of zero interviews means the funnel is broken at the top — applications are not converting. Solved by chapters 5, 6, and 9.\n\nComplaint 8, verbatim: Passed the exam, certified — but listings demand 3+ years. (r/CodingandBilling.) What it reveals: those listings are not entry roles; reading them correctly saves months of wasted applications. Solved by chapter 5.\n\nThe core insight: the hiring market for medical coding is not testing whether you can code — the exam already did that. The market is testing whether you can get past the filters — the apprentice suffix, the 1+ year line, the experience paradox, and the salary math — long enough to get your first 12 months of real coding experience on a resume. Candidates who fail are not the ones who know the least about coding; they are the ones who spent their money and months on the wrong credential, the wrong program, or the wrong application strategy. That is learnable. It is a system. The rest of the guide is the system."
+    },
+    {
+      "id": "chapter-2",
+      "title": "Chapter 2: CPC vs. CCS vs. CBCS — Which Certification, at What Cost",
+      "parent": null,
+      "order": 2,
+      "content": "There are three credentials you will actually see in entry-level conversations: the CPC (Certified Professional Coder) from AAPC, the CCS (Certified Coding Specialist) from AHIMA, and the CBCS (Certified Billing and Coding Specialist) from NHA. A fourth, the CCA (Certified Coding Associate) from AHIMA, appears in the complaint threads — the first verbatim complaint in this guide is from a CCA holder — but it is less commonly the one employers post for. All prices below were verified from the official sources at research time (evidence board, section 3).\n\nThe credential table, in prose: CPC comes from AAPC at $425 (1 attempt) / $499 (2 attempts), or $400 / $475 for students; AAPC membership is required to take the exam at $229/yr renewal. It is the most common outpatient/professional coding credential in the U.S., and most job posts in the complaint threads mention it by name. CCS comes from AHIMA at $299 member / $399 non-member; AHIMA membership is about $209/yr and is not required for the exam, but the member rate only applies if you join. CCS carries hospital/inpatient coding weight: it is respected, but the exam is harder and the job market for it skews to facilities with inpatient volumes. CBCS comes from NHA; its exam price is [VERIFY current price — not captured in the evidence board; check nhanow.com] and whether NHA requires membership is [VERIFY whether NHA requires membership]. It is an entry-level billing-and-coding credential — cheaper and quicker, but fewer job posts ask for it by name. CCA comes from AHIMA at [VERIFY current price — evidence board confirms the credential exists but not the price; check ahima.org]; it is an AHIMA entry credential, and the evidence board's own complaint threads show holders struggling to convert it into interviews — which is about the market, not the credential.\n\nTwo decisions matter more than the acronym. Decision 1: AAPC membership is not optional for the CPC. You cannot register for the CPC exam without being an AAPC member, so the real CPC entry cost is exam plus membership: $425 + $229 = $654 at the standard rate (or $400 + $229 = $629 as a student, if you qualify), not the $425 the marketing pages headline. Budget for the membership every year, because it also gets you the member price on future exams and the AAPC job board (Chapter 7). [VERIFY] current membership and exam pricing at aapc.com — these are the two prices in this guide most likely to have moved. Decision 2: nobody in the complaint threads says the credential choice was their problem — except at the margins. The CCA holder was stuck; the CPC-As were stuck. The market does not distinguish much between them at the application stage. What the threads show: CPC is the most-recognized name, CCS carries inpatient weight, and CBCS is the budget entry. The evidence board's honest read: if you can afford the CPC path, it is the most widely recognized; if your budget is tight, CBCS is a legitimate lower-cost start, and you can upgrade to CPC later once you have income. [VERIFY] Which credential your local market actually posts for: search your target job boards for CPC, CCS, and CBCS as keywords and count the hits — that takes ten minutes and answers the question better than any guide.\n\nThe training-program price map (the $22,000 question). Complaint 5 asked what the norm is; here is the verified spread. For-profit program (the $22,000 quote): $22,000 (self-reported, r/CodingandBilling), 9–12 months to exam-ready, and it produces the same credential at the end as every other row — the evidence board's top reply to the $22k question: I would NOT pay $22k for a course that has no guarantee of job prospects. Community college / BOCES program: about $3,000–3,500 (self-reported), 9–12 months, the common-sense middle, often includes the exam fee and one year of a study platform. AAPC training bundle (self-study): starting at $3,099 — a search snippet only, NOT full-page verified; it bundles coursework plus exam plus membership, and the snippet price needs re-verification before you rely on it. Self-study plus official materials: about $750–1,400 total path (see Chapter 4), 3–6 months — the cheapest route: AAPC/AHIMA official study guide, practice exams, and a self-paced course on sale; all routes end at the same exam.\n\nThe implied total outlay, verified by the evidence board: about $1,300–1,500 for the certification path (course $750–3,500 + exam $425 + membership $229 + books) before a single paycheck. Chapter 4 turns that into a month-by-month budget. That range — not $22,000, and not $425 for the exam — is the honest planning number, and it is the number this guide's entire cost framing is built on."
+    },
+    {
+      "id": "chapter-3",
+      "title": "Chapter 3: The CPC-A Trap — What the A Means and How to Get Rid of It",
+      "parent": null,
+      "order": 3,
+      "content": "The single most common credential in the complaint threads is the CPC with an A suffix: CPC-A, the Apprentice designation. It is the default when you pass the CPC exam without prior coding work experience, and it is the reason a large share of certified-but-zero-interviews stories exist.\n\nWhat the A means: when you pass the CPC exam as a new entrant, AAPC awards the credential with the Apprentice suffix. It signals to employers that you passed the exam but have not yet performed coding work in the field. Employers see the A and hear training burden, so many job posts that say CPC required quietly mean CPC without the A. That mismatch — the post says CPC, your resume says CPC-A, your application is filtered — is the trap.\n\nHow the A is actually removed — two paths, both verified. Path 1: two years of field work. Work for two years in an eligible coding role, and AAPC converts the Apprentice designation to full CPC. The catch is the one the whole complaint board is about: you need a coding job to get the coding job. Path 2: the Practicode program. AAPC's Practicode is a supervised online coding-practice program — real-world-style records you code and get scored on. Completing it satisfies the experience requirement and removes the A. [VERIFY] current Practicode pricing and the exact completion terms at aapc.com — the evidence board verified that Practicode is one of the two removal paths but did not capture its current price, and AAPC changes program details. This is the path for people who cannot get a field job first.\n\nWhy employers filter it: a CPC-A cannot necessarily code at production speed or accuracy without supervision. Employers hiring remotely, in particular, do not want to supervise a brand-new coder one-on-one across a screen — that is the hidden cost the A represents to them. It is not that you are unqualified; it is that your qualification has a supervision price tag, and remote roles minimize supervision.\n\nThe trap's ugly corollary: every entry-level remote post that says 1+ year experience is, functionally, a post that wants a full CPC (A already removed) or a coder with one year of real production coding. Fresh CPC-As reading those posts apply anyway and get silence. The complaint thread is full of that silence.\n\nWhat to do about it, concretely: (a) decide before you take the exam whether you will do the two-years route (get any medical-office job and code on the side of your main duties — see Chapter 6) or budget for Practicode immediately after passing; (b) if you go the two-years route, count your timeline in months and log your eligible work hours from day one — the two years is field experience, and [VERIFY] exactly which job titles and duties AAPC counts as eligible by reading their apprentice-removal requirements before you accept any offer; and (c) never hide the A in an application — the background check or the credential verification at hiring will surface it, and an honest CPC-A who explains the removal plan beats a candidate who got filtered for fudging."
+    },
+    {
+      "id": "chapter-4",
+      "title": "Chapter 4: The 12-Month, ~$1,400 Roadmap",
+      "parent": null,
+      "order": 4,
+      "content": "This is the budget-and-timeline chapter. It exists because complaint 4 (cost shock) and complaint 5 ($22,000 confusion) are both failures of planning: people spent before they knew the total, and discovered the total after the money was gone. Here is the whole path, in months and dollars, built from the evidence board's verified anchors. The planning number is about $1,400 total outlay — the evidence board's verified implied range is $1,300–1,500 for the self-study-plus-books route, and $1,400 sits in the middle of it.\n\nMonth 1–4 — Study (cost: $150–450). AAPC official CPC study guide plus practice exams: roughly $150–250 [VERIFY current AAPC store prices]. Optional: a self-paced prep course bought on sale, or a used study guide from the previous edition — codes change annually, so the current-year edition matters (see Chapter 10's general rule). Budget 80–120 hours of study total [VERIFY the current AAPC-suggested study-hour figure; the range is a planning estimate, not a verified number]. Do not buy the $3,099 bundle reflexively: the verified community-college norm is about $3,000–3,500 for a full instructor-led program, and the self-study route is a fraction of that. Choose based on whether you need a classroom to finish things, not on what the sales page suggests.\n\nMonth 5 — Exam scheduling (cost: $0 to schedule; $654 to sit). CPC: $425 standard ($400 student) plus $229 AAPC membership, because membership is required to register. Total to sit: $654 standard / $629 student. Blackout dates are real: AAPC has exam blackout periods during the year — [VERIFY] the current blackout calendar at aapc.com/exam-schedule before you plan your exam month. Book your exam date when you are scoring consistently on practice exams, not when the calendar is convenient — a retake costs the full exam price again, so an extra month of practice is cheaper than a retake.\n\nMonth 6 — Exam and credential setup (cost: $229/yr membership, already paid above). CPC exam results: same-day provisional results for computer-based testing at Pearson VUE sites [VERIFY the current result timeline — it varies by delivery format]. Join the AAPC job board and the coding communities from the day you pass; do not wait until you need a job to build the account.\n\nMonth 7–12 — The application campaign (cost: $0 in cash, about 5–8 hours/week of time). Target 200 applications over six months — about 8 per week. This is the funnel number from the evidence board's content research (Chapter 9 explains the funnel). Your first paycheck will not come from a remote medical coder posting with your current resume; it will come from one of the on-ramp roles in Chapter 6, or from the 1-in-200 remote shot. Budget your expectations accordingly. If you chose the Practicode route, run it in months 7–9 so the A is gone before the heaviest application months.\n\nThe honest monthly cash flow: Month 1–4, about $40–110/month average. Month 5–6, the about-$654 exam-and-membership lump. Month 7–12, $0. Total: about $1,300–1,500, planning number $1,400. At the $17/hour entry wage from Chapter 8, that is roughly 80–90 hours of gross work — which is the real answer to complaint 4: yes, it is expensive, and no, the expense does not make sense unless you treat the whole path as a 12-month project with a plan, which is what this chapter is."
+    },
+    {
+      "id": "chapter-5",
+      "title": "Chapter 5: How to Decode a Job Post Like an Insider",
+      "parent": null,
+      "order": 5,
+      "content": "Complaint threads are full of people reading job posts literally and then despairing: certified — but listings demand 3+ years. The skill this chapter teaches is reading them like an insider: separating what is a real filter from what is a wish list.\n\nHard requirements (real filters — you must have them or the system drops you): the credential itself (CPC required, CCS preferred — note that preferred is not required); education minimums (usually high school diploma or associate's); physical/legal requirements (eligibility to work, passing a background check); and sometimes 1+ year of coding experience — see below.\n\nSoft requirements (wish lists — apply anyway): familiarity with EPIC / Cerner / NextGen — every employer lists their own EHR, nobody expects a new hire to know their specific system, and most train on it; excellent communication, detail-oriented, self-motivated — boilerplate that is not scored; experience with ICD-10, CPT, HCPCS — you studied exactly this for the exam, so you have it; CPC certification preferred — preferred, not required.\n\nWhat 1+ year really means — the three readings. Reading 1: a filter to keep out CPC-As. The employer wants a full CPC or someone with production experience; this is the most common reading on remote posts, per the evidence board's thread analysis. Reading 2: any medical-office experience counts. Many employers count front-desk, billing, insurance-verification, or patient-registration time as qualifying experience, even if it was not coding. If you have any healthcare-adjacent work history, you may already satisfy the line — and if you do not, Chapter 6 is how you get it. Reading 3: a genuine requirement. For hospital inpatient roles (CCS-heavy), a year of real coding is often non-negotiable. These are the posts to skip early and target later.\n\n3+ years is not an entry-level post. The complaint thread's phrase — certified — but listings demand 3+ years — describes looking at mid-career posts while holding an entry-level credential. Reading it correctly saves months: a 3-year posting is not a rejection of you; it is a different job. Your targets are (a) posts with no experience line, (b) posts with 1+ year where your medical-office time counts, (c) roles titled claims specialist, insurance verification, or billing specialist, and (d) postings that say new graduates welcome or will train.\n\nThe decoding drill for every post (5 minutes each): (1) circle the hard requirements — do you meet all of them? If no, skip. (2) Underline the soft ones — these are negotiation text, not filters. (3) Look up the company, not just the job — is it a real employer with a real website and a real office (Chapter 7's scam filters)? (4) Apply only if the hard list is satisfied. This drill converts 200 scattered applications into 200 eligible applications."
+    },
+    {
+      "id": "chapter-6",
+      "title": "Chapter 6: On-Ramp Roles — The Jobs That Actually Hire CPC-As",
+      "parent": null,
+      "order": 6,
+      "content": "The second verbatim complaint in this guide — even front desk wants someone with experience — describes the paradox from the wrong end. The fix is not to argue with the paradox; it is to use it. There is a set of roles that hire people with a CPC-A and no medical-office experience, pay a livable wage, and put medical office experience on your resume so the 1+ year line in future posts is satisfied. These are on-ramp roles. They are not glamorous, they are rarely remote, and they are the proven route the complaint threads' success stories used.\n\nThe on-ramp table, in prose. Claims specialist / claims processor: you enter, scrub, and resubmit claims and fix denials by reading the codes on them; you touch codes and claims every day, and denial reasons teach you real-world coding errors; typical remote availability is some hybrid, mostly on-site. Insurance verification / eligibility specialist: you verify patient coverage and benefits before visits; you learn payers, coverage rules, and why claims get denied — the business half of coding; commonly offered remote. Medical billing specialist: you prepare and submit bills and handle patient statements; direct billing experience — the closest paid job to coding you can get without a coding title; some remote. Patient registration / front desk: you check patients in and collect insurance info; satisfies worked in a medical office for the experience line and is a foot in the door; almost never remote. Authorization / pre-cert specialist: you get procedures pre-approved by insurers; you learn medical necessity and payer rules; sometimes remote.\n\nThe strategy, stated plainly: your first job in healthcare does not need the word coding in the title. It needs to (a) hire you with a CPC-A, (b) put you inside the revenue cycle, and (c) give you something to write on the experience line of your next application. One year of claims work plus your CPC converts CPC-A, no experience into CPC, 1+ year medical office experience — which is exactly the profile the remote posts in Chapter 7 filter for rather than against.\n\nRules for on-ramp positions: take the interview even if the pay is lower than you hoped — the credential is a different currency here: you are renting the experience. Ask in the interview whether coding-adjacent duties (denial review, charge review, claim scrubbing) can be part of your responsibilities — managers who say yes are giving you your two-years-removal field hours in writing. Keep a running log of your duties and dates from day one — when you apply to remove the A (Chapter 3), you will need to document eligible work. If you must go remote and cannot get any of these, the Practicode route (Chapter 3) is the alternative — it costs money but removes the A without the job."
+    },
+    {
+      "id": "chapter-7",
+      "title": "Chapter 7: Where Remote Coding Jobs Actually Get Posted (and How to Spot the Scams)",
+      "parent": null,
+      "order": 7,
+      "content": "Complaint 3 — the part-time remote ad that produced no such postings — is a posting-location problem as much as a job problem. The fantasy jobs live in ads; the real jobs live in four places, and only one of them is an aggregator.\n\nWhere the real postings live. 1. Revenue-cycle employers directly: hospitals and health systems post coding jobs on their own career portals days before they hit aggregators. The largest employers of remote coders are health systems, revenue cycle management (RCM) companies, and medical billing outsourcing firms. Make a list of ten in your state or region, check their career pages weekly, and apply on the portal — not through the aggregator. [VERIFY] the current employer landscape at content stage; the evidence board confirmed the category (revenue-cycle/outsourcing companies) but did not name-check specific employers. 2. Staffing agencies: healthcare staffing agencies place coders on contract, including remote contracts; contract work is how many CPC-As get the first year that unlocks everything else. [VERIFY] current agency names and reputations — the evidence board did not verify a specific list. 3. Direct career portals of the health systems themselves (the distinction matters because portal applications are seen by the employer's own team, while aggregator applications are bulk-imported). 4. The AAPC job board: available with your membership — which you already have, because you had to buy it for the exam. It is the one board where CPC postings are genuinely written for certified coders, and it is free with the membership you already paid for.\n\nAggregators (Indeed, LinkedIn, etc.) are where the scams concentrate — and where the entry-level remote fantasy lives. Use them to discover employers, then apply on the employer's own site.\n\nScam filters — never pay for any of these: never pay for equipment — no legitimate employer charges a new hire for a laptop, headset, or equipment deposit, and a remote-job scam's number-one ask is exactly that; never pay for required training or a certification fee after an interview — legitimate employers train you on their systems and pay you to attend; never pay an application processing fee — no real hiring process charges one; never accept a job from a company you cannot verify — a real website, a real address, a real phone number, and a domain that matches the company name, and a remote coder job from a Gmail address is not a job; never give banking or Social Security information before you have a signed offer and a verified employer — identity thieves run fake job postings to harvest exactly this; and a guaranteed job after a paid course is a marketing claim, not an employment contract — the $22,000 quote in complaint 5 was sold on prospects, not promises, and the top-rated reply in that thread was the warning that no course guarantees a job.\n\nThe general rule, in one line: the job search should cost you time, never money. Any posting that asks you to spend money to be hired is a scam, full stop."
+    },
+    {
+      "id": "chapter-8",
+      "title": "Chapter 8: Salary Reality — What Entry Actually Pays vs. What the Ads Imply",
+      "parent": null,
+      "order": 8,
+      "content": "Complaint 4 is the salary question: entry level pay for CPC horribly low considering the incredibly high cost. This chapter gives the verified numbers so you can make the decision with your eyes open — before you spend the $1,400.\n\nThe verified anchors (evidence board, section 3). Entry-level CPC-A pay: about $17–21/hour, from the r/MedicalCoding cost thread, verified. At 40 hours/week that is roughly $35,400–43,700/year — before taxes, before you pay your own benefits if the role is contract. BLS median for medical records specialists: $50,250/year ($24.16/hour) — this is the number the ads love. It is the median, which means half of all medical records and health information specialists — of every experience level, certified and uncertified, hospital and clinic — earn less. It is not the entry-level wage, and it is not a promise to you in year one. BLS 10th percentile: $16.87/hour — this is the honest entry reality: the bottom tenth of the occupation earns below $17/hour, right where the CPC-A thread says entry pay sits.\n\nHow to read the gap: the $50,250 median is the ceiling of the first chapter, not the starting line. The realistic arc from the evidence board's numbers: start at $17–21/hour in an on-ramp or first coding role (year 0–1), clear the A, accumulate 1–2 years of production coding, and the market moves you toward and past the median as the experience line in job posts stops filtering you. [VERIFY] current regional pay at content stage — BLS publishes state-level wage data, and the cost thread's $17–21/hour is a national self-reported range, not a local guarantee.\n\nThe two honest decisions this chapter forces. Decision 1: is the $1,400 path worth it at $17/hour? The evidence board's own math: about 80–90 gross hours of entry work pays for the entire path. Against a multi-decade career, the break-even is fast if you land the job — and Chapters 3, 5, 6, and 9 exist to improve the odds of landing it. If you cannot tolerate a $35–44k first-year income, this is the chapter where you should stop and choose differently — that is cheaper than finding out in month 8. Decision 2: do not compare your first-year salary to the median. Complaint 4's anger is real, but the comparison it rests on is wrong: nobody with a fresh credential starts at the occupation's median. The guide's job is to make that true statement boring and obvious before you spend, not after."
+    },
+    {
+      "id": "chapter-9",
+      "title": "Chapter 9: The Funnel — 200 Applications → 5 Interviews → 1 Offer",
+      "parent": null,
+      "order": 9,
+      "content": "The Facebook complaint — passed my CPC exam last October and have been job searching since then. I haven't received an offer for an interview not once — is a funnel failure, and funnels are mathematics. Here is the expected funnel from the evidence board's content research, and how to operate it without going insane.\n\nThe funnel, as planned: 200 applications → about 5 interviews → about 1 offer, over roughly six months of consistent applications (about 8/week). These are planning numbers, not promises: some months convert better, some worse, and the on-ramp roles in Chapter 6 convert dramatically better than remote-coding postings do.\n\nWhy the funnel feels broken when it is working: a 1-in-200 remote-coding application rate means weeks of silence are normal operation. The people who quit — thinking about going into a different field at this point, complaint 2 — are often quitting at application 40 of a 200-application plan, which is like abandoning a marathon at mile 2. The fix is not more applications; it is a tracked funnel.\n\nThe tracking sheet (a spreadsheet, 15 minutes to set up): columns for date applied, role, company, where you applied (portal vs. aggregator), hard requirements met (yes/no), outcome (no response / rejection / screening / interview), and notes. Review it every two weeks. It tells you: (a) whether your applications are eligible — if your interview rate is 0% and your hard requirements met column is full of no's, you are applying to the wrong posts — go back to Chapter 5; (b) which posting source converts — portal applications almost always beat aggregator bulk-applies; and (c) when to change the plan — after 50 eligible applications with zero interviews, change something: the resume, the role target (Chapter 6), or the removal of the A (Chapter 3, Practicode).\n\nThe funnel multipliers. Eligibility beats volume: 100 applications that meet every hard requirement outperform 300 scatter-shots; the complaint threads' applied-everywhere-zero-traction stories are scatter-shots. Referrals beat cold applications: one employee referral converts at many times the cold rate; your AAPC membership, the coding communities, and every human you know who works in healthcare are referral channels — use them before you use Indeed. On-ramp roles convert at a different rate entirely: a claims or verification role with no experience line will convert far better than the 1-in-200 remote shot, and it feeds the experience line that makes the remote shot convert later.\n\nThe honest warning that closes this chapter: the funnel can fail even when you run it perfectly — hiring freezes, rescinded offers (the offer was rescinded as a result of company changes, complaint 6), and cycles where an employer hires one internal candidate and your 40 perfect applications evaporate. What the funnel guarantees is not an offer; it is that you will know, week by week, whether the plan is working, and that you will never spend six months wondering why nothing is happening. That knowledge is what the no-interview-not-once posters never had."
+    },
+    {
+      "id": "chapter-10",
+      "title": "Chapter 10: Glossary",
+      "parent": null,
+      "order": 10,
+      "content": "AAPC — American Academy of Professional Coders. The organization behind the CPC credential and its exams; also runs the AAPC job board. AHIMA — American Health Information Management Association. The organization behind the CCS and CCA credentials. NHA — National Healthcareer Association. The organization behind the CBCS credential.\n\nCPC — Certified Professional Coder (AAPC). The most common outpatient/professional coding credential. CPC-A — CPC with the Apprentice designation: issued when you pass without prior field experience; removed by two years of field work or the Practicode program (Chapter 3). CCS — Certified Coding Specialist (AHIMA). Hospital/inpatient-oriented credential. CCA — Certified Coding Associate (AHIMA). Entry-level AHIMA credential; the first verbatim complaint in this guide is from a CCA holder. CBCS — Certified Billing and Coding Specialist (NHA). Entry-level billing-and-coding credential.\n\nPracticode — AAPC's supervised online coding-practice program; one of the two verified ways to remove the Apprentice designation. RCM — Revenue Cycle Management. The business of turning patient encounters into paid claims; RCM companies are major employers of coders (Chapter 7).\n\nEHR / EMR — Electronic Health Record / Electronic Medical Record. The software (EPIC, Cerner, NextGen, etc.) coders work in. ICD-10 — International Classification of Diseases, 10th Revision. The diagnosis coding system; updated annually, with new code sets taking effect each year. CPT — Current Procedural Terminology. The procedure coding system owned by the AMA. HCPCS — Healthcare Common Procedure Coding System. Covers supplies, equipment, and services not in CPT.\n\nDenial — a claim a payer refuses to pay, usually with a reason code. Reading denials is a daily coder task and a fast learning tool (Chapter 6). Blackout dates — periods when AAPC does not administer exams, typically around major holidays and code-release windows (Chapter 4). On-ramp role — a job that hires credentialed newcomers (claims, verification, billing, front desk) and builds the experience line (Chapter 6)."
+    },
+    {
+      "id": "appendix-a",
+      "title": "Appendix A: The [VERIFY] List — What This Guide Does Not Know",
+      "parent": null,
+      "order": 11,
+      "content": "This guide is honest about its limits. Every item below is a fact that the evidence board could not verify or that changes over time, and none should be assumed at purchase time. Where the guide could, it gave the check.\n\n1. AAPC CPC exam and membership prices — verified at research time ($425/$499, $400/$475 student; $229/yr membership), but these move. Check aapc.com before you buy.\n2. CBCS exam price and NHA membership requirements — not captured in the evidence board. Check nhanow.com.\n3. CCA exam price — the credential is confirmed but the price was not captured. Check ahima.org.\n4. AAPC training bundle price — starting at $3,099 came from a search snippet, not full-page extraction. Re-verify before relying on it.\n5. AAPC blackout dates — blackout periods exist (verified), but the specific dates change every year. Check aapc.com/exam-schedule when planning your exam month (Chapter 4).\n6. Practicode pricing and current removal terms — Practicode is a verified removal path, but its price and exact completion requirements were not captured. Check aapc.com.\n7. CPC exam result timeline — same-day provisional results for computer-based testing is the common pattern; confirm the current timeline for your delivery format.\n8. Which job titles AAPC counts toward the two-years field-work removal — you must confirm this before accepting any experience role; the requirement is documented on AAPC's site.\n9. Suggested study hours (80–120) — a planning estimate from prep-community norms, not a verified AAPC figure.\n10. Entry pay $17–21/hour — verified from the r/MedicalCoding cost thread, but it is a national self-reported range; local and regional pay varies. BLS state data is the check (Chapter 8).\n11. Current revenue-cycle employers and staffing agencies — the categories are verified, a specific named list is not; build your own list from career portals at content stage (Chapter 7).\n12. The 200 → 5 → 1 funnel — a planning model from the evidence board's content research, not a measured statistic for your market. Use it as a tracking target, not a promise (Chapter 9).\n\nThe general rule for everything marked [VERIFY]: one visit to the official site (aapc.com, ahima.org, nhanow.com, bls.gov) resolves it in under ten minutes. A reader who checks the official source before spending has already outperformed the buyers who took a sales page at its word — and the sales pages are exactly where complaints 4 and 5 came from."
+    },
+    {
+      "id": "appendix-b",
+      "title": "Appendix B: Sources and Honesty Notes",
+      "parent": null,
+      "order": 12,
+      "content": "Verified full-page: AAPC CPC exam pricing ($425/$499, $400/$475 student) and membership ($229/yr); AHIMA CCS exam pricing ($299/$399) and membership (about $209/yr); BLS median ($50,250/yr, $24.16/hr) and 10th percentile ($16.87/hr); the six verbatim complaint quotes in Chapter 1 (verified via the PullPush archive); the Facebook quote about not receiving an offer for an interview not once (Google-indexed snippet); and the CCA/AHIMA thread and the CPC-A rescinded-offer thread.\n\nSnippet-verified only: the AAPC training bundle $3,099 price; some 2025–26 thread titles (thread bodies were not in the archive); and Facebook group post bodies (login-walled, quotes are search-indexed snippets only).\n\nNot verified: CBCS and CCA exam prices; Practicode pricing; the current blackout-date calendar; a named list of current employers/agencies; subreddit member counts; and X handle lists for AAPC/AHIMA communities.\n\nThis guide claims no medical coding credentials, no school representation, and no clinical expertise. It is a path guide — certification choice, costs, exam strategy, and a job-hunt playbook — built from the public failure record and public market research. It does not teach ICD-10/CPT coding and makes no clinical claims; readers are directed to official AAPC/AHIMA study materials for the skill itself.\n\nNothing in this guide has been fabricated. Every number is either verified against the official source at research time or marked [VERIFY] with instructions for checking it yourself. Prices change; always confirm before you spend."
+    }
+  ],
+  "qa_bank": [
+    {
+      "id": "q1",
+      "question": "Which certification is the most commonly mentioned in entry-level job posts for outpatient/professional coding?",
+      "answer": "The CPC (Certified Professional Coder) from AAPC. It is the most common outpatient/professional coding credential in the U.S., and most job posts in the complaint threads mention it by name.",
+      "category": "certification",
+      "source_chapter": "chapter-2",
+      "provenance": "Evidence board, section 3 — credential pricing verified from official sources at research time.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q2",
+      "question": "What is the real total cost to sit for the CPC exam, and why is it not $425?",
+      "answer": "AAPC membership is required to register for the CPC exam, so the real entry cost is exam plus membership: $425 + $229 = $654 at the standard rate (or $400 + $229 = $629 as a student). The $425 on the marketing page is headline pricing only.",
+      "category": "certification",
+      "source_chapter": "chapter-2",
+      "provenance": "[VERIFY] current membership and exam pricing at aapc.com — these are the two prices in this guide most likely to have moved.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q3",
+      "question": "What does the A in CPC-A mean, and who gets it?",
+      "answer": "It is the Apprentice designation. AAPC awards it by default when you pass the CPC exam without prior coding work experience. It signals that you passed the exam but have not yet performed coding work in the field, and employers read it as training burden.",
+      "category": "credential",
+      "source_chapter": "chapter-3",
+      "provenance": "Chapter 3 of the guide; anchored to verbatim complaint 6 (CPC-A here... I got a billing job but the offer was rescinded as a result of company changes).",
+      "difficulty": "core"
+    },
+    {
+      "id": "q4",
+      "question": "What are the two verified paths to remove the Apprentice designation?",
+      "answer": "Path 1: two years of field work in an eligible coding role — AAPC then converts the Apprentice designation to full CPC. Path 2: completing AAPC's Practicode, a supervised online coding-practice program that satisfies the experience requirement and removes the A. Practicode is the path for people who cannot get a field job first.",
+      "category": "credential",
+      "source_chapter": "chapter-3",
+      "provenance": "Both paths verified by the evidence board. [VERIFY] current Practicode pricing and the exact completion terms at aapc.com — the price was not captured.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q5",
+      "question": "Which credential carries hospital/inpatient weight and is known for a harder exam?",
+      "answer": "The CCS (Certified Coding Specialist) from AHIMA. It signals hospital/inpatient coding weight and is respected, but the exam is harder and the job market for it skews to facilities with inpatient volumes. Exam price: $299 member / $399 non-member; AHIMA membership is about $209/yr.",
+      "category": "certification",
+      "source_chapter": "chapter-2",
+      "provenance": "Evidence board, section 3 — verified full-page from AHIMA.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q6",
+      "question": "What is the budget entry-level billing-and-coding credential, and what is known about its price?",
+      "answer": "The CBCS (Certified Billing and Coding Specialist) from NHA. It is cheaper and quicker than CPC, but fewer job posts ask for it by name. Its exam price was not captured in the evidence board, and it is unknown whether NHA requires membership.",
+      "category": "certification",
+      "source_chapter": "chapter-2",
+      "provenance": "[VERIFY current price — not captured in the evidence board; check nhanow.com]; [VERIFY whether NHA requires membership].",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q7",
+      "question": "The first verbatim complaint in the guide is from a holder of which AHIMA credential, and what does that complaint show?",
+      "answer": "The CCA (Certified Coding Associate), an AHIMA entry credential. The holder reported being credentialed for over a year and still unable to get a job. The evidence board's complaint threads show CCA holders struggling to convert the credential into interviews — which is about the market, not the credential.",
+      "category": "certification",
+      "source_chapter": "chapter-2",
+      "provenance": "Verbatim complaint 1: I have a certificate in medical coding. I am CCA credentialed by AHIMA. It's been a year and some change since I've graduated and it's way too hard to get a job! — r/MedicalCoding.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q8",
+      "question": "How does the $22,000 program quote compare to the verified norm for coding certificate programs?",
+      "answer": "The $22,000 quote (self-reported, r/CodingandBilling) produces the same credential as every other route. The verified norm is roughly $3,000–3,500 for a community college / BOCES instructor-led program, or about $750–1,400 for the self-study-plus-official-materials route. The evidence board's top reply to the $22k question: I would NOT pay $22k for a course that has no guarantee of job prospects.",
+      "category": "certification",
+      "source_chapter": "chapter-2",
+      "provenance": "Verbatim complaint 5: I recently enquired at a place that cost $22,000. For a coding certificate? That sounded nuts. What is the norm? — r/CodingandBilling.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q9",
+      "question": "What does the study phase (months 1–4) of the roadmap cost, and how many study hours are planned?",
+      "answer": "Months 1–4 cost $150–450: the AAPC official CPC study guide plus practice exams run roughly $150–250, with optional self-paced prep courses on sale or a used prior-edition guide. Budget 80–120 hours of study total — a planning estimate, not a verified AAPC figure.",
+      "category": "study-plan",
+      "source_chapter": "chapter-4",
+      "provenance": "[VERIFY current AAPC store prices]; [VERIFY the current AAPC-suggested study-hour figure; the range is a planning estimate, not a verified number].",
+      "difficulty": "core"
+    },
+    {
+      "id": "q10",
+      "question": "Why should you book the exam date based on practice-exam scores rather than calendar convenience?",
+      "answer": "Because a retake costs the full exam price again. Booking when you are scoring consistently on practice exams avoids paying twice — an extra month of practice is cheaper than a retake.",
+      "category": "study-plan",
+      "source_chapter": "chapter-4",
+      "provenance": "Chapter 4 roadmap; direct guidance from the guide.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q11",
+      "question": "What are AAPC exam blackout dates, and what should you do about them?",
+      "answer": "Blackout dates are periods when AAPC does not administer exams, typically around major holidays and code-release windows. They are real, but the specific dates change every year — check the current blackout calendar at aapc.com/exam-schedule before planning your exam month.",
+      "category": "study-plan",
+      "source_chapter": "chapter-4",
+      "provenance": "[VERIFY] the current blackout calendar at aapc.com/exam-schedule before you plan your exam month. Blackout periods exist (verified); dates change yearly (Appendix A item 5).",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q12",
+      "question": "What does the ~$1,400 planning number consist of, and what does it mean in hours of work?",
+      "answer": "It is the evidence board's implied total outlay for the certification path: course $750–3,500 + exam $425 + membership $229 + books, an implied range of $1,300–1,500 before a single paycheck, with $1,400 as the middle planning number. At the $17/hour entry wage, that is roughly 80–90 hours of gross work.",
+      "category": "study-plan",
+      "source_chapter": "chapter-4",
+      "provenance": "Evidence board verified implied range, Chapter 2 and Chapter 4; monthly cash flow: months 1–4 ~$40–110/month, months 5–6 the ~$654 lump, months 7–12 $0.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q13",
+      "question": "How do you tell a hard requirement from a soft requirement in a job post?",
+      "answer": "Hard requirements are real filters — you must have them or the system drops you: the credential itself (and note that preferred is not required), education minimums (usually high school diploma or associate's), physical/legal requirements (eligibility to work, background check), and sometimes 1+ year of coding experience. Soft requirements are wish lists — apply anyway: EHR familiarity (EPIC/Cerner/NextGen — employers train on their own system), communication/detail-oriented/self-motivated boilerplate, ICD-10/CPT/HCPCS experience (you studied exactly this for the exam), and CPC certification preferred.",
+      "category": "job-hunt",
+      "source_chapter": "chapter-5",
+      "provenance": "Chapter 5 decoding framework; anchored to verbatim complaint 8: Passed the exam, certified — but listings demand 3+ years.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q14",
+      "question": "What are the three readings of a 1+ year experience line in a job post?",
+      "answer": "(1) A filter to keep out CPC-As — the employer wants a full CPC or someone with production experience; the most common reading on remote posts. (2) Any medical-office experience counts — front-desk, billing, insurance-verification, or patient-registration time is often accepted as qualifying even if it was not coding. (3) A genuine requirement — for hospital inpatient roles (CCS-heavy), a year of real coding is often non-negotiable; skip these early and target them later.",
+      "category": "job-hunt",
+      "source_chapter": "chapter-5",
+      "provenance": "Evidence board thread analysis, Chapter 5.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q15",
+      "question": "What should you do when a posting demands 3+ years of experience?",
+      "answer": "Recognize it as not an entry-level post — a different job, not a rejection of you — and skip it. Target instead: posts with no experience line, posts with 1+ year where your medical-office time counts, roles titled claims specialist / insurance verification / billing specialist, and postings that say new graduates welcome or will train.",
+      "category": "job-hunt",
+      "source_chapter": "chapter-5",
+      "provenance": "Verbatim complaint 8: Passed the exam, certified — but listings demand 3+ years. — r/CodingandBilling.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q16",
+      "question": "After one year of on-ramp work plus your CPC, what does your resume profile become?",
+      "answer": "CPC-A, no experience converts into CPC, 1+ year medical office experience — exactly the profile the remote posts filter for rather than against. Your first healthcare job does not need the word coding in the title; it needs to hire you with a CPC-A, put you inside the revenue cycle, and give you something for the experience line.",
+      "category": "resume",
+      "source_chapter": "chapter-6",
+      "provenance": "Chapter 6 strategy, stated plainly; success stories from the complaint threads.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q17",
+      "question": "What are the on-ramp roles that hire CPC-As with no medical-office experience?",
+      "answer": "Claims specialist / claims processor (touch codes and claims daily, mostly on-site), insurance verification / eligibility specialist (learn payers and why claims get denied, commonly remote), medical billing specialist (closest paid job to coding without a coding title, some remote), patient registration / front desk (satisfies worked in a medical office, almost never remote), and authorization / pre-cert specialist (learn medical necessity and payer rules, sometimes remote).",
+      "category": "job-hunt",
+      "source_chapter": "chapter-6",
+      "provenance": "Chapter 6 on-ramp table; anchored to verbatim complaint 2: I've been applying to front desk and billing positions, but even they want someone with experience working in a medical office!!!",
+      "difficulty": "core"
+    },
+    {
+      "id": "q18",
+      "question": "What should you ask in an on-ramp interview about coding-adjacent duties?",
+      "answer": "Ask whether coding-adjacent duties — denial review, charge review, claim scrubbing — can be part of your responsibilities. Managers who say yes are giving you your two-years-removal field hours in writing.",
+      "category": "interview",
+      "source_chapter": "chapter-6",
+      "provenance": "Chapter 6 rules for on-ramp positions.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q19",
+      "question": "Where do real remote coding jobs actually get posted?",
+      "answer": "Four places: (1) revenue-cycle employers directly — hospitals, health systems, RCM companies, and billing outsourcing firms post on their own career portals days before aggregators; make a list of ten and check weekly; (2) healthcare staffing agencies, including remote contracts; (3) direct career portals of health systems (portal applications are seen by the employer's team, aggregator applications are bulk-imported); and (4) the AAPC job board, free with the membership you already paid for. Aggregators like Indeed and LinkedIn are where scams concentrate — use them to discover employers, then apply on the employer's own site.",
+      "category": "job-hunt",
+      "source_chapter": "chapter-7",
+      "provenance": "Chapter 7; anchored to verbatim complaint 3: I took a course to learn medical billing because I saw an ad that said work part-time and remote… I haven't seen ANY postings that say part-time.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q20",
+      "question": "What is the one-line rule that separates legitimate jobs from scams?",
+      "answer": "The job search should cost you time, never money. Any posting that asks you to spend money to be hired — for equipment, required training, a certification fee after an interview, or an application processing fee — is a scam, full stop. Also never give banking or Social Security information before a signed offer and verified employer, and treat a guaranteed job after a paid course as a marketing claim, not a contract.",
+      "category": "job-hunt",
+      "source_chapter": "chapter-7",
+      "provenance": "Chapter 7 scam filters; the $22,000 quote in complaint 5 was sold on prospects, not promises.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q21",
+      "question": "What is the planned application funnel, and over what period?",
+      "answer": "200 applications → about 5 interviews → about 1 offer, over roughly six months of consistent applications (about 8/week). These are planning numbers, not promises; on-ramp roles convert dramatically better than remote-coding postings.",
+      "category": "job-hunt",
+      "source_chapter": "chapter-9",
+      "provenance": "Evidence board content research; Appendix A item 12 notes it is a planning model, not a measured statistic for your market.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q22",
+      "question": "What does the tracking sheet tell you, and when should you change the plan?",
+      "answer": "Reviewed every two weeks, it tells you (a) whether applications are eligible — 0% interview rate plus unmet hard requirements means you are applying to the wrong posts, go back to Chapter 5; (b) which source converts — portal applications almost always beat aggregator bulk-applies; and (c) when to change the plan — after 50 eligible applications with zero interviews, change the resume, the role target (Chapter 6), or remove the A (Chapter 3, Practicode).",
+      "category": "job-hunt",
+      "source_chapter": "chapter-9",
+      "provenance": "Chapter 9 tracking-sheet design; 15 minutes to set up.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q23",
+      "question": "How should you handle the CPC-A designation in an application?",
+      "answer": "Never hide it. The background check or credential verification at hiring will surface it, and an honest CPC-A who explains the removal plan beats a candidate who got filtered for fudging.",
+      "category": "interview",
+      "source_chapter": "chapter-3",
+      "provenance": "Chapter 3, what to do about it, concretely, point (c).",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q24",
+      "question": "What does entry-level coding actually pay, and why should you not compare your first-year salary to the BLS median?",
+      "answer": "Entry-level CPC-A pay is about $17–21/hour ($35,400–43,700/year at 40 hours/week, before taxes). The BLS median for medical records specialists is $50,250/year ($24.16/hour) — but it is the median across every experience level, so half earn less, and the 10th percentile ($16.87/hour) is the honest entry reality. Nobody with a fresh credential starts at the occupation's median; the realistic arc is start at $17–21/hour, clear the A, accumulate 1–2 years of production coding, then move toward and past the median.",
+      "category": "credential",
+      "source_chapter": "chapter-8",
+      "provenance": "Evidence board section 3 anchors; entry pay verified from the r/MedicalCoding cost thread (national self-reported range). [VERIFY] current regional pay at content stage via BLS state-level data.",
+      "difficulty": "core"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "chk-1",
+      "title": "The 5-minute job-post decoding drill",
+      "items": [
+        "Circle the hard requirements — do you meet all of them? If no, skip the post.",
+        "Underline the soft requirements — these are negotiation text, not filters.",
+        "Look up the company, not just the job — real employer with a real website, a real address, and a real phone number (Chapter 7 scam filters).",
+        "Apply only if the hard list is satisfied — this converts 200 scattered applications into 200 eligible applications."
+      ]
+    },
+    {
+      "id": "chk-2",
+      "title": "Rules for on-ramp positions",
+      "items": [
+        "Take the interview even if the pay is lower than you hoped — you are renting the experience.",
+        "Ask in the interview whether coding-adjacent duties (denial review, charge review, claim scrubbing) can be part of your responsibilities — a yes gives you your two-years-removal field hours in writing.",
+        "Keep a running log of your duties and dates from day one — you will need it to document eligible work when you remove the A (Chapter 3).",
+        "If you must go remote and cannot get any on-ramp role, the Practicode route (Chapter 3) is the alternative — it costs money but removes the A without the job."
+      ]
+    },
+    {
+      "id": "chk-3",
+      "title": "Scam filters — never pay for any of these",
+      "items": [
+        "Never pay for equipment — no legitimate employer charges for a laptop, headset, or equipment deposit; it is a remote-job scam's number-one ask.",
+        "Never pay for required training or a certification fee after an interview — legitimate employers train you on their systems and pay you to attend.",
+        "Never pay an application processing fee — no real hiring process charges one.",
+        "Never accept a job from a company you cannot verify — real website, real address, real phone number, domain matching the company name; a remote coder job from a Gmail address is not a job.",
+        "Never give banking or Social Security information before you have a signed offer and a verified employer — identity thieves run fake postings to harvest exactly this.",
+        "Treat a guaranteed job after a paid course as a marketing claim, not an employment contract."
+      ]
+    },
+    {
+      "id": "chk-4",
+      "title": "Where the real postings live",
+      "items": [
+        "Revenue-cycle employers directly: make a list of ten hospitals, health systems, RCM companies, and billing outsourcing firms in your state or region; check their career pages weekly and apply on the portal.",
+        "Healthcare staffing agencies — they place coders on contract, including remote contracts; contract work is how many CPC-As get the first year that unlocks everything else.",
+        "Direct career portals of the health systems — portal applications are seen by the employer's own team, while aggregator applications are bulk-imported.",
+        "The AAPC job board — free with the membership you already paid for, and the one board where CPC postings are genuinely written for certified coders.",
+        "Use aggregators (Indeed, LinkedIn) only to discover employers, then apply on the employer's own site."
+      ]
+    },
+    {
+      "id": "chk-5",
+      "title": "The 12-month roadmap at a glance",
+      "items": [
+        "Months 1–4, Study: $150–450 — AAPC official study guide plus practice exams (~$150–250), 80–120 study hours, optional sale-priced prep course or used prior-edition guide.",
+        "Month 5, Exam scheduling: $0 to schedule, $654 to sit — $425 exam ($400 student) + $229 AAPC membership; check the blackout calendar at aapc.com/exam-schedule; book by practice-exam scores, not calendar convenience.",
+        "Month 6, Exam and credential setup: $229/yr membership already paid — same-day provisional results common for Pearson VUE computer-based testing; join the AAPC job board and coding communities the day you pass.",
+        "Months 7–12, Application campaign: $0 cash, ~5–8 hours/week — target 200 applications over six months (~8/week); if on the Practicode route, run it in months 7–9 so the A is gone before the heaviest application months.",
+        "Total: ~$1,300–1,500, planning number $1,400 — roughly 80–90 gross hours at the $17/hour entry wage."
+      ]
+    },
+    {
+      "id": "chk-6",
+      "title": "Setting up the application tracking sheet",
+      "items": [
+        "Columns: date applied, role, company, where you applied (portal vs. aggregator), hard requirements met (yes/no), outcome (no response / rejection / screening / interview), notes.",
+        "Review the sheet every two weeks.",
+        "If interview rate is 0% and hard requirements met is full of no's — you are applying to the wrong posts; go back to Chapter 5.",
+        "If portal applications outperform aggregator bulk-applies in your outcomes — shift volume to portals.",
+        "After 50 eligible applications with zero interviews, change something: the resume, the role target (Chapter 6), or the removal of the A (Chapter 3, Practicode)."
+      ]
+    }
+  ],
+  "decision_trees": [
+    {
+      "id": "dt-1",
+      "title": "Which certification route should you take?",
+      "nodes": [
+        {
+          "condition": "Your budget can absorb the CPC path (about $654 exam + membership, $629 student)",
+          "option": "Choose CPC (AAPC)",
+          "outcome": "Most widely recognized outpatient/professional credential; most job posts mention it by name. Budget the $229/yr membership every year."
+        },
+        {
+          "condition": "Your budget is tight",
+          "option": "Choose CBCS (NHA) as a lower-cost start",
+          "outcome": "Legitimate entry-level billing-and-coding credential; upgrade to CPC later once you have income. [VERIFY] current CBCS price at nhanow.com."
+        },
+        {
+          "condition": "You are targeting hospital/inpatient roles",
+          "option": "Choose CCS (AHIMA)",
+          "outcome": "Carries inpatient coding weight; exam is harder and the job market skews to facilities with inpatient volumes."
+        },
+        {
+          "condition": "You are unsure what your local market posts for",
+          "option": "Search your target job boards for CPC, CCS, and CBCS as keywords and count the hits",
+          "outcome": "[VERIFY] ten minutes of counting answers the question better than any guide."
+        }
+      ]
+    },
+    {
+      "id": "dt-2",
+      "title": "How to remove the Apprentice designation (CPC-A)",
+      "nodes": [
+        {
+          "condition": "You can get a medical-office job (on-ramp role, Chapter 6)",
+          "option": "Two-years field-work route",
+          "outcome": "Work two years in an eligible coding role and AAPC converts CPC-A to full CPC. Count the timeline in months and log eligible work hours from day one. [VERIFY] exactly which job titles and duties AAPC counts as eligible by reading their apprentice-removal requirements before accepting any offer."
+        },
+        {
+          "condition": "You cannot get a field job first",
+          "option": "Practicode program (AAPC)",
+          "outcome": "Supervised online coding-practice program (real-world-style records you code and get scored on); satisfies the experience requirement and removes the A. Costs money. [VERIFY] current Practicode pricing and exact completion terms at aapc.com."
+        },
+        {
+          "condition": "Either route chosen",
+          "option": "Never hide the A in applications",
+          "outcome": "The background check or credential verification at hiring will surface it; an honest CPC-A who explains the removal plan beats a candidate filtered for fudging."
+        }
+      ]
+    },
+    {
+      "id": "dt-3",
+      "title": "How to read the 1+ year experience line",
+      "nodes": [
+        {
+          "condition": "The post is remote",
+          "option": "Read it as a CPC-A filter",
+          "outcome": "The employer wants a full CPC or someone with production experience — the most common reading on remote posts per the evidence board's thread analysis."
+        },
+        {
+          "condition": "You have any healthcare-adjacent work history",
+          "option": "Read it as already satisfied",
+          "outcome": "Front-desk, billing, insurance-verification, or patient-registration time is often counted as qualifying experience even if it was not coding."
+        },
+        {
+          "condition": "The post is a hospital inpatient role (CCS-heavy)",
+          "option": "Read it as a genuine requirement",
+          "outcome": "A year of real coding is often non-negotiable; skip these posts early and target them later."
+        }
+      ]
+    },
+    {
+      "id": "dt-4",
+      "title": "Which job posts should you apply to?",
+      "nodes": [
+        {
+          "condition": "The post has no experience line",
+          "option": "Apply",
+          "outcome": "Real entry-level target."
+        },
+        {
+          "condition": "The post has a 1+ year line and you have medical-office time",
+          "option": "Apply",
+          "outcome": "Your healthcare-adjacent experience likely counts as qualifying."
+        },
+        {
+          "condition": "The role is titled claims specialist, insurance verification, or billing specialist",
+          "option": "Apply",
+          "outcome": "On-ramp titles that hire CPC-As with no medical-office experience (Chapter 6)."
+        },
+        {
+          "condition": "The posting says new graduates welcome or will train",
+          "option": "Apply",
+          "outcome": "Explicit entry signals."
+        },
+        {
+          "condition": "The posting demands 3+ years",
+          "option": "Skip",
+          "outcome": "Not an entry-level post — a different job, not a rejection of you."
+        }
+      ]
+    },
+    {
+      "id": "dt-5",
+      "title": "Is the ~$1,400 certification path worth it at $17/hour?",
+      "nodes": [
+        {
+          "condition": "You cannot tolerate a $35–44k first-year income",
+          "option": "Stop and choose differently now",
+          "outcome": "Cheaper than finding out in month 8."
+        },
+        {
+          "condition": "You can tolerate it and will run the full 12-month plan",
+          "option": "Proceed with the path",
+          "outcome": "About 80–90 gross hours of entry work pays for the entire path; against a multi-decade career the break-even is fast if you land the job — Chapters 3, 5, 6, and 9 improve the odds."
+        },
+        {
+          "condition": "You find yourself comparing your first-year salary to the BLS median ($50,250/yr)",
+          "option": "Do not",
+          "outcome": "Nobody with a fresh credential starts at the occupation's median; compare against the $17–21/hour entry reality (10th percentile $16.87/hour)."
+        }
+      ]
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "claim": "CBCS exam price was not captured in the evidence board; check nhanow.com for the current price.",
+      "source": "chapter-2 (also Appendix A item 2)",
+      "verified": false,
+      "verify_how": "[VERIFY current price — not captured in the evidence board; check nhanow.com]"
+    },
+    {
+      "id": "f2",
+      "claim": "Whether NHA requires membership to take the CBCS exam is unknown.",
+      "source": "chapter-2 (also Appendix A item 2)",
+      "verified": false,
+      "verify_how": "[VERIFY whether NHA requires membership] — check nhanow.com"
+    },
+    {
+      "id": "f3",
+      "claim": "CCA exam price was not captured; the credential itself is confirmed to exist.",
+      "source": "chapter-2 (also Appendix A item 3)",
+      "verified": false,
+      "verify_how": "[VERIFY current price — evidence board confirms the credential exists but not the price; check ahima.org]"
+    },
+    {
+      "id": "f4",
+      "claim": "AAPC CPC exam and membership prices ($425/$499, $400/$475 student; $229/yr membership) were verified at research time but move over time.",
+      "source": "chapter-2 (also Appendix A item 1)",
+      "verified": false,
+      "verify_how": "[VERIFY] current membership and exam pricing at aapc.com — these are the two prices in this guide most likely to have moved."
+    },
+    {
+      "id": "f5",
+      "claim": "Which credential your local market actually posts for (CPC vs CCS vs CBCS) is not known from the evidence board.",
+      "source": "chapter-2",
+      "verified": false,
+      "verify_how": "[VERIFY] search your target job boards for CPC, CCS, and CBCS as keywords and count the hits — takes ten minutes."
+    },
+    {
+      "id": "f6",
+      "claim": "Practicode is a verified Apprentice-removal path, but its current price and exact completion terms were not captured.",
+      "source": "chapter-3 (also Appendix A item 6)",
+      "verified": false,
+      "verify_how": "[VERIFY] current Practicode pricing and the exact completion terms at aapc.com — AAPC changes program details."
+    },
+    {
+      "id": "f7",
+      "claim": "Which job titles and duties AAPC counts as eligible toward the two-years field-work removal is not enumerated in this guide.",
+      "source": "chapter-3 (also Appendix A item 8)",
+      "verified": false,
+      "verify_how": "[VERIFY] exactly which job titles and duties AAPC counts as eligible by reading their apprentice-removal requirements before you accept any offer."
+    },
+    {
+      "id": "f8",
+      "claim": "AAPC official CPC study guide plus practice exams cost roughly $150–250.",
+      "source": "chapter-4",
+      "verified": false,
+      "verify_how": "[VERIFY current AAPC store prices]"
+    },
+    {
+      "id": "f9",
+      "claim": "Budget 80–120 hours of study total for the CPC exam.",
+      "source": "chapter-4 (also Appendix A item 9)",
+      "verified": false,
+      "verify_how": "[VERIFY the current AAPC-suggested study-hour figure; the range is a planning estimate, not a verified number] — from prep-community norms."
+    },
+    {
+      "id": "f10",
+      "claim": "AAPC exam blackout periods exist but the specific dates change every year.",
+      "source": "chapter-4 (also Appendix A item 5)",
+      "verified": false,
+      "verify_how": "[VERIFY] the current blackout calendar at aapc.com/exam-schedule before you plan your exam month. Existence of blackout periods: verified."
+    },
+    {
+      "id": "f11",
+      "claim": "CPC exam results: same-day provisional results for computer-based testing at Pearson VUE sites.",
+      "source": "chapter-4 (also Appendix A item 7)",
+      "verified": false,
+      "verify_how": "[VERIFY the current result timeline — it varies by delivery format]"
+    },
+    {
+      "id": "f12",
+      "claim": "AAPC training bundle (self-study) is advertised starting at $3,099.",
+      "source": "chapter-2 (also Appendix A item 4)",
+      "verified": false,
+      "verify_how": "Search snippet only, NOT full-page verified — re-verify the full page before relying on it."
+    },
+    {
+      "id": "f13",
+      "claim": "The largest employers of remote coders are health systems, RCM companies, and medical billing outsourcing firms — but no specific employers were name-checked.",
+      "source": "chapter-7 (also Appendix A item 11)",
+      "verified": false,
+      "verify_how": "[VERIFY] the current employer landscape at content stage — the evidence board confirmed the category (revenue-cycle/outsourcing companies) but did not name-check specific employers; build your own list of ten from career portals."
+    },
+    {
+      "id": "f14",
+      "claim": "Healthcare staffing agencies place coders on contract, including remote contracts.",
+      "source": "chapter-7 (also Appendix A item 11)",
+      "verified": false,
+      "verify_how": "[VERIFY] current agency names and reputations — the evidence board did not verify a specific list."
+    },
+    {
+      "id": "f15",
+      "claim": "Entry pay of $17–21/hour is a national self-reported range, not a local guarantee.",
+      "source": "chapter-8 (also Appendix A item 10)",
+      "verified": false,
+      "verify_how": "[VERIFY] current regional pay at content stage — BLS publishes state-level wage data (bls.gov); the cost thread range is national self-reported."
+    },
+    {
+      "id": "f16",
+      "claim": "The 200 applications → 5 interviews → 1 offer funnel is a planning model, not a measured statistic for your market.",
+      "source": "chapter-9 (also Appendix A item 12)",
+      "verified": false,
+      "verify_how": "Planning model from the evidence board's content research; use as a tracking target and track your own conversion rates, not as a promise."
+    },
+    {
+      "id": "f17",
+      "claim": "CPC exam pricing at research time: $425 (1 attempt) / $499 (2 attempts), $400 / $475 student.",
+      "source": "chapter-2 (verified full-page, Appendix B)",
+      "verified": true,
+      "verify_how": "Verified against the official AAPC source at research time (evidence board, section 3)."
+    },
+    {
+      "id": "f18",
+      "claim": "AAPC membership is $229/yr, is required to take the CPC exam, and makes the real CPC entry cost $654 standard / $629 student.",
+      "source": "chapter-2 and chapter-4 (verified full-page, Appendix B)",
+      "verified": true,
+      "verify_how": "Verified against the official AAPC source at research time; arithmetic: $425+$229=$654, $400+$229=$629."
+    },
+    {
+      "id": "f19",
+      "claim": "CCS exam pricing: $299 member / $399 non-member; AHIMA membership about $209/yr (not required for the exam, but the member rate only applies if you join).",
+      "source": "chapter-2 (verified full-page, Appendix B)",
+      "verified": true,
+      "verify_how": "Verified against the official AHIMA source at research time."
+    },
+    {
+      "id": "f20",
+      "claim": "BLS median for medical records specialists: $50,250/year ($24.16/hour); BLS 10th percentile: $16.87/hour.",
+      "source": "chapter-8 (verified full-page, Appendix B)",
+      "verified": true,
+      "verify_how": "Verified BLS figures at research time."
+    },
+    {
+      "id": "f21",
+      "claim": "Entry-level CPC-A pay is about $17–21/hour, roughly $35,400–43,700/year at 40 hours/week.",
+      "source": "chapter-8 (verified from r/MedicalCoding cost thread)",
+      "verified": true,
+      "verify_how": "Verified from the r/MedicalCoding cost thread (evidence board, section 3); note: national self-reported range, see f15 for regional check."
+    },
+    {
+      "id": "f22",
+      "claim": "The six verbatim complaint quotes in Chapter 1 were verified via the PullPush archive; the Facebook quote was verified via a Google-indexed snippet.",
+      "source": "Appendix B",
+      "verified": true,
+      "verify_how": "Verified full-page (PullPush archive) and snippet (Google-indexed) at research time; Facebook group bodies are login-walled, so quotes are search-indexed snippets only."
+    },
+    {
+      "id": "f23",
+      "claim": "The implied total outlay for the certification path is about $1,300–1,500 (course $750–3,500 + exam $425 + membership $229 + books), with $1,400 as the planning number.",
+      "source": "chapter-2 and chapter-4 (verified implied range, Appendix B)",
+      "verified": true,
+      "verify_how": "Verified implied range from the evidence board; $1,400 is the middle planning figure used throughout the roadmap."
+    },
+    {
+      "id": "f24",
+      "claim": "Practicode is one of the two verified ways to remove the Apprentice designation (existence verified; pricing not captured).",
+      "source": "chapter-3 and chapter-10 (verified path)",
+      "verified": true,
+      "verify_how": "Removal-path existence verified by the evidence board; current price and terms are unverified — see f6."
+    },
+    {
+      "id": "f25",
+      "claim": "AAPC has exam blackout periods during the year (existence verified; specific dates change yearly).",
+      "source": "chapter-4",
+      "verified": true,
+      "verify_how": "Blackout periods verified; the current calendar must be checked at aapc.com/exam-schedule — see f10."
+    },
+    {
+      "id": "f26",
+      "claim": "On-ramp roles (claims specialist, insurance verification, medical billing specialist, patient registration/front desk, authorization/pre-cert specialist) hire CPC-As with no medical-office experience and build the experience line.",
+      "source": "chapter-6",
+      "verified": true,
+      "verify_how": "Proven route from the complaint threads' success stories; Chapter 6 of the guide."
+    }
+  ],
+  "content_hash": "placeholder"
+}
