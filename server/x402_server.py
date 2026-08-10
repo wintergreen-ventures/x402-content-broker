@@ -152,6 +152,13 @@ PRICING = {
     "methodology_single": "$3.00",
     "methodology_bundle": "$15.00",
     "methodology_premium": "$5.00",
+    # ── Knowledge guide APIs (guide-to-agent conversion, 2026-08-07 + atsa 08-10) ──
+    "knowledge_oral_board_bundle": "$2.50",
+    "knowledge_oral_board_query": "$0.02",
+    "knowledge_medical_coding_bundle": "$2.50",
+    "knowledge_medical_coding_query": "$0.02",
+    "knowledge_atsa_bundle": "$2.50",
+    "knowledge_atsa_query": "$0.02",
 }
 
 
@@ -351,6 +358,65 @@ def _build_payment_routes():
         )},
     }
 
+    # ── Knowledge guide APIs (guide-to-agent conversion) ──
+    _KNOWLEDGE_META = {
+        "oral-board-prep": {
+            "bundle_key": "knowledge_oral_board_bundle",
+            "query_key": "knowledge_oral_board_query",
+            "bundle_desc": ("Firefighter Oral Board Prep — Structured Knowledge API: complaint map of why candidates "
+                            "fail, scoring dimensions (communication, ethics, community fit), 12-slot story bank with "
+                            "compression formula, STAR + community-safety answer frameworks, five killer questions with "
+                            "answer skeletons, 7-day and 3-week prep plans, mock board scripts, debrief checklist, "
+                            "verified $37-397 prep-market pricing, [VERIFY]-stamped fact layer."),
+            "query_desc": "Per-query firefighter oral board prep Q&A — one grounded pair from the 23-pair QA bank, with source chapter and provenance.",
+        },
+        "medical-coding-path": {
+            "bundle_key": "knowledge_medical_coding_bundle",
+            "query_key": "knowledge_medical_coding_query",
+            "bundle_desc": ("Medical Coding to Remote Work — Structured Career Path API: certification choice and real "
+                            "costs, CPC-A trap and removal, 12-month $1,400 roadmap, job-post decoding, on-ramp roles, "
+                            "scam filters, salary reality, 200-to-1 funnel, [VERIFY]-stamped fact layer."),
+            "query_desc": "Per-query medical coding career-path Q&A — one grounded pair from the QA bank, with source chapter and provenance.",
+        },
+        "atsa-prep": {
+            "bundle_key": "knowledge_atsa_bundle",
+            "query_key": "knowledge_atsa_query",
+            "bundle_desc": ("Unofficial ATSA Prep — Structured Knowledge API: what the ATSA is, test-day playbook "
+                            "(Num Lock trap), collision-section scan method, memory chunking + mnemonic mapping, "
+                            "personality consistency rule, 3-4 week prep plan with diagnosis profiles, score timeline, "
+                            "retake playbook, verified $10-99 prep pricing, 18-pair QA bank, [VERIFY]-stamped fact layer."),
+            "query_desc": "Per-query ATSA prep Q&A — one grounded pair from the 18-pair QA bank, with source chapter and provenance.",
+        },
+    }
+    for slug, meta in _KNOWLEDGE_META.items():
+        base_path = f"/api/v1/knowledge/{slug}"
+        qa_path = f"{base_path}/qa"
+        PAYMENT_ROUTES[f"GET {base_path}"] = {
+            "accepts": [_make_accepts(meta["bundle_key"], base_path, meta["bundle_desc"])],
+            "description": meta["bundle_desc"],
+            "mimeType": "application/json",
+            "extensions": {"bazaar": _bazaar_extension(
+                {"type": "object", "properties": {}},
+                {},
+                {"type": "object", "properties": {
+                    "guide_id": {"type": "string"}, "title": {"type": "string"},
+                    "sections": {"type": "array"}, "qa_bank": {"type": "array"}}},
+            )},
+        }
+        PAYMENT_ROUTES[f"GET {qa_path}"] = {
+            "accepts": [_make_accepts(meta["query_key"], qa_path, meta["query_desc"])],
+            "description": meta["query_desc"],
+            "mimeType": "application/json",
+            "extensions": {"bazaar": _bazaar_extension(
+                {"type": "object", "properties": {"q": {"type": "string"}}, "required": ["q"]},
+                {"q": "why do candidates fail"},
+                {"type": "object", "properties": {
+                    "id": {"type": "string"}, "question": {"type": "string"},
+                    "answer": {"type": "string"}, "category": {"type": "string"},
+                    "source_chapter": {"type": "string"}, "provenance": {"type": "string"}}},
+            )},
+        }
+
 
 if _X402_ENABLED:
     _build_payment_routes()
@@ -535,6 +601,12 @@ async def root(request: Request):
             {"method": "GET", "path": "/api/v1/trust/check", "price": PRICING["trust_check"], "description": "Trust score lookup — check endpoint trustworthiness."},
             {"method": "GET", "path": "/api/v1/trust/feed", "price": PRICING["trust_feed"], "description": "Daily trust scores for top endpoints."},
             {"method": "GET", "path": "/api/v1/trust/badge", "price": PRICING["trust_badge"], "description": "Wintergreen Trust Verified badge request."},
+            {"method": "GET", "path": "/api/v1/knowledge/oral-board-prep", "price": PRICING["knowledge_oral_board_bundle"], "description": "Firefighter Oral Board Prep — Structured Knowledge API: complaint map, scoring dimensions, 12-slot story bank, STAR frameworks, five killer questions, 7-day/3-week prep plans, mock scripts, debrief checklist, [VERIFY]-stamped fact layer."},
+            {"method": "GET", "path": "/api/v1/knowledge/oral-board-prep/qa", "price": PRICING["knowledge_oral_board_query"], "description": "Per-query Q&A from the firefighter oral board prep guide — grounded in guide content only, with source chapter and provenance."},
+            {"method": "GET", "path": "/api/v1/knowledge/medical-coding-path", "price": PRICING["knowledge_medical_coding_bundle"], "description": "Medical Coding to Remote Work — Structured Career Path API: certification choice and real costs, CPC-A trap and removal, 12-month $1,400 roadmap, job-post decoding, on-ramp roles, scam filters, salary reality, 200-to-1 funnel, [VERIFY]-stamped fact layer."},
+            {"method": "GET", "path": "/api/v1/knowledge/medical-coding-path/qa", "price": PRICING["knowledge_medical_coding_query"], "description": "Per-query Q&A from the medical coding career-path guide — grounded in guide content only, with source chapter and provenance."},
+            {"method": "GET", "path": "/api/v1/knowledge/atsa-prep", "price": PRICING["knowledge_atsa_bundle"], "description": "Unofficial ATSA Prep — Structured Knowledge API: test-day playbook, collision scan method, memory chunking, personality consistency rule, 3-4 week prep plan, score timeline, retake playbook, verified pricing, [VERIFY]-stamped fact layer."},
+            {"method": "GET", "path": "/api/v1/knowledge/atsa-prep/qa", "price": PRICING["knowledge_atsa_query"], "description": "Per-query Q&A from the ATSA prep guide — grounded in guide content only, with source chapter and provenance."},
         ],
         "pay_to": PAY_TO_ADDRESS,
         "trust_layer": "https://x402.wintergreen.uk/trust",
@@ -574,6 +646,43 @@ async def catalog():
 # ── Methodology packs (free discovery, individual packs are gated) ──
 _METHODOLOGY_DIR = CONTENT_DIR / "prompts" / "packs"
 _methodology_cache: dict = {}
+
+
+# ── Knowledge guides (content/guides/*.json — agent-consumable guide layer) ──
+_GUIDES_DIR = CONTENT_DIR / "guides"
+_guide_cache: dict = {}
+
+
+def _load_guide(slug: str) -> Optional[dict]:
+    """Load a knowledge guide JSON by filename (e.g. 'oral-board-prep').
+    Filename is the handler arg — the internal 'guide_id' field is metadata only."""
+    if slug in _guide_cache:
+        return _guide_cache[slug]
+    path = _GUIDES_DIR / f"{slug}.json"
+    if not path.exists():
+        return None
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    _guide_cache[slug] = data
+    return data
+
+
+def _match_qa(guide: dict, q: str) -> Optional[dict]:
+    """Match a question against qa_bank by normalized keyword overlap. Returns
+    ONE grounded pair (excerpt only — leak prevention + token economics)."""
+    if not q:
+        return None
+    tokens = {t for t in q.lower().replace("?", "").split() if len(t) > 2}
+    if not tokens:
+        return None
+    best, best_score = None, 0
+    for pair in guide.get("qa_bank", []):
+        hay = f"{pair.get('question','')} {pair.get('category','')} {pair.get('source_chapter','')}".lower()
+        score = sum(1 for t in tokens if t in hay)
+        if score > best_score:
+            best, best_score = pair, score
+    return best if best_score > 0 else None
+
 
 def _load_methodology_packs() -> list:
     if "packs" not in _methodology_cache:
@@ -643,6 +752,59 @@ async def get_methodology_bundle():
             "savings": "$6.00"
         }
     }
+
+
+# ── Knowledge guide endpoints (paid: bundle + per-query QA excerpt) ──
+_KNOWLEDGE_ROUTES = {
+    "oral-board-prep": {
+        "summary": "Get Oral Board Prep",
+        "bundle_desc": "Paid: Firefighter Oral Board Prep — full structured knowledge bundle. $2.50",
+        "qa_summary": "Get Oral Board Prep Qa",
+        "qa_desc": "Paid: Firefighter Oral Board Prep — per-query Q&A excerpt. $0.02",
+    },
+    "medical-coding-path": {
+        "summary": "Get Medical Coding Path",
+        "bundle_desc": "Paid: Medical Coding to Remote Work — full structured career-path knowledge bundle. $2.50",
+        "qa_summary": "Get Medical Coding Path Qa",
+        "qa_desc": "Paid: Medical Coding to Remote Work — per-query Q&A excerpt. $0.02",
+    },
+    "atsa-prep": {
+        "summary": "Get Atsa Prep",
+        "bundle_desc": "Paid: Unofficial ATSA Prep — full structured knowledge bundle. $2.50",
+        "qa_summary": "Get Atsa Prep Qa",
+        "qa_desc": "Paid: Unofficial ATSA Prep — per-query Q&A excerpt. $0.02",
+    },
+}
+
+for _slug, _meta in _KNOWLEDGE_ROUTES.items():
+    @app.get(f"/api/v1/knowledge/{_slug}")
+    async def knowledge_bundle(_slug=_slug, _meta=_meta):
+        """Paid: full structured knowledge guide. $2.50."""
+        guide = _load_guide(_slug)
+        if guide is None:
+            raise HTTPException(status_code=404, detail=f"Guide not found: {_slug}")
+        return guide
+
+    @app.get(f"/api/v1/knowledge/{_slug}/qa")
+    async def knowledge_qa(q: str = "", _slug=_slug, _meta=_meta):
+        """Paid: per-query QA excerpt from the grounded QA bank. $0.02. Excerpt only — never the full guide."""
+        guide = _load_guide(_slug)
+        if guide is None:
+            raise HTTPException(status_code=404, detail=f"Guide not found: {_slug}")
+        pair = _match_qa(guide, q)
+        if pair is None:
+            return {"id": "no-match", "matched": False, "query": q}
+        return {
+            "id": pair.get("id"),
+            "matched": True,
+            "query": q,
+            "question": pair.get("question"),
+            "answer": pair.get("answer"),
+            "category": pair.get("category"),
+            "difficulty": pair.get("difficulty"),
+            "source_chapter": pair.get("source_chapter"),
+            "provenance": pair.get("provenance"),
+        }
 
 
 # ── Paid endpoints ──

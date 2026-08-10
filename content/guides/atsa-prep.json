@@ -1,0 +1,587 @@
+{
+ "guide_id": "atsa-prep",
+ "title": "The Unofficial ATSA Prep Guide & Practice Pack",
+ "description": "Structured prep system for the FAA ATSA skill sections: what the test is, the test-day playbook including the Num Lock trap, the collision-section method with the scan-name-decide-act drill, memory chunking for numbers and differences, mnemonic body-mapping for equations with variables, spatial-visual and logical-reasoning methods, the consistency-over-perfection personality rule, a three-to-four-week prep plan with diagnosis profiles, the post-test score timeline, the retake playbook, honest verified pricing across the prep market, plus a 18-pair grounded QA bank, five checklists, three decision trees and a provenance-stamped fact layer with explicit verification notes. Unofficial, not affiliated with the FAA.",
+ "version": "0.1.0",
+ "generated_at": "2026-08-10T00:00:00Z",
+ "pricing": "$2.50",
+ "category": "guide",
+ "tags": [
+  "atsa",
+  "air-traffic-control",
+  "atc-hiring",
+  "test-prep",
+  "aptitude-test",
+  "career-change",
+  "faa",
+  "interview-prep",
+  "collision-avoidance",
+  "memory-training",
+  "study-plan",
+  "career-switcher",
+  "government-jobs",
+  "prep-guide"
+ ],
+ "sections": [
+  {
+   "id": "how-to-use",
+   "title": "Part 1: How to Use This Guide",
+   "parent": null,
+   "order": 0,
+   "content": "This is a structured preparation system for the skill sections of the FAA Air Traffic Skills Assessment (ATSA), the computer test taken at a Pearson VUE center as the second step of the air traffic controller hiring process. It is built from what real test-takers report, not from official FAA materials, because the FAA publishes almost nothing about the test. Claims that come from candidate reports rather than verified sources are flagged with a how-to-check note; a full verification appendix collects them.\nThe honest version of what this guide can and cannot do: it can make the sections concrete, give a practice method, and remove the walking-in-blind anxiety that dominates the evidence threads. It cannot predict a score, and no product can. The test measures aptitude under pressure; the best prep makes sure the right skills are practiced, not that the test has been memorized.\nThis product is not affiliated with, endorsed by, or officially connected to the Federal Aviation Administration (FAA) or the Air Traffic Skills Assessment (ATSA). ATSA is a trademark of the FAA. All practice content is independently developed; it is a training aid, not a copy of the official test."
+  },
+  {
+   "id": "complaint-map",
+   "title": "Part 2: The Complaint Map",
+   "parent": null,
+   "order": 1,
+   "content": "The guide opens with the recorded pain of real candidates, each mapped to the chapter that solves it. I walked out so upset because I was convinced I bombed it, then scored Well Qualified and now work at a facility: the score is a black box for weeks and anxiety is part of the test, solved in the post-test chapter. Nobody actually knows what they did wrong, the entire process is unknown to the public: no feedback after failing means you must prep differently blind, solved in the retake chapter. The collision section was hard and my biggest problem was pressing all clear and then realizing two dots would collide much later: collision judgment under time pressure is the core skill, solved in the collision chapter. Is the memory test really going to give me like six seconds to read and memorize all those, I am averaging fifty percent or less: memory pacing feels impossible without a system, solved in the memory chapters. If I am being honest about myself it could look bad, but if I answer what they look for my answers seem unnatural: the personality section punishes gaming, solved in the personality chapter. It is ninety-nine dollars for one month and eighty-nine for one week, does anyone think it is still worth it: prep pricing is absurd and the affordable middle is missing, solved in the pricing chapter. If you do not pass it this time you will have to wait months before this bid comes up again: one shot per bid makes retakes scarce, solved in the prep and retake chapters. I had a few mess-ups because I fat-fingered the num lock key on the pad: test-day logistics steal points, solved in the test-day chapter."
+  },
+  {
+   "id": "what-is-atsa",
+   "title": "Part 3: What the ATSA Actually Is",
+   "parent": null,
+   "order": 2,
+   "content": "The ATSA is a computer-based test taken in person at a Pearson VUE testing center. It is free of charge. The commonly reported structure is seven sections over roughly two hours fifty minutes, with up to thirty minutes of break time that can be divided as needed. The exact section count and order vary by report; the pointSixtyFive ATSA Compilation thread is the canonical community breakdown and should be checked for the current consensus.\nThe sections that matter: Memory Test 1, Numbers and Differences, where a number appears and a mental operation such as a difference between displayed values is performed under tight pacing. Memory Test 2, Equations with Variables, where an equation with variables flashes for a few seconds and a value must be solved from memory; candidates consistently report roughly six seconds per flash. The ATC Radar Simulation or collision section, where aircraft appear as numbered circles on a radar screen and the candidate presses the number key of a circle about to collide to remove it, or presses zero when the sector is safe; this is the section candidates describe as the hardest. Spatial-visual relationships, logical reasoning, word problems and reading comprehension, which are standard aptitude material with an ATC flavor including charts, ranked orders, seating arrangements and pattern logic. Finally the personality inventory, typically a large forced-choice battery of over one hundred questions in a most or least style, where there are no right answers and consistency is the scored dimension.\nThe test feels like a black box because the FAA does not publish scoring weights, pass thresholds or per-section feedback. Candidates report waiting weeks for a single email that says Well Qualified, Qualified or Not Qualified with no breakdown. That is by design; managing the uncertainty is part of the aptitude being measured."
+  },
+  {
+   "id": "test-day-playbook",
+   "title": "Part 4: Test-Day Playbook: The Cheap Points",
+   "parent": null,
+   "order": 3,
+   "content": "The evidence threads are full of preventable losses that cost nothing to fix. Keyboard map: the collision section uses the number pad; know where every key is before sitting down, with one through nine for aircraft numbers and zero for sector safe. Practice on a number pad rather than the top row, because muscle memory is the whole game.\nThe Num Lock trap: multiple candidates report accidentally hitting Num Lock mid-section and losing responses. Whether a testing center keyboard locks Num Lock on is center-dependent; ask the proctor before the section starts or test a key on the pad in the tutorial, and glance at the Num Lock light between rounds.\nPlastic key covers or keypad stickers can provide tactile insurance so pad keys are distinguishable without looking, but Pearson centers have rules about what may be brought; check the testing center allowed-items policy and ask the proctor when in doubt.\nProctor rules: candidates report being told they must be completely quiet, with no whispering answers even quietly. Practice silently at home and assume no talking, no phone, no notes and no leaving the room without permission.\nBreaks: up to thirty minutes total, dividable. Candidates recommend a short break between the memory sections and the collision section, the two highest-pressure blocks. Drink water, stand up, reset, and use the bathroom during a break rather than during a section.\nWhat to bring: government-issued ID matching the application is the consistent requirement. Current FAA and Pearson requirements change; check the confirmation email received when scheduling."
+  },
+  {
+   "id": "collision-section",
+   "title": "Part 5: The Collision Section: Judgment Under Pressure",
+   "parent": null,
+   "order": 4,
+   "content": "This is the section candidates describe as the hardest and where prep diverges most from the real test. The evidence is consistent: the real test feels denser and faster than practice materials, and the clear timing is unforgiving. It measures conflict detection under divided attention: can you watch multiple converging aircraft, identify which pairs will actually collide, and act before it is too late while the radar keeps moving.\nThe core method is decide, act, then recover. Scan for converging pairs first; two circles on intersecting paths with similar speed are the danger, while parallel or separating pairs are safe. Prioritize collisions over anything else; multiple candidates report the same lesson that when there is a choice between doing math and saving a plane, save the plane, because the collision is the catastrophic failure and a skipped math question costs one answer. Use the no-collision call deliberately; pressing zero when the sector is safe is a real decision, not a default, and candidates report the failure mode of pressing zero and then watching two dots converge because the lookahead is longer than it feels. When in doubt about a pair, ask whether they will be within touching distance while still on screen; if yes, remove one. After a collision, recover rather than melt down; real takers report surviving four to ten collisions and still scoring Well Qualified, though the FAA does not publish the collision tolerance. One collision is not a failed section; the next aircraft still needs your eyes.\nA concrete scan drill: run one round with a single rule, naming the converging pair out loud before pressing anything. Saying it forces the eyes to find the pair before the thumb acts, which is the exact order the real test rewards. Then run a round where only zero is pressed, building the safe-sector call into a reflex, then combine scan, name, decide, act. Ten minutes of that sequence beats an hour of passive watching because the test measures the decision loop, not familiarity with radar graphics."
+  },
+  {
+   "id": "memory-numbers",
+   "title": "Part 6: Memory Test 1: Numbers and Differences",
+   "parent": null,
+   "order": 5,
+   "content": "The reported challenge is tight pacing, a mental operation on a flashed number, and no feedback on whether the answer was right until it is over. The method is to chunk and operate.\nRead the number as chunks rather than digits; eight four seven two becomes eighty-four seventy-two or eight, four-seven, two depending on what the operation needs. Chunking is how working memory holds more and is the same trick used for phone numbers.\nDo the operation immediately in the head, silently because whispering is not allowed on test day. The difference between two flashed numbers should become a reflex: subtract the smaller from the larger, hold the result, type it.\nNever confuse the last number shown with the answer. This is the exact failure candidates report, where the typed answer feels like the number just seen. Say the answer to yourself once before typing so the label sticks.\nMiss one, reset. Candidates report the resilience rule that if you lose the thread, drop it and start fresh from the next number; one lost answer is not the section, a spiral is.\nPractice protocol: ten minutes a day with a flash-and-recall tool. The free simulator companion to this guide has a memory section and any digit-flash app works. Two-second exposure per item, immediate recall, no feedback until the round ends, mirroring real conditions."
+  },
+  {
+   "id": "memory-variables",
+   "title": "Part 7: Memory Test 2: Equations with Variables",
+   "parent": null,
+   "order": 6,
+   "content": "Candidates consistently report the same shock: a multi-variable equation flashes for what feels like six seconds, then vanishes, and a value must be solved from memory. The method is mnemonic mapping.\nAssign variables to physical anchors. The community's most reported system is body mapping, where A is thumb, B is index and C is middle finger, storing each variable's value on the corresponding finger. Mnemonic systems are candidate-reported technique rather than FAA endorsed, but the underlying principle of spatial encoding is standard memory research.\nRead the equation as a sentence rather than symbols. A plus B minus C with values anchored to fingers becomes a tiny physical sequence of thumb plus index minus middle; you recall the motion rather than the symbols.\nDo the arithmetic in the same order every time. Fix a sequence such as left to right or parentheses first and never vary it, because under time pressure the procedure is the memory.\nWhisper rules: on test day you cannot whisper, so practice solving entirely silently with finger positions as the only external aid. If you find yourself needing to say it aloud at home, you are still depending on the wrong channel and should fix that before test day.\nPractice protocol: six-second flash, immediate solve, no feedback until the round ends. Five minutes a day beats thirty minutes once a week because the skill is retrieval speed, and retrieval speed is built in short frequent sessions."
+  },
+  {
+   "id": "spatial-visual",
+   "title": "Part 8: Spatial-Visual Relationships",
+   "parent": null,
+   "order": 7,
+   "content": "The reported shape is pattern-completion and spatial reasoning items with an ATC flavor at a one to two second per item pace, with style details varying by report and the pointSixtyFive compilation describing the section.\nThe method: the eye-reversal rule. Candidates report the classic trap that the correct answer is often the mirror or rotation of the obvious one; if an option looks like the pattern but reversed, check whether the reversal is the intended answer. This is a candidate-reported heuristic.\nWarm up before the section. The first few items set the pace, so do two or three deliberately slowly to calibrate then accelerate. The evidence threads describe candidates finding their rhythm mid-section, which is lost points.\nOne to two seconds per item maximum. The pace is the test. When you hesitate past the rhythm, guess and move on; a wrong answer on one item is cheaper than losing the section's pacing."
+  },
+  {
+   "id": "logical-reasoning",
+   "title": "Part 9: Logical Reasoning, Word Problems and Reading Comprehension",
+   "parent": null,
+   "order": 8,
+   "content": "The reported shapes are seating arrangements, ranked orders, charts and passage-based questions with ATC context.\nThe method: draw the arrangement. Seating and ranking questions are solved on paper or in the scratch space by drawing the table, writing the order and filling from the constraints; never hold it in your head.\nRanked-order traps: the classic error is answering who is second when the question asked who is last, or the reverse. Circle the question word before reading the options.\nChart questions: read the axes first. Determine what is being measured, in what units and over what period; candidates report losing points by answering from the chart's shape rather than its labels.\nReading comprehension: passage first, question second, evidence third. Skim the passage, read the question, then find the sentence that answers it. The answer must trace to a sentence rather than to an inference about the topic."
+  },
+  {
+   "id": "personality-section",
+   "title": "Part 10: The Personality Section: Consistency Beats Perfection",
+   "parent": null,
+   "order": 9,
+   "content": "This is the section candidates understand least, and the evidence threads show why: it feels like it should be gameable, and the reports say gaming it backfires.\nCandidates report a large forced-choice battery, roughly one hundred or more questions, choosing the response that is most like you and least like you across repeated dimensions. There are no objectively correct answers, and the exact question count and format come from candidate reports.\nThe trap: if I am honest, my answers might look bad, but if I answer what they want it looks unnatural. The reported consequence of strategizing is inconsistency. Repeated questions are the same construct asked different ways; if you answer what you think they want each time, your answers stop matching each other, and the inconsistency is the signal.\nThe method is to be consistent rather than perfect. Answer as yourself with first instinct, because the first response that feels true is the one you will repeat consistently; the strategic answer changes by question while the true one does not. Watch the forced-choice mechanics; most and least batteries force a pick between the stronger and weaker of two traits, so pick the one that is more true and move on, because agonizing burns time and produces answers that drift. Understand the liars signal; candidates report and the community consensus holds that people who try to project a perfect profile score worse because the inconsistency shows up, though there is no official confirmation. The safest strategy is the one that needs no memory: be yourself, every time. If you took the test before and answered differently the second time, the exact failure one three-time taker reported, that is the mechanism; same person, same answers, every attempt."
+  },
+  {
+   "id": "prep-plan",
+   "title": "Part 11: The Three to Four Week Prep Plan",
+   "parent": null,
+   "order": 10,
+   "content": "The typical window from application to test day is roughly three to four weeks, depending on the bid, so check the confirmation email. Candidates who fail consistently report either under-preparing by walking in blind or over-preparing with weeks of expensive prep that did not match the real test. This plan is the middle: daily, short, section-true.\nWeek one, diagnose. Days one and two, take one full-length practice pass using the free simulator or the ten dollar app to find weak sections; do not study yet, measure. Days three through five, thirty minutes per day on the two weakest sections, which for most people are collision and memory. Days six and seven, repeat the diagnosis; the sections that moved are where time goes.\nHow to read the diagnosis: most candidates land in one of three profiles. The collision-heavy profile, collision accuracy under sixty percent while memory holds, needs scan drills first with fewer aircraft and slower closing speeds and deliberate safe-versus-converging calls, then density up. The memory-heavy profile, digits and variables bleeding together, needs chunking and mnemonic work before any timing pressure: get the recall method solid at your own pace, then add the flash timer. The pace profile, everything roughly correct but too slow, needs the one to two second rhythm drills: force the decision, accept the wrong answers, build the tempo. Identifying the profile in week one makes weeks two and three efficient instead of busy.\nWeek two, method. Forty-five minutes per day alternating collision drills, memory drills for numbers and variables, and one full mixed session, using the mnemonic systems every session until automatic. Sunday, a full timed run scored and compared to week one.\nWeek three, simulate. Forty-five to sixty minutes per day, but every session is timed, silent and section-sequenced like the real test: memory, spatial, collision, with a short break. Practice the keyboard map blind with hands on the pad and eyes on the screen. One full-length simulation mid-week and one on Sunday.\nWeek four, rehearse. Taper to thirty minutes per day with review only in the last two days; do not learn new material in the final forty-eight hours. The day before: logistics check of ID, center address, arrival time and what to bring, light practice and sleep. The evidence threads are full of people who lost points to fatigue and logistics rather than ability.\nThe overstudying warning: the thread about studying three weeks with JobTestPrep and still getting Not Qualified is the cautionary tale that prep which does not match the test's pressure does not transfer. The point of this plan is pressure-matched practice, not volume."
+  },
+  {
+   "id": "after-the-test",
+   "title": "Part 12: After the Test: The Silence, Decoded",
+   "parent": null,
+   "order": 11,
+   "content": "Candidates report weeks of silence after the test, then a single email with a rating; reported timelines vary by bid and two to six weeks is the expected range.\nThe ratings: Well Qualified is the strongest band, Qualified is the mid band, and Not Qualified or Not Referred means the bid's bar was not cleared. The FAA's exact referral bands and their current meaning are published in the job announcement, which is the authoritative source for a given bid.\nWhat the I-thought-I-bombed-it phenomenon means: a striking share of the evidence threads are people who walked out certain they failed and then got Well Qualified. The test is designed so you do not know how you did; the uncertainty is the experience. Do not read your performance in the room as your score; wait for the email.\nWhat to do while waiting: nothing changes the score. Rest, apply to the next bid when it opens, and keep the prep light so a retake, if needed, starts from a warm baseline rather than cold."
+  },
+  {
+   "id": "retake-playbook",
+   "title": "Part 13: Failed? The Retake Playbook",
+   "parent": null,
+   "order": 12,
+   "content": "The reality candidates report: you cannot retake the ATSA until the next bid opens, and bids come in waves months apart. The bid cadence changes, so check the FAA hiring announcement calendar. This is the scarcity that makes each attempt expensive, and it is also why a structured retake plan matters.\nWhat you can know: the email gives a rating band and nothing else. The FAA does not tell you which section failed, what your score was, or how close you came, and no official per-section feedback is published.\nWhat the evidence says about retakers: the three-time taker reports Well Qualified on the first attempt and Qualified on the next two, and thought they failed every time; the score does not move the way people expect. One retaker's reported cause of regression was answering the personality section differently the second time; consistency is a scored dimension, so changing answers between attempts changes the profile. Retakers who improve report doing the same core method work on collision and memory, not buying more prep.\nThe retake plan: first, do not buy new prep to fix a diagnosis you do not have. The no-feedback problem means more of the same materials will not tell you more; the affordable tools cover the same sections as the ninety-nine dollar platforms, and the difference is practice design, not content volume. Second, rebuild from the fundamentals; collision scanning and memory chunking are the two skills that dominate candidate reports, and six weeks of daily twenty-minute drills on those two beats any cram. Third, reapply on the next bid with the same consistent answers: same method, same personality answers, same prep routine, removing every variable you control so the test measures the aptitude rather than the variance you introduced."
+  },
+  {
+   "id": "pricing",
+   "title": "Part 14: The Honest Pricing Chapter",
+   "parent": null,
+   "order": 13,
+   "content": "The market, verified in August 2026: JobTestPrep ATSA PrepPack is seventy-nine to ninety-nine dollars with one week to three month tiers, though exact tiers differ between a candidate report of eighty-nine dollars for one week and ninety-nine for one month and a listing review of seventy-nine for one week, eighty-nine for one month and ninety-nine for three months. ATC Preparation ATSA Preparation Suite is fifty-nine ninety-nine for a thirty-day recurring subscription. Prepopedia Complete ATSA Practice is forty-nine dollars one-time with three-month unlimited access, snippet-verified. Peterson's AT-SA Exam Prep is fifty-nine dollars per month recurring, snippet-verified. The ATSAPro app is roughly ten dollars one-time. Free tiers exist from ATC Preparation Level 1, 123atc, and browser simulators at zero dollars.\nWhat the expensive tiers actually buy is repetition volume, section-mapped question banks and, on the highest tiers, multiple full-length practice tests. That is real value if used. The evidence thread's honest summary: one candidate skipped the ninety-nine dollar pack, just tried looking to see what to expect, and scored Well Qualified. Another called the ninety-nine dollar pack not worth at all and recommended the ten dollar app for the basics.\nThe honest recommendation: this guide, the free simulator companion and one cheap full-length practice pass cover the same sections as the ninety-nine dollar platforms at a fraction of the cost, if the daily drills are actually done. The thing expensive tiers cannot buy is pressure-matched practice; that is a habit, not a product. If a full-length simulation beyond the free one is wanted, the ten dollar app or a single month of a mid-tier platform is the reasonable add, not the ninety-nine dollar subscription used for two weeks."
+  }
+ ],
+ "qa_bank": [
+  {
+   "id": "q1",
+   "question": "How long is the ATSA and how many sections does it have?",
+   "answer": "The commonly reported structure is seven sections over roughly two hours fifty minutes at a Pearson VUE center, with up to thirty minutes of dividable break time. The exact count and order vary by report, so check the pointSixtyFive ATSA Compilation thread for current consensus.",
+   "category": "structure",
+   "difficulty": "basic",
+   "source_chapter": "Part 3",
+   "provenance": "candidate reports / pointSixtyFive"
+  },
+  {
+   "id": "q2",
+   "question": "Is the ATSA free to take?",
+   "answer": "Yes, the ATSA itself is free of charge; you take it in person at a Pearson VUE testing center. The cost is in prep materials, which range from free simulators to ninety-nine dollar platforms.",
+   "category": "structure",
+   "difficulty": "basic",
+   "source_chapter": "Part 3",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q3",
+   "question": "How does the collision section work?",
+   "answer": "Aircraft appear as numbered circles on a radar screen. You press the number key of a circle about to collide to remove it, or press zero when the sector is safe. It measures conflict detection under divided attention and is the section candidates describe as hardest.",
+   "category": "collision",
+   "difficulty": "basic",
+   "source_chapter": "Part 5",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q4",
+   "question": "What is the core decision rule in the collision section?",
+   "answer": "Prioritize collisions over anything else. When there is a choice between doing math and saving a plane, save the plane: the collision is the catastrophic failure and a skipped math question costs one answer.",
+   "category": "collision",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 5",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q5",
+   "question": "How many collisions can you survive and still score Well Qualified?",
+   "answer": "Real takers report surviving four to ten collisions and still scoring Well Qualified, but the FAA does not publish the collision tolerance. Treat that range as directional rumor, not specification, and treat every collision as expensive but not fatal.",
+   "category": "collision",
+   "difficulty": "advanced",
+   "source_chapter": "Part 5",
+   "provenance": "candidate reports only; not officially published"
+  },
+  {
+   "id": "q6",
+   "question": "What is the Num Lock trap?",
+   "answer": "Multiple candidates report accidentally hitting Num Lock mid-collision-section and losing responses. Whether the testing center keyboard locks Num Lock on is center-dependent; ask the proctor before the section starts or test a key in the tutorial, and glance at the Num Lock light between rounds.",
+   "category": "test-day",
+   "difficulty": "basic",
+   "source_chapter": "Part 4",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q7",
+   "question": "How do you handle the memory flash timing?",
+   "answer": "Chunk the number into groups rather than individual digits, do the operation immediately and silently, and never confuse the last number shown with your answer. Miss one, reset, and start fresh from the next number rather than spiraling.",
+   "category": "memory",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 6",
+   "provenance": "candidate reports + memory research"
+  },
+  {
+   "id": "q8",
+   "question": "What mnemonic system do candidates use for the variable equations?",
+   "answer": "Body mapping: assign variables to physical anchors such as A as thumb, B as index and C as middle finger, storing each variable's value on the corresponding finger. Read the equation as a sentence and do the arithmetic in the same order every time.",
+   "category": "memory",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 7",
+   "provenance": "candidate-reported technique"
+  },
+  {
+   "id": "q9",
+   "question": "Should you try to game the personality section?",
+   "answer": "No. The reported consequence of strategizing is inconsistency: repeated questions are the same construct asked different ways, and answering what you think they want each time makes your answers stop matching each other. Answer as yourself with first instinct, every time, on every attempt.",
+   "category": "personality",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 10",
+   "provenance": "candidate reports; community consensus, not official"
+  },
+  {
+   "id": "q10",
+   "question": "What do WQ, Q and NR mean?",
+   "answer": "Well Qualified is the strongest band, Qualified is the mid band, and Not Qualified or Not Referred means the bid's bar was not cleared. The FAA's exact referral bands and their current meaning are published in the job announcement you applied under.",
+   "category": "results",
+   "difficulty": "basic",
+   "source_chapter": "Part 12",
+   "provenance": "job announcement is authoritative"
+  },
+  {
+   "id": "q11",
+   "question": "Why do people think they failed when they actually passed?",
+   "answer": "The test is designed so you do not know how you did; the uncertainty is the experience. A striking share of evidence threads are people who walked out certain they failed and then scored Well Qualified. Do not read your in-room performance as your score; wait for the email.",
+   "category": "results",
+   "difficulty": "basic",
+   "source_chapter": "Part 12",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q12",
+   "question": "How long do you wait for ATSA results?",
+   "answer": "Candidates report weeks of silence, then a single email with a rating. Reported timelines vary by bid, with two to six weeks the expected range. Nothing you do while waiting changes the score.",
+   "category": "results",
+   "difficulty": "basic",
+   "source_chapter": "Part 12",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q13",
+   "question": "What should you do differently on a retake?",
+   "answer": "Do not buy new prep to fix a diagnosis you do not have; the affordable tools cover the same sections as the expensive platforms. Rebuild the two fundamentals, collision scanning and memory chunking, with daily short drills, and reapply with the same consistent answers on every attempt.",
+   "category": "retake",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 13",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q14",
+   "question": "Can you change your personality answers between attempts?",
+   "answer": "You can, but you should not. Consistency is a scored dimension; one retaker's reported cause of regression was answering the personality section differently the second time. Same person, same answers, every attempt.",
+   "category": "personality",
+   "difficulty": "advanced",
+   "source_chapter": "Part 13",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q15",
+   "question": "Is the ninety-nine dollar prep worth it?",
+   "answer": "One candidate skipped it, practiced with the ten dollar app, and scored Well Qualified; another called it not worth at all. The expensive tiers buy repetition volume and full-length tests, which is real value if used. The guide plus a free simulator plus one cheap full-length pass covers the same sections if the daily drills are done.",
+   "category": "pricing",
+   "difficulty": "basic",
+   "source_chapter": "Part 14",
+   "provenance": "candidate reports + verified vendor pricing"
+  },
+  {
+   "id": "q16",
+   "question": "What is the one-to-two second pace rule?",
+   "answer": "In the spatial-visual section the pace is the test: one to two seconds per item maximum. When you hesitate past the rhythm, guess and move on, because a wrong answer on one item is cheaper than losing the section's pacing.",
+   "category": "spatial",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 8",
+   "provenance": "candidate reports"
+  },
+  {
+   "id": "q17",
+   "question": "How do you solve seating and ranking questions?",
+   "answer": "Draw the arrangement: draw the table, write the order and fill from the constraints in the scratch space. Never hold it in your head, and circle the question word before reading the options to avoid the second-versus-last trap.",
+   "category": "logical",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 9",
+   "provenance": "standard test technique"
+  },
+  {
+   "id": "q18",
+   "question": "What is the three-week prep structure?",
+   "answer": "Week one diagnose with a full practice pass and thirty minutes a day on weak sections. Week two method with forty-five minutes a day alternating collision and memory drills plus a Sunday timed run. Week three simulate with timed silent section-sequenced sessions and two full-length runs. Week four taper to thirty minutes review only.",
+   "category": "plan",
+   "difficulty": "basic",
+   "source_chapter": "Part 11",
+   "provenance": "guide method"
+  }
+ ],
+ "checklists": [
+  {
+   "id": "chk-1",
+   "title": "Test-Day Checklist",
+   "items": [
+    "Government-issued ID matching your application",
+    "Confirmation email with center address and arrival time",
+    "Number pad location memorized: 1-9 aircraft, 0 sector safe",
+    "Ask proctor about Num Lock behavior before the section",
+    "Test a pad key in the tutorial to confirm keyboard state",
+    "Plastic key covers or stickers if allowed by center policy",
+    "Silent practice: no whispering, no talking, no phone, no notes",
+    "Break plan: short reset between memory and collision sections",
+    "Use the bathroom during a break, not during a section",
+    "Arrive early enough to be calm, not rushed"
+   ]
+  },
+  {
+   "id": "chk-2",
+   "title": "Week 1 Diagnosis Checklist",
+   "items": [
+    "Days 1-2: one full-length practice pass, no studying yet",
+    "Record per-section accuracy to find the weak sections",
+    "Days 3-5: thirty minutes daily on the two weakest sections",
+    "Days 6-7: repeat the practice pass and compare sections",
+    "Identify profile: collision-heavy, memory-heavy, or pace",
+    "Collision-heavy: scan drills, fewer aircraft, deliberate calls",
+    "Memory-heavy: chunking and mnemonics before any timing",
+    "Pace profile: one-to-two-second rhythm drills, accept wrong answers"
+   ]
+  },
+  {
+   "id": "chk-3",
+   "title": "Collision Scan Drill",
+   "items": [
+    "Round 1: name the converging pair out loud before pressing",
+    "Round 2: press only zero, no diversions, build the safe-sector call",
+    "Round 3: combine scan, name, decide, act",
+    "Prioritize collisions over math when both demand attention",
+    "After a collision: recover, do not melt down, next aircraft needs your eyes",
+    "Ten minutes of this sequence per session, not passive watching"
+   ]
+  },
+  {
+   "id": "chk-4",
+   "title": "Memory Method Checklist",
+   "items": [
+    "Read numbers as chunks, not individual digits",
+    "Do the operation immediately and silently",
+    "Say the answer to yourself once before typing",
+    "Never confuse the last number shown with your answer",
+    "Miss one, reset: drop it and start fresh from the next number",
+    "Variables: assign A, B, C to fingers or body anchors",
+    "Read equations as sentences, recall the motion not the symbols",
+    "Same arithmetic order every time",
+    "Practice entirely silent, no whispering even at home"
+   ]
+  },
+  {
+   "id": "chk-5",
+   "title": "Retake Plan Checklist",
+   "items": [
+    "Do not buy new prep to fix a diagnosis you do not have",
+    "Rebuild the two fundamentals: collision scanning and memory chunking",
+    "Six weeks of daily twenty-minute drills on those two skills",
+    "Same method, same personality answers, same prep routine as last attempt",
+    "Remove every variable you control before test day",
+    "Check the next bid window on the FAA hiring announcement calendar",
+    "Expect no per-section feedback; plan blind and prepare for pressure"
+   ]
+  }
+ ],
+ "decision_trees": [
+  {
+   "id": "dt-1",
+   "title": "Which prep profile are you?",
+   "description": "Maps your diagnosis results to the correct prep focus.",
+   "nodes": [
+    {
+     "condition": "Collision accuracy under 60% while memory holds",
+     "option": "Collision-heavy profile",
+     "outcome": "Scan drills first: fewer aircraft, slower closing speeds, deliberate safe-versus-converging calls, then density up"
+    },
+    {
+     "condition": "Digits and variables bleed together under flash timing",
+     "option": "Memory-heavy profile",
+     "outcome": "Chunking and mnemonic work before timing pressure: get recall solid at your own pace, then add the flash timer"
+    },
+    {
+     "condition": "Everything roughly correct but too slow",
+     "option": "Pace profile",
+     "outcome": "One-to-two-second rhythm drills: force the decision, accept wrong answers, build the tempo"
+    },
+    {
+     "condition": "No clear weak section",
+     "option": "Balanced profile",
+     "outcome": "Maintain with the standard week two and three plan: forty-five minutes alternating sections, Sunday timed runs"
+    }
+   ]
+  },
+  {
+   "id": "dt-2",
+   "title": "How to answer the personality section",
+   "description": "The decision rule for forced-choice batteries.",
+   "nodes": [
+    {
+     "condition": "Question asks about a trait or behavior",
+     "option": "First instinct",
+     "outcome": "Answer as yourself, immediately; the first response that feels true is the one you will repeat consistently"
+    },
+    {
+     "condition": "Forced choice between two traits",
+     "option": "Pick the more true one",
+     "outcome": "Choose the stronger truth and move on; agonizing burns time and produces drifting answers"
+    },
+    {
+     "condition": "Tempted to answer what they want",
+     "option": "Do not strategize",
+     "outcome": "Strategic answers change by question and stop matching each other; the inconsistency is the signal that scores poorly"
+    },
+    {
+     "condition": "Second attempt",
+     "option": "Same answers as first",
+     "outcome": "Same person, same answers, every attempt; changing answers between attempts changes your scored profile"
+    }
+   ]
+  },
+  {
+   "id": "dt-3",
+   "title": "What to do after a failed attempt",
+   "description": "The retake decision flow.",
+   "nodes": [
+    {
+     "condition": "Want to buy more prep",
+     "option": "Pause",
+     "outcome": "You have no feedback to target; more of the same materials will not tell you more. Affordable tools cover the same sections"
+    },
+    {
+     "condition": "Weakest skills are collision or memory",
+     "option": "Rebuild fundamentals",
+     "outcome": "Six weeks of daily twenty-minute drills on collision scanning and memory chunking beats any cram"
+    },
+    {
+     "condition": "Next bid window approaching",
+     "option": "Reapply consistently",
+     "outcome": "Same method, same personality answers, same prep routine; remove every variable you control"
+    },
+    {
+     "condition": "Not sure which section failed",
+     "option": "Plan blind",
+     "outcome": "No per-section feedback exists; prepare for pressure across all sections rather than guessing a target"
+    }
+   ]
+  }
+ ],
+ "facts": [
+  {
+   "id": "f1",
+   "claim": "The ATSA takes about 2 hours 50 minutes with up to 30 minutes of break time at a Pearson VUE center",
+   "source": "candidate reports / pointSixtyFive compilation",
+   "verified": false,
+   "verify_how": "Check the pointSixtyFive ATSA Compilation thread and your scheduling confirmation"
+  },
+  {
+   "id": "f2",
+   "claim": "The ATSA has roughly seven sections",
+   "source": "candidate reports",
+   "verified": false,
+   "verify_how": "Section count varies by report; check current community consensus on pointSixtyFive"
+  },
+  {
+   "id": "f3",
+   "claim": "The ATSA is free of charge",
+   "source": "Prepopedia / FAA hiring materials",
+   "verified": true,
+   "verify_how": "Stated on prep vendor pages describing the FAA process"
+  },
+  {
+   "id": "f4",
+   "claim": "Memory Test 2 flashes equations for roughly 6 seconds",
+   "source": "candidate reports (evidence thread 1h5my5p)",
+   "verified": false,
+   "verify_how": "No official number is published; treat as directional"
+  },
+  {
+   "id": "f5",
+   "claim": "Candidates report surviving 4-10 collisions and still scoring Well Qualified",
+   "source": "candidate reports",
+   "verified": false,
+   "verify_how": "The FAA does not publish collision tolerance; treat as rumor, not spec"
+  },
+  {
+   "id": "f6",
+   "claim": "Num Lock mishaps cause lost responses in the collision section",
+   "source": "candidate reports (evidence thread 1t5p1vx, 1hhhy2k)",
+   "verified": false,
+   "verify_how": "Center-dependent; ask the proctor and test a key in the tutorial"
+  },
+  {
+   "id": "f7",
+   "claim": "No per-section ATSA feedback is provided after failure",
+   "source": "candidate reports (evidence thread 1eg9wzg)",
+   "verified": true,
+   "verify_how": "Candidates consistently report a single rating email with no breakdown"
+  },
+  {
+   "id": "f8",
+   "claim": "Results arrive by email after weeks of silence",
+   "source": "candidate reports",
+   "verified": false,
+   "verify_how": "Reported timelines vary by bid, two to six weeks typical"
+  },
+  {
+   "id": "f9",
+   "claim": "The personality section punishes strategizing through inconsistency",
+   "source": "candidate reports and community consensus (thread 1t7kya3 comments)",
+   "verified": false,
+   "verify_how": "No official confirmation; treat as community consensus"
+  },
+  {
+   "id": "f10",
+   "claim": "Changing personality answers between attempts can change your score band",
+   "source": "candidate report (three-time taker, thread 1j55l2p)",
+   "verified": false,
+   "verify_how": "Single candidate report; treat as directional"
+  },
+  {
+   "id": "f11",
+   "claim": "JobTestPrep ATSA PrepPack costs $79-99 depending on tier",
+   "source": "vendor listing review + candidate report",
+   "verified": true,
+   "verify_how": "Live listing at jobtestprep.com; candidate-reported tiers differ slightly, so check the current listing"
+  },
+  {
+   "id": "f12",
+   "claim": "ATC Preparation ATSA suite is $59.99 for 30 days recurring",
+   "source": "vendor page",
+   "verified": true,
+   "verify_how": "atcpreparation.com/atsa-preparation-software"
+  },
+  {
+   "id": "f13",
+   "claim": "Prepopedia Complete ATSA Practice is $49 one-time",
+   "source": "vendor page (snippet-verified)",
+   "verified": false,
+   "verify_how": "Page sits behind a JS loader; re-verify at prepopedia.com"
+  },
+  {
+   "id": "f14",
+   "claim": "Peterson's AT-SA Exam Prep is $59/month recurring",
+   "source": "vendor page (snippet-verified)",
+   "verified": false,
+   "verify_how": "petersons.com test-prep product page"
+  },
+  {
+   "id": "f15",
+   "claim": "The ATSAPro app costs roughly $10 one-time",
+   "source": "candidate reports and app store listing",
+   "verified": false,
+   "verify_how": "App-store price not pulled live; verify on the store listing"
+  },
+  {
+   "id": "f16",
+   "claim": "You cannot retake the ATSA until the next bid opens, months apart",
+   "source": "candidate reports (thread 1j1y9bm)",
+   "verified": false,
+   "verify_how": "Bid cadence changes; check the FAA hiring announcement calendar"
+  },
+  {
+   "id": "f17",
+   "claim": "A failed ATSA delays a roughly $130k/year career path",
+   "source": "candidate comment in evidence thread 1j1y9bm",
+   "verified": false,
+   "verify_how": "Career earnings vary by facility and experience; treat as directional motivation"
+  },
+  {
+   "id": "f18",
+   "claim": "The FAA does not publish scoring weights or pass thresholds",
+   "source": "consistent absence in candidate reports and vendor materials",
+   "verified": true,
+   "verify_how": "No public FAA document publishes them; treat any source claiming to know them as unreliable"
+  },
+  {
+   "id": "f19",
+   "claim": "Air traffic controllers require scoring Best or Well Qualified under current FAA referral",
+   "source": "prep vendor descriptions (Prepopedia)",
+   "verified": false,
+   "verify_how": "Check the current FAA job announcement; referral bands change"
+  },
+  {
+   "id": "f20",
+   "claim": "Mnemonics such as finger/body mapping for variables are standard memory technique",
+   "source": "candidate reports + memory research",
+   "verified": true,
+   "verify_how": "Spatial encoding is established memory research; the specific finger mapping is candidate-reported"
+  }
+ ],
+ "content_hash": "placeholder"
+}
