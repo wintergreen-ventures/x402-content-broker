@@ -1,8 +1,10 @@
 # Wintergreen x402 Content Broker
 
-**A production micro-payment API broker built on the [x402](https://x402.org) protocol — quant research, AI prompts, and edge data sold per-request with on-chain settlement.**
+The Wintergreen x402 Content Broker is production payment infrastructure for the agent economy: a machine-facing storefront where AI agents discover resources, pay per-request on-chain, and receive verified delivery. It is the merchant side of the x402 micro-payment protocol. Where Cloudflare's Kitesurf is a machine-facing browser, this is a machine-facing storefront — built for crawlers and clients, not eyeballs: discovery through `/.well-known/x402` and `agent-card.json`, priced invoices instead of shopping carts, on-chain settlement instead of checkout, a signed response instead of a rendered page.
 
-Live at **[x402.wintergreen.uk](https://x402.wintergreen.uk)** · Brokered under the [x402scan](https://x402scan.com) Bazaar listing.
+The flow is end to end and machine-native: an agent requests an endpoint, receives a priced invoice in USDC, pays on-chain on Base (`eip155:8453`) through Coinbase Developer Platform facilitators, and receives the resource — with every transaction appended to the append-only `receipts/` log. Payer, amount, endpoint, latency, and settlement hash are recorded per accepted outcome, and the on-chain settlement record is the independent verifier. The `x402_trust` submodule publishes independent, verifiable trust scores so agents can assess an endpoint before they spend.
+
+Live at [x402.wintergreen.uk](https://x402.wintergreen.uk) (health check: `{"status":"healthy","x402_enabled":true,"network":"eip155:8453"}`), brokered under the [x402scan](https://x402scan.com) Bazaar listing. Status is honest and measured: one accepted paid outcome to date — $0.02 USDC on 2026-08-07, delivered in 1,625 ms with HTTP 200 — against 6,722 discovery events from agent crawlers. Payments are real, and adoption is in progress; every number above traces to the receipt log.
 
 > Payments are real. The broker accepts live x402 payments (ETH/USDC via Coinbase Developer Platform facilitators), serves paid content, and appends every transaction to an immutable receipt log.
 

@@ -2,6 +2,12 @@
 
 > **Status:** Early-stage production deployment. Infrastructure verified; commercial adoption at first-accepted-outcome stage. All numbers below are measured from the broker's own append-only receipt log — nothing estimated, nothing projected.
 
+## What this is
+
+This is production payment infrastructure for the agent economy, not a content store. The Wintergreen x402 Content Broker is a machine-facing storefront — the merchant counterpart to a machine-facing browser like Cloudflare's Kitesurf — where an AI agent discovers a resource, receives a priced invoice, pays on-chain on Base (`eip155:8453`) through Coinbase Developer Platform facilitators, and receives verified delivery, with every transaction appended to an immutable receipt log. The storefront is built for crawlers and clients, not eyeballs: discovery happens through `/.well-known/x402` fan-out, an `agent-card.json` catalog, and `llms.txt`, and fulfillment is a signed HTTP response. This is the reference merchant implementation of the x402 micro-payment protocol: the rail on which agents pay other machines for data and compute, per-request, with no accounts, no subscriptions, and no humans in the loop.
+
+Honest status: the rail is live and healthy, and adoption is in progress. As of the early-August 2026 measurement snapshot, the broker has recorded exactly one accepted paid outcome — $0.02 USDC on 2026-08-07, `/api/v1/knowledge/oral-board-prep/qa`, payer `b23a6a8439c0`, 1,625 ms invoice-to-delivery, HTTP 200, settlement `settlement:5316c7b0061a7c05` — against 6,722 discovery events dominated by agent crawlers (686 probes of `/.well-known/x402`, 616 direct storefront hits, 321 reads of the agent card, 235 of `llms.txt`, 323 search calls). The gap between discovery and payment is the honest current state and the target of the next phase. Per this project's value-engineering rule, zero is evidence, not a default: no revenue is claimed beyond the $0.02 measured, and no adoption assumptions are stated until they are measured on the same receipt log.
+
 ## Outcome contract
 
 | Field | Value |
