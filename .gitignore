@@ -3,3 +3,7 @@ __pycache__/
 .env
 receipts/settle-log.jsonl
 *.log
+
+# Local secrets — never commit (note: .env.local carries the router mnemonic)
+.env.local
+.env.*.local

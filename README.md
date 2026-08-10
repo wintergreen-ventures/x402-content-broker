@@ -118,5 +118,5 @@ gitignored (contains live payment data).
 
 ## License
 
-See [x402-trust](https://github.com/wintergreen-ventures/x402-trust) for the
-trust layer license. Broker code license pending owner decision.
+MIT — see [LICENSE](LICENSE). The `x402_trust` submodule has its own MIT
+license ([x402-trust](https://github.com/wintergreen-ventures/x402-trust)).
