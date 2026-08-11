@@ -159,6 +159,8 @@ PRICING = {
     "knowledge_medical_coding_query": "$0.02",
     "knowledge_atsa_bundle": "$2.50",
     "knowledge_atsa_query": "$0.02",
+    "knowledge_contractor_bundle": "$2.50",
+    "knowledge_contractor_query": "$0.02",
 }
 
 
@@ -387,6 +389,16 @@ def _build_payment_routes():
                             "retake playbook, verified $10-99 prep pricing, 18-pair QA bank, [VERIFY]-stamped fact layer."),
             "query_desc": "Per-query ATSA prep Q&A — one grounded pair from the 18-pair QA bank, with source chapter and provenance.",
         },
+        "contractor-estimating": {
+            "bundle_key": "knowledge_contractor_bundle",
+            "query_key": "knowledge_contractor_query",
+            "bundle_desc": ("Contractor Pricing & Estimating Toolkit — Structured Knowledge API: cost-of-operation "
+                            "calculator with worked numbers, site-walk scope checklist, minimum-charge rule, quote "
+                            "structures (hourly/flat/not-to-exceed), scope-creep scripts, three-line bid sanity check, "
+                            "trade price ranges, four-number cheat sheet, recurring-work pricing, seven-step estimating "
+                            "workflow, 18-pair QA bank, [VERIFY]-stamped fact layer."),
+            "query_desc": "Per-query contractor pricing Q&A — one grounded pair from the 18-pair QA bank, with source chapter and provenance.",
+        },
     }
     for slug, meta in _KNOWLEDGE_META.items():
         base_path = f"/api/v1/knowledge/{slug}"
@@ -607,6 +619,8 @@ async def root(request: Request):
             {"method": "GET", "path": "/api/v1/knowledge/medical-coding-path/qa", "price": PRICING["knowledge_medical_coding_query"], "description": "Per-query Q&A from the medical coding career-path guide — grounded in guide content only, with source chapter and provenance."},
             {"method": "GET", "path": "/api/v1/knowledge/atsa-prep", "price": PRICING["knowledge_atsa_bundle"], "description": "Unofficial ATSA Prep — Structured Knowledge API: test-day playbook, collision scan method, memory chunking, personality consistency rule, 3-4 week prep plan, score timeline, retake playbook, verified pricing, [VERIFY]-stamped fact layer."},
             {"method": "GET", "path": "/api/v1/knowledge/atsa-prep/qa", "price": PRICING["knowledge_atsa_query"], "description": "Per-query Q&A from the ATSA prep guide — grounded in guide content only, with source chapter and provenance."},
+            {"method": "GET", "path": "/api/v1/knowledge/contractor-estimating", "price": PRICING["knowledge_contractor_bundle"], "description": "Contractor Pricing & Estimating Toolkit — Structured Knowledge API: cost-of-operation calculator, scope checklist, minimum-charge rule, quote templates, bid sanity check, trade ranges, estimating workflow, [VERIFY]-stamped fact layer."},
+            {"method": "GET", "path": "/api/v1/knowledge/contractor-estimating/qa", "price": PRICING["knowledge_contractor_query"], "description": "Per-query Q&A from the contractor pricing toolkit — grounded in guide content only, with source chapter and provenance."},
         ],
         "pay_to": PAY_TO_ADDRESS,
         "trust_layer": "https://x402.wintergreen.uk/trust",
@@ -773,6 +787,12 @@ _KNOWLEDGE_ROUTES = {
         "bundle_desc": "Paid: Unofficial ATSA Prep — full structured knowledge bundle. $2.50",
         "qa_summary": "Get Atsa Prep Qa",
         "qa_desc": "Paid: Unofficial ATSA Prep — per-query Q&A excerpt. $0.02",
+    },
+    "contractor-estimating": {
+        "summary": "Get Contractor Estimating",
+        "bundle_desc": "Paid: Contractor Pricing & Estimating Toolkit — full structured knowledge bundle. $2.50",
+        "qa_summary": "Get Contractor Estimating Qa",
+        "qa_desc": "Paid: Contractor Pricing & Estimating Toolkit — per-query Q&A excerpt. $0.02",
     },
 }
 

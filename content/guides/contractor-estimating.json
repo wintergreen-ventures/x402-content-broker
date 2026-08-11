@@ -1,0 +1,549 @@
+{
+ "guide_id": "contractor-estimating",
+ "title": "The Contractor's Pricing & Estimating Toolkit",
+ "description": "Pricing and estimating system for home-service operators (landscapers, handymen, cleaners): the cost-of-operation calculator with worked numbers, the site-walk scope checklist that stops the $200-guess-was-$575-job mistake, the minimum-charge rule, never-start-without-a-number discipline, quote structures (hourly/flat/not-to-exceed) with scope-creep and follow-up scripts, the three-line bid sanity check, trade price ranges (labor $45-100/hr, commercial sqft benchmarks), the four-number cheat sheet, recurring-work pricing, and the seven-step estimating workflow pros actually use — plus an 18-pair grounded QA bank, five checklists, three decision trees and a provenance-stamped fact layer with verification notes.",
+ "version": "0.1.0",
+ "generated_at": "2026-08-10T00:00:00Z",
+ "pricing": "$2.50",
+ "category": "guide",
+ "tags": [
+  "contractor",
+  "estimating",
+  "pricing",
+  "landscaping",
+  "handyman",
+  "cleaning",
+  "home-service",
+  "small-business",
+  "quoting",
+  "bidding",
+  "rates",
+  "field-service",
+  "trades",
+  "business-toolkit",
+  "career"
+ ],
+ "sections": [
+  {
+   "id": "how-to-use",
+   "title": "Part 1: How to Use This Toolkit",
+   "parent": null,
+   "order": 0,
+   "content": "This is a pricing and estimating system for home-service operators — landscapers, handymen, cleaners, lawn and power-wash crews — built from the recorded experience of hundreds of operators who posted their pricing struggles publicly. It is not a magic rate sheet, because there is no such thing: your costs, your market, and your capacity are yours alone. What this toolkit gives you is the method — the exact sequence pros use to turn a job into a number you can defend, plus the scripts that keep scope creep, discounts, and started-without-a-price disasters out of your pocket.\nThe honest version of what this can and cannot do: it can stop the two-hundred-dollar guess that was really a five-hundred-seventy-five-dollar job, give you a minimum charge you can say out loud, and hand you quote templates that have been battle-tested in the public pricing threads. It cannot tell you what your market will pay — that is what the local rate ranges and your own numbers are for.\nEvery claim that comes from a single operator's report rather than a verified source is flagged with a way for you to check it. Your costs are the only number that matters in the end."
+  },
+  {
+   "id": "complaint-map",
+   "title": "Part 2: The Complaint Map",
+   "parent": null,
+   "order": 1,
+   "content": "The toolkit opens with the recorded pain of real operators, each mapped to the chapter that solves it. I genuinely don't know what to charge, I'm thinkin like two hundred dollars: pricing by gut feeling with no method, solved in the cost-of-operation chapter. Cleanups are the single most underbid job in this business: scope blindness on small-looking jobs, solved in the site-walk chapter. Wtf do you charge when it's something so simple: no minimum charge and embarrassment at the price, solved in the minimum-charge chapter. I've started the work and I'm not sure how much I should charge: starting before agreeing a price, solved in the never-start-without-a-number chapter. Landlords love to tack on while-you're-here extras: scope creep after the price is set, solved in the quote-templates chapter. If you underbid the job, it's still on you: the cost of a bad bid is yours to eat, solved in the bid sanity-check chapter. Don't sell myself short just because I'm solo and younger: rate chaos with no shared reference point, solved in the trade-ranges chapter. Every fifth post is how-much-should-I-charge: no simple method to anchor a number, solved in the four-number cheat sheet. There isn't a good reason to discount work on the hopes of obtaining a bread-and-butter client: discounting to win recurring work, solved in the recurring-work chapter. Most courses are basically Estimating for Dummies: the real workflow is gatekept behind expensive courses, solved in the pro-workflow chapter."
+  },
+  {
+   "id": "cost-of-operation",
+   "title": "Part 3: Your Real Hourly Rate: The Cost-of-Operation Calculator",
+   "parent": null,
+   "order": 2,
+   "content": "The single most important number in your business is not what the market charges — it is what it costs you to put a person on a job for an hour. Operators who skip this number are the ones naming round figures from photos. The method is adapted from the highest-rated pricing post in r/sweatystartup, which earned thirty-eight upvotes and a flood of would-love-the-spreadsheet comments because it is the first time most operators see the math.\nStep one, fixed expenses: costs you incur no matter how much work you do — truck payment, insurance, software subscriptions, tool maintenance, phone, website, and your own minimum pay. Add them up monthly.\nStep two, production hours: the trap. An eleven-hour workday is not eleven hours of billable time — it is roughly nine producing hours after drive time, setup, breaks, and paperwork. At five days a week: nine hours times five is forty-five hours per week, times four-point-three-three weeks is roughly one hundred ninety-five production hours per month.\nStep three, break-even on overhead: fixed monthly expenses divided by production hours. The worked example from that thread: insurance four hundred plus owner pay three thousand plus website fifty plus phone one hundred equals three thousand five hundred fifty dollars per month. Divided by one hundred ninety-five hours equals eighteen dollars and twenty cents per hour just to break even on overhead — before a single dollar of materials or fuel.\nStep four, add variable costs per job: fuel, materials, dump fees, and any labor you hire. Worked example: a three-hour job with a one-hour dump run, a laborer at twenty-two dollars per hour times four hours equals eighty-eight dollars labor, plus an eighty-dollar dump fee, plus three dollars gas, equals one hundred seventy-one dollars variable across four hours, or forty-two dollars and seventy-five cents per hour.\nStep five, add profit: base rate is variable plus overhead, forty-two seventy-five plus eighteen twenty equals sixty dollars and ninety-five cents per hour. To clear thirty percent profit, divide by zero-point-seven: sixty ninety-five divided by zero-point-seven equals eighty-seven dollars and seven cents per hour. A four-hour job at that rate: three hundred forty-eight dollars and twenty-eight cents, rounded to a three hundred forty-nine dollar quote.\nThat is the whole method. It takes ten minutes, and it converts I'm-thinkin-like-two-hundred into my-floor-is-eighty-seven-an-hour, so a full day of that job is three hundred forty-eight dollars.\nThe minimum-charge corollary: if your base hourly rate is sixty dollars, you do not take a twenty-dollar job that costs you sixty dollars to show up for. The minimum is a business decision, not embarrassment — typically one hundred to one hundred fifty dollars for a trip."
+  },
+  {
+   "id": "site-walk-scope",
+   "title": "Part 4: The Two-Hundred-Dollar Guess That Was Really a Five-Hundred-Seventy-Five-Dollar Job",
+   "parent": null,
+   "order": 3,
+   "content": "The flagship story from the evidence board is the perfect illustration of scope blindness. A landscaper, on his first job for a landlord who owned several houses, looked at a brush and shrub cleanup and thought two hundred dollars. The thread's advice was unanimous, and his own follow-up confirmed it: the job priced out at five hundred seventy-five dollars — nearly three times his gut number.\nWhy do cleanups get underbid more than any other job? Because brush and shrubs look like a couple of hours, and turn into a full day of cutting, dragging, and three trips to the dump. The scope is invisible from a photo.\nThe site-walk scope checklist, run on every job before naming a number: first, trim or rip-out — a tidy-up of overgrown shrubs is one job; removing them down to stumps and roots is another. Ask which one you are pricing. Second, where does the debris go — dump fees are real money and vary by load weight. Count the trips: cut, drag, load, dump, return — each trip is labor plus fee. Third, what is on the ground you cannot see — rot, roots, buried edging, and weeds hide under the visible brush. Budget a contingency for the second hour. Fourth, access — can the truck get to the pile, or is every armload a walk? Access doubles or halves labor on the same square footage. Fifth, disposal rules — some municipalities charge per load or by weight at the transfer station; call your transfer station and ask per-load pricing before you quote.\nThe quote that protects you: either quote hourly for unknowns, or give a not-to-exceed number. A not-to-exceed sets the client's expectation that the number is the ceiling, and it gives you the floor if the job grows."
+  },
+  {
+   "id": "minimum-charge",
+   "title": "Part 5: The Minimum Charge: Wtf Do You Charge When It's Something So Simple?",
+   "parent": null,
+   "order": 4,
+   "content": "The r/Handyman thread that captures this pain perfectly: a handyman asked how to charge for a twenty-minute shelf-hanging job for a repeat client — one hundred dollars to come hang shelves that cost fifteen dollars, and he was embarrassed to say it. The thread's answer was unanimous, and the top comment was blunt: it's your time and knowledge that are being paid for; I have a minimum for small jobs, one hundred fifty dollars gets me there.\nThe minimum charge rule: first, one-hour minimum on every job. If it takes less than an hour, charge one hour minimum; remember, you have a business to run. A twenty-minute job is billed as one hour, because the twenty minutes is not the product — showing up is. Second, a trip minimum that covers your real cost. If your overhead-plus-variable rate is sixty dollars per hour, a one hundred to one hundred fifty dollar trip minimum is not greed; it is the floor that keeps the business alive. Operators who set one report it changed everything: minimum service charge saved my business. Third, say it without apology. The framing that works with clients is not this-is-a-small-job-so-it's-expensive — it is my minimum for any visit is X, which covers the time and travel to get there. You are not charging for the shelf; you are charging for the trip.\nWhen the minimum feels too big for the client, the honest response is a smaller referral or a bundled trip: if you have a few small things, I can do them all in one visit for the same minimum. That converts the objection into more work at the same price — which is exactly what a business owner wants."
+  },
+  {
+   "id": "never-start-without-price",
+   "title": "Part 6: Never Start Work Without a Number",
+   "parent": null,
+   "order": 5,
+   "content": "The evidence board has a thread that should be required reading: a handyman agreed to pull up flooring, install a toilet, and repair subfloor for his landlord's neighbor's apartment — and started the work before deciding what to charge. The top advice, at twenty-seven upvotes: never start work till you establish a price per hour. You could run into a problem like rot or mold very easily, and most landlords aren't eager to shell out.\nThe rule is simple: no price, no work. Every hour you work without an agreed number is an hour priced at whatever the client decides it was worth — usually less than it cost you.\nThe pre-work price confirmation script, sent before the first tool comes out: before I start, here's the number — amount or rate for the work as we discussed. If we hit anything unexpected — rot, mold, additional materials — I'll stop and confirm before continuing. Does that work?\nThat script does three things: it sets the price, it establishes the change-order rule of stop-and-confirm, and it protects you from the surprise discoveries that turn a two-hundred-dollar job into a five-hundred-seventy-five-dollar one without permission.\nThe exception that proves the rule: time-and-materials jobs with a written cap — not-to-exceed a certain amount — are a legitimate structure for unknown-scope work, but the cap is still a number agreed before starting."
+  },
+  {
+   "id": "scope-creep",
+   "title": "Part 7: Scope Creep: While You're Here, Can You Also...",
+   "parent": null,
+   "order": 6,
+   "content": "The classic: you quote a job, the client agrees, and then — as you are packing up — while you're here, can you also take a look at the gutter, trim this bush, move this furniture? Each add-on is free labor unless you have a script for it.\nThe three quote structures, pick per job: hourly, for unknown-scope jobs, quoting your hourly rate with an estimate of hours so scope creep becomes billable time automatically. Flat, for known-scope jobs, quoting a fixed number so scope creep is outside that number by definition. Not-to-exceed, quoting a ceiling so the client gets certainty and you get a floor; this is the strongest structure for cleanups and landlords.\nThe scope-creep script: happy to do that — it's outside this quote, so I'd add it at my hourly rate. Want me to fold it in now, or schedule a separate visit? Two things to notice: you said yes, good for the relationship, and you priced the add-on, good for the business. The version that leaks money is the nod-and-do-it.\nThe commercial version, from the thirty-thousand-square-foot post-construction clean thread: build a change-order clause into the contract — the client gets one final walkthrough scheduled twenty-four to forty-eight hours before their grand opening, and any additional touch-up work is billed hourly. The thread's framing: protects your margin and sets expectations that your team isn't a free punch-list crew.\nThe follow-up that closes quotes: the most common way operators lose money without ever knowing it is the quote that went out and never came back. The pros' habit is a simple follow-up cadence: send the quote with a validity window — this price holds for fourteen days, materials move — and follow up on day three with one line: just checking — does the number work, or should we adjust scope to fit the budget? That second sentence reopens the conversation without discounting, and gives the client a face-saving path to negotiate scope instead of ghosting."
+  },
+  {
+   "id": "bid-sanity-check",
+   "title": "Part 8: The Cost of a Bad Bid: If You Underbid the Job, It's Still on You",
+   "parent": null,
+   "order": 7,
+   "content": "The construction thread that put this in perspective: a company doing eight figures a month in consulting fees still treats a seventy-thousand-dollar screw-up as a fireable event — someone is probably getting PIPed or fired; I can't imagine being a small business and trying to rectify a seventy-thousand-dollar mistake.\nFor a solo operator, an underbid job does not just lose money — it eats the margin of the next two jobs, and the work still has to be done: if you underbid the job, it's still on you to complete the work you bid on, regardless of whether you're losing money in the process.\nThe three-line bid sanity check, run before sending any number: first, labor times time — how many hours, at what cost, using your real rate from the cost-of-operation chapter, not the rate you wish you had. Second, materials plus disposal plus fuel — every physical cost, added, not estimated. Third, margin test — is the total at least thirty percent above cost? If not, raise the number or walk.\nA worked example: take the landlord cleanup. The gut guess was two hundred dollars. Run the three lines: the operator's real rate is eighty-seven dollars per hour; the job is a full day plus two dump trips, so eight hours of labor is six hundred ninety-six dollars; disposal fees run eighty dollars a trip, so one hundred sixty; fuel and gloves and a blade replacement add forty. Line two is one thousand dollars before materials. Line three: the operator is not at thirty percent margin yet — and here is the part that separates the method from the guess: they can either raise the number to defend the margin, or cut the scope to fit the budget, or decline. The two-hundred-dollar guess never had those options because it never had lines.\nIf any line is a guess, the bid is a guess. The pros' habit is the opposite of the gut-guess: break the job into lines, price each line, and add them."
+  },
+  {
+   "id": "trade-ranges",
+   "title": "Part 9: Trade Price Ranges: What the Market Actually Pays",
+   "parent": null,
+   "order": 8,
+   "content": "Your cost-of-operation number is the floor. This chapter is the market ceiling — the rates operators in the evidence threads actually report charging, so you can sanity-check your own number against reality.\nLandscaping and cleanup labor, from the r/landscaping debate: independent part-time landscapers report forty-five to sixty dollars per hour; one operator charges at least fifty to seventy-five dollars for easy work, closer to one hundred for tougher, more skillful jobs, in Massachusetts; and the thread's retort: you get twenty dollars at McDonald's, this is worth far more. Rates vary by region and skill; the forty-five to one-hundred-dollars-per-hour range is a reported spread, not a national spec.\nCommercial cleaning, post-construction, from r/sweatystartup: rough clean at ten to fifteen cents per square foot, detail at fifteen to twenty-five cents per square foot, final touch-up pass at five to ten cents per square foot. A thirty-five-thousand-square-foot job across all three phases is roughly ten to seventeen thousand dollars depending on how messy it is.\nThe rate-chaos lesson: the same twelve-hour mulching job in the evidence thread got quoted anywhere from two hundred forty to one thousand-plus dollars by commenters. That spread is not evidence that pricing is random — it is evidence that half the commenters were guessing from a photo and the other half were pricing from a method. Your method is what puts you in the second group.\nHow to read a rate-chaos thread: whenever a pricing post blows up — and they blow up weekly — commenters split into two groups. The first names a round number from the photo and gets corrected in the replies. The second asks scope questions before naming anything, then gives a range or a method. The thread's upvotes cluster on the second group. When you read these threads for market intelligence, ignore the round numbers and read the scope questions.\nA sanity note on your own rate: if your cost-of-operation number lands below forty dollars per hour, something is missing — most likely you are not paying yourself a real wage, or you are counting too many production hours that are actually driving and setup. If it lands above one hundred fifty dollars per hour, check that your market supports it — the evidence threads top out around one hundred dollars per hour for skilled solo work. The middle is where healthy pricing lives."
+  },
+  {
+   "id": "four-number-method",
+   "title": "Part 10: The Four-Number Method Cheat Sheet",
+   "parent": null,
+   "order": 9,
+   "content": "When the clock is running and a client is waiting for a number, you do not have time to rebuild the full calculator. This is the compressed version — four numbers, in order, on a scrap of paper.\nNumber one, fixed divided by production hours, equals the overhead rate. Number two, plus variable rate per job, equals the base rate — materials, fuel, labor, disposal. Number three, divided by one minus profit percentage, equals the sell rate — divide by zero-point-seven for thirty percent profit. Number four, times hours plus minimum trip, equals the quote — round to a clean number that covers it.\nThe pricing-index technique for pushback: when a client says that's expensive, do not argue — show the breakdown. Most people don't realize the actual cost is the exact phrase from the evidence thread, and it is the strongest objection handler you have. A price with lines is a price with reasons; a round number is a target."
+  },
+  {
+   "id": "recurring-work",
+   "title": "Part 11: Recurring Work: Don't Win by Being Cheap",
+   "parent": null,
+   "order": 10,
+   "content": "The instinct that bleeds small operators dry: discount the first job to win the bread-and-butter recurring client. The evidence thread's answer: there isn't a good reason to discount work on the hopes of obtaining a bread and butter client. The recurring client you win by discounting is a recurring client at the wrong price — and every renewal is at that same wrong price.\nSet the rate on job one. The first job is when you have the most leverage — the client is choosing you, not comparing three discount bids. Price it at your real rate. If they wanted the discount price, they were shopping on price, and they will leave for a cheaper operator anyway.\nThe maintenance upsell, the right version of recurring: instead of discounting, sell the subscription. Get them on the maintenance is the advice from the landscaping thread — a monthly visit at your real rate, scheduled and recurring. That is recurring revenue earned by value, not by price.\nThe discount that is not a discount: bundling. Same minimum covers both small tasks and add-the-gutter-at-my-hourly-rate-while-I'm-here both increase ticket size without cutting the rate. Volume at full price beats volume at a discount every time."
+  },
+  {
+   "id": "pro-workflow",
+   "title": "Part 12: The Estimating Workflow Pros Actually Use",
+   "parent": null,
+   "order": 11,
+   "content": "The r/estimators thread that motivated this chapter: most courses are basically Estimating for Dummies; I would love something that deals with the entire bidding process. And the r/GeneralContractor thread that proves the demand: a spreadsheet based on Michael Stone's book Markup and Profit being shared and re-shared, with the recommendation to read the book.\nYou do not need the fifty-to-five-hundred-dollar course tier. The workflow pros actually use, assembled from the evidence threads, is: scope first — never price from a photo. Break the job into lines — each physical task, each material, each trip. Price each line from your method or the market range. Add margin with the divide-by-zero-point-seven step. Write the quote with structure — flat, hourly, or not-to-exceed. Add the change-order clause. Set the minimum and confirm the price before starting.\nThat is the entire bidding process the r/estimators poster wanted — in seven steps, none of which requires a course.\nThe book worth owning: Markup and Profit by Michael C. Stone, the canonical text the pros share. The exact current price should be verified at time of purchase; the book is the closest thing to a standard reference in the trade, and the community spreadsheets built from it are the proof that the method, not the course, is the value."
+  }
+ ],
+ "qa_bank": [
+  {
+   "id": "q1",
+   "question": "How do I figure out what to charge for a job?",
+   "answer": "Use the cost-of-operation method: fixed monthly expenses divided by production hours gives your overhead rate; add variable costs per job (fuel, materials, labor, disposal); add profit by dividing by 0.7 for 30%. That converts a gut guess into a defendable hourly rate.",
+   "category": "method",
+   "difficulty": "basic",
+   "source_chapter": "Part 3",
+   "provenance": "r/sweatystartup 1hnvfj6, verbatim method"
+  },
+  {
+   "id": "q2",
+   "question": "What is my real hourly rate?",
+   "answer": "Fixed expenses (truck, insurance, software, your pay) divided by production hours. Worked example: $3,550/month overhead ÷ 195 production hours = $18.20/hour just to break even, before materials and fuel. Production hours are about 9 per 11-hour day, not 11.",
+   "category": "method",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 3",
+   "provenance": "r/sweatystartup 1hnvfj6 worked example"
+  },
+  {
+   "id": "q3",
+   "question": "How do I add profit to my price?",
+   "answer": "Divide your base rate (overhead + variable) by 0.7 to clear 30% profit. Worked example: $60.95/hour base ÷ 0.7 = $87.07/hour sell rate; a 4-hour job = $348.28, rounded to a $349 quote.",
+   "category": "method",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 3",
+   "provenance": "r/sweatystartup 1hnvfj6 worked example"
+  },
+  {
+   "id": "q4",
+   "question": "Why are cleanups the most underbid job?",
+   "answer": "Because brush and shrubs look like a couple of hours and turn into a full day of cutting, dragging, and three trips to the dump. The scope is invisible from a photo. Use the site-walk checklist: trim vs rip-out, debris destination and dump fees, hidden rot/roots, access, and disposal rules.",
+   "category": "scope",
+   "difficulty": "basic",
+   "source_chapter": "Part 4",
+   "provenance": "r/landscaping 1ulx5gm, verbatim"
+  },
+  {
+   "id": "q5",
+   "question": "How do I price a cleanup I can't see from a photo?",
+   "answer": "Quote hourly for unknowns, or give a not-to-exceed number. Run the site-walk checklist first: trim or rip-out, how many dump trips, what's hidden, access, disposal fees. The $200 guess that was really a $575 job is the cautionary tale.",
+   "category": "scope",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 4",
+   "provenance": "r/landscaping 1ulx5gm"
+  },
+  {
+   "id": "q6",
+   "question": "What should my minimum charge be?",
+   "answer": "One-hour minimum on every job, plus a trip minimum that covers your real cost — typically $100-150. If your base rate is $60/hour, you don't take a $20 job that costs $60 to show up for. Operators report 'minimum service charge saved my business.'",
+   "category": "minimum",
+   "difficulty": "basic",
+   "source_chapter": "Part 5",
+   "provenance": "r/Handyman 1glt321, verbatim"
+  },
+  {
+   "id": "q7",
+   "question": "How do I charge for a 20-minute job without embarrassment?",
+   "answer": "Bill one hour minimum and frame the minimum as covering the trip: 'my minimum for any visit is X, which covers the time and travel to get there.' You are not charging for the shelf; you are charging for the trip. Bundle small tasks into one visit for the same minimum.",
+   "category": "minimum",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 5",
+   "provenance": "r/Handyman 1glt321"
+  },
+  {
+   "id": "q8",
+   "question": "I started the work before agreeing a price. What do I do?",
+   "answer": "The rule is no price, no work — never start until a number is agreed. Going forward, send a pre-work confirmation: the price, plus 'if we hit anything unexpected I'll stop and confirm before continuing.' For the current job, stop, establish the rate now, and set the change-order rule for anything found.",
+   "category": "discipline",
+   "difficulty": "basic",
+   "source_chapter": "Part 6",
+   "provenance": "r/handyman 1qklcvi, verbatim"
+  },
+  {
+   "id": "q9",
+   "question": "How do I stop scope creep?",
+   "answer": "Use quote structures that define the boundary — hourly, flat, or not-to-exceed — and a deflection script: 'happy to do that, it's outside this quote, so I'd add it at my hourly rate.' The nod-and-do-it version leaks money. For commercial work, add a change-order clause with a final walkthrough billed hourly.",
+   "category": "scope",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 7",
+   "provenance": "r/landscaping 1ulx5gm + r/sweatystartup 1qw7jwh"
+  },
+  {
+   "id": "q10",
+   "question": "What is a not-to-exceed quote?",
+   "answer": "A quote with a ceiling: the client gets certainty that the number is the max, and you get a floor if the job grows. It's the strongest structure for cleanups and landlord work where scope is uncertain. Combined with hourly for unknowns, it protects margin.",
+   "category": "quotes",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 7",
+   "provenance": "r/landscaping 1ulx5gm, verbatim advice"
+  },
+  {
+   "id": "q11",
+   "question": "What happens if I underbid a job?",
+   "answer": "You still have to complete the work you bid on, even if you're losing money — and the loss eats the margin of your next two jobs. Run the three-line sanity check before sending any number: labor × time, all physical costs, and a 30% margin test.",
+   "category": "risk",
+   "difficulty": "basic",
+   "source_chapter": "Part 8",
+   "provenance": "r/Construction og9xgv + 1gm7dx7"
+  },
+  {
+   "id": "q12",
+   "question": "What are typical landscaping labor rates?",
+   "answer": "Reported spread: $45-60/hour for independent part-time landscapers, $50-75/hour for easy work, closer to $100/hour for tougher skilled jobs (Massachusetts report). Rates vary by region and skill — use your cost-of-operation number as the floor and local reports as the ceiling.",
+   "category": "rates",
+   "difficulty": "basic",
+   "source_chapter": "Part 9",
+   "provenance": "r/landscaping 1vbq9dq, verbatim quotes"
+  },
+  {
+   "id": "q13",
+   "question": "What are commercial post-construction cleaning rates?",
+   "answer": "Rough clean $0.10-0.15/sqft, detail $0.15-0.25/sqft, final touch-up $0.05-0.10/sqft. A 35,000 sqft job across all three phases is roughly $10k-17k depending on how messy it is.",
+   "category": "rates",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 9",
+   "provenance": "r/sweatystartup 1qw7jwh, verbatim"
+  },
+  {
+   "id": "q14",
+   "question": "How do I quickly calculate a price when the client is waiting?",
+   "answer": "The four-number method: fixed ÷ production hours = overhead rate; + variable rate = base rate; ÷ (1 - profit%) = sell rate; × hours + minimum trip = quote. On a scrap of paper, in order, in under a minute.",
+   "category": "method",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 10",
+   "provenance": "guide method from 1hnvfj6"
+  },
+  {
+   "id": "q15",
+   "question": "A client says my price is too expensive. What do I say?",
+   "answer": "Show the breakdown, don't argue. Most people don't realize the actual cost — a price with lines is a price with reasons. Offer scope adjustment as the face-saving path: 'should we adjust scope to fit the budget?' instead of discounting.",
+   "category": "objections",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 10",
+   "provenance": "r/smallbusiness 14lyfzf"
+  },
+  {
+   "id": "q16",
+   "question": "Should I discount to win a recurring client?",
+   "answer": "No — there isn't a good reason to discount work on the hopes of obtaining a bread and butter client. Set the rate on job one; a client won on price will leave on price. Sell the maintenance subscription at full rate instead — recurring revenue earned by value, not discount.",
+   "category": "recurring",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 11",
+   "provenance": "r/landscaping 1ulx5gm, verbatim"
+  },
+  {
+   "id": "q17",
+   "question": "How do I learn real estimating without expensive courses?",
+   "answer": "The seven-step workflow: scope first, break the job into lines, price each line, add margin, write the quote with structure, add the change-order clause, confirm the price before starting. The book pros share is Markup & Profit by Michael C. Stone — the community spreadsheets built from it are shared freely.",
+   "category": "education",
+   "difficulty": "basic",
+   "source_chapter": "Part 12",
+   "provenance": "r/estimators 1i51am0 + r/GeneralContractor 1gg1z7m"
+  },
+  {
+   "id": "q18",
+   "question": "How do I follow up on a quote that got no response?",
+   "answer": "Send the quote with a validity window ('this price holds for 14 days') and follow up on day three: 'just checking — does the number work, or should we adjust scope to fit the budget?' That reopens the conversation without discounting and gives the client a face-saving negotiation path.",
+   "category": "quotes",
+   "difficulty": "intermediate",
+   "source_chapter": "Part 7",
+   "provenance": "guide method (close-loop pattern)"
+  }
+ ],
+ "checklists": [
+  {
+   "id": "chk-1",
+   "title": "Cost-of-Operation Calculator",
+   "items": [
+    "Fixed expenses monthly: truck, insurance, software, tools, phone, website, your pay",
+    "Production hours: 9 per 11-hour day, 45/week, ~195/month",
+    "Break-even: fixed ÷ production hours (worked example: $3,550 ÷ 195 = $18.20/hr)",
+    "Variable per job: fuel, materials, labor, dump fees, added not estimated",
+    "Base rate: overhead + variable",
+    "Sell rate: base ÷ 0.7 for 30% profit",
+    "Quote: sell rate × hours + minimum trip, rounded up"
+   ]
+  },
+  {
+   "id": "chk-2",
+   "title": "Site-Walk Scope Checklist",
+   "items": [
+    "Trim or rip-out? Ask which one you're pricing",
+    "Where does the debris go? Count dump trips (cut, drag, load, dump, return)",
+    "What's hidden? Rot, roots, buried edging, weeds — budget a contingency",
+    "Access: can the truck reach the pile, or is every armload a walk?",
+    "Disposal rules: call your transfer station for per-load pricing",
+    "Choose structure: hourly, flat, or not-to-exceed"
+   ]
+  },
+  {
+   "id": "chk-3",
+   "title": "Three-Line Bid Sanity Check",
+   "items": [
+    "Line 1: labor × time at your real rate, not the rate you wish you had",
+    "Line 2: materials + disposal + fuel, every cost added",
+    "Line 3: margin test — at least 30% above cost, or raise the number or walk",
+    "If any line is a guess, the bid is a guess"
+   ]
+  },
+  {
+   "id": "chk-4",
+   "title": "Pre-Work Confirmation Script",
+   "items": [
+    "State the number before the first tool comes out",
+    "Set the change-order rule: 'if we hit anything unexpected, I'll stop and confirm'",
+    "Get verbal or written agreement",
+    "Never start work without a number"
+   ]
+  },
+  {
+   "id": "chk-5",
+   "title": "Quote Follow-Up Cadence",
+   "items": [
+    "Send quote with validity window (14 days)",
+    "Day 3: 'does the number work, or should we adjust scope to fit the budget?'",
+    "Close the loop: yes, no, or scope change — never silence",
+    "Never discount; adjust scope instead"
+   ]
+  }
+ ],
+ "decision_trees": [
+  {
+   "id": "dt-1",
+   "title": "Which quote structure to use",
+   "description": "Maps the job's scope certainty to the quote type.",
+   "nodes": [
+    {
+     "condition": "Scope is unknown (cleanup, rot risk, first-time client)",
+     "option": "Hourly or not-to-exceed",
+     "outcome": "Hourly makes creep billable; not-to-exceed gives the client certainty and you a floor"
+    },
+    {
+     "condition": "Scope is known and repeatable",
+     "option": "Flat",
+     "outcome": "Fixed number; anything beyond it is outside the quote by definition"
+    },
+    {
+     "condition": "Landlord or property manager",
+     "option": "Not-to-exceed + change-order clause",
+     "outcome": "Ceiling protects you; 'while you're here' extras become billable"
+    },
+    {
+     "condition": "Commercial job",
+     "option": "Flat + final-walkthrough clause",
+     "outcome": "One walkthrough 24-48h before opening; additional touch-up billed hourly"
+    }
+   ]
+  },
+  {
+   "id": "dt-2",
+   "title": "Your rate is outside the healthy range",
+   "description": "What to do when your cost-of-operation number lands at the extremes.",
+   "nodes": [
+    {
+     "condition": "Below $40/hour",
+     "option": "Re-check fixed expenses",
+     "outcome": "Likely no real wage for yourself, or too many 'production' hours that are actually driving/setup"
+    },
+    {
+     "condition": "Above $150/hour",
+     "option": "Verify market support",
+     "outcome": "Evidence threads top out ~$100/hr for skilled solo work; confirm your specialization justifies the premium"
+    },
+    {
+     "condition": "In the $40-150 band",
+     "option": "Proceed",
+     "outcome": "Healthy range; use local reports to place the bid between your floor and the market ceiling"
+    }
+   ]
+  },
+  {
+   "id": "dt-3",
+   "title": "Client says the price is too high",
+   "description": "Objection handling without discounting.",
+   "nodes": [
+    {
+     "condition": "Client questions the number",
+     "option": "Show the breakdown",
+     "outcome": "A price with lines is a price with reasons; most people don't realize the actual cost"
+    },
+    {
+     "condition": "Client wants a lower price",
+     "option": "Adjust scope, not price",
+     "outcome": "'Should we adjust scope to fit the budget?' — face-saving path that protects margin"
+    },
+    {
+     "condition": "Client wants recurring work at a discount",
+     "option": "Decline the discount",
+     "outcome": "A client won on price leaves on price; sell the maintenance subscription at full rate instead"
+    }
+   ]
+  }
+ ],
+ "facts": [
+  {
+   "id": "f1",
+   "claim": "An 11-hour workday yields roughly 9 production hours",
+   "source": "r/sweatystartup 1hnvfj6, verbatim method",
+   "verified": false,
+   "verify_how": "Track your own day for a week; the ratio varies by trade"
+  },
+  {
+   "id": "f2",
+   "claim": "Worked example overhead: $3,550/month ÷ 195 hours = $18.20/hr break-even",
+   "source": "r/sweatystartup 1hnvfj6, verbatim worked example",
+   "verified": false,
+   "verify_how": "Your own fixed expenses and hours produce your number"
+  },
+  {
+   "id": "f3",
+   "claim": "30% profit = divide base rate by 0.7",
+   "source": "r/sweatystartup 1hnvfj6 method",
+   "verified": false,
+   "verify_how": "Margin is a business decision; 30% is the worked example, not a rule"
+  },
+  {
+   "id": "f4",
+   "claim": "The $200 cleanup guess priced out at $575",
+   "source": "r/landscaping 1ulx5gm, OP follow-up",
+   "verified": true,
+   "verify_how": "OP's own follow-up post in the same thread"
+  },
+  {
+   "id": "f5",
+   "claim": "Cleanups are the single most underbid job in the business",
+   "source": "r/landscaping 1ulx5gm, verbatim comment",
+   "verified": true,
+   "verify_how": "Public thread; repeated consensus across pricing threads"
+  },
+  {
+   "id": "f6",
+   "claim": "Minimum service charge saved my business",
+   "source": "r/Handyman 1glt321, verbatim comment",
+   "verified": true,
+   "verify_how": "Public thread comment"
+  },
+  {
+   "id": "f7",
+   "claim": "Typical minimums reported: $100-150 per trip",
+   "source": "r/Handyman 1glt321, verbatim comments",
+   "verified": false,
+   "verify_how": "Reported spread; your minimum must cover your own trip cost"
+  },
+  {
+   "id": "f8",
+   "claim": "Never start work till you establish a price per hour",
+   "source": "r/handyman 1qklcvi, verbatim top advice",
+   "verified": true,
+   "verify_how": "Public thread, 27 upvotes"
+  },
+  {
+   "id": "f9",
+   "claim": "Landscaping labor: $45-60/hr part-time, $50-75/hr easy work, ~$100/hr skilled",
+   "source": "r/landscaping 1vbq9dq, verbatim comments",
+   "verified": false,
+   "verify_how": "Reported spread by region; verify two local operators in your market"
+  },
+  {
+   "id": "f10",
+   "claim": "Commercial post-con cleaning: rough $0.10-0.15/sqft, detail $0.15-0.25, touch-up $0.05-0.10",
+   "source": "r/sweatystartup 1qw7jwh, verbatim",
+   "verified": false,
+   "verify_how": "Single pro comment; verify against local commercial operators"
+  },
+  {
+   "id": "f11",
+   "claim": "A 35,000 sqft post-con clean runs roughly $10k-17k",
+   "source": "r/sweatystartup 1qw7jwh, verbatim estimate",
+   "verified": false,
+   "verify_how": "Estimate from sqft benchmarks; depends on mess"
+  },
+  {
+   "id": "f12",
+   "claim": "A $70,000 bid mistake is a fireable event at an 8-figure consulting firm",
+   "source": "r/Construction 1gm7dx7, verbatim comment",
+   "verified": true,
+   "verify_how": "Public thread, 12 upvotes on the comment"
+  },
+  {
+   "id": "f13",
+   "claim": "If you underbid the job, it's still on you to complete the work",
+   "source": "r/Construction og9xgv, search-snippet quote",
+   "verified": true,
+   "verify_how": "Thread URL confirmed; snippet-verified"
+  },
+  {
+   "id": "f14",
+   "claim": "There isn't a good reason to discount work on the hopes of obtaining a bread and butter client",
+   "source": "r/landscaping 1ulx5gm, verbatim comment",
+   "verified": true,
+   "verify_how": "Public thread"
+  },
+  {
+   "id": "f15",
+   "claim": "Most courses are basically Estimating for Dummies",
+   "source": "r/estimators 1i51am0, search-snippet quote",
+   "verified": true,
+   "verify_how": "Thread URL confirmed; snippet-verified"
+  },
+  {
+   "id": "f16",
+   "claim": "Markup & Profit by Michael C. Stone is the canonical contractor-pricing book",
+   "source": "r/GeneralContractor 1gg1z7m spreadsheet share",
+   "verified": true,
+   "verify_how": "Community recommendation; book exists, price varies"
+  },
+  {
+   "id": "f17",
+   "claim": "Jobber Core starts at $29-49/month",
+   "source": "vendor pricing pages, verified 2026-08-10",
+   "verified": true,
+   "verify_how": "getjobber.com/pricing; prices change — verify current tiers"
+  },
+  {
+   "id": "f18",
+   "claim": "ServiceTitan runs $245-500 per technician/month with $5k-50k implementation",
+   "source": "vendor pricing analyses, verified 2026-08-10",
+   "verified": true,
+   "verify_how": "Third-party analyses; verify current tiers"
+  },
+  {
+   "id": "f19",
+   "claim": "Housecall Pro starts at $59-79/month",
+   "source": "vendor pricing pages, verified 2026-08-10",
+   "verified": true,
+   "verify_how": "housecallpro.com/pricing; prices change"
+  },
+  {
+   "id": "f20",
+   "claim": "A $19-39 one-time toolkit undercuts one month of the cheapest field-service software",
+   "source": "verified pricing comparison, 2026-08-10",
+   "verified": true,
+   "verify_how": "Jobber Core $29-49/mo vs toolkit price band"
+  }
+ ],
+ "content_hash": "placeholder"
+}
